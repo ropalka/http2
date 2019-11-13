@@ -1,1 +1,4 @@
-# http2
+http2
+=====
+
+FOSS Nova HTTP2 library
