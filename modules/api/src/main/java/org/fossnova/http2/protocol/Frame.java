@@ -16,34 +16,24 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-*/
-package test.fossnova.http2.stream;
-
-import org.fossnova.http2.protocol.FramesHandler;
-import org.junit.After;
-import org.junit.Before;
-
-import java.nio.ByteBuffer;
+ */
+package org.fossnova.http2.protocol;
 
 /**
+ * // TODO: javadoc
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-public abstract class AbstractHttp2TestCase {
-    byte[] dataBytes;
-    ByteBuffer dataBuffer;
-    FramesHandler framesHandler;
+public interface Frame {
 
-    @Before
-    public final void setUp() {
-        dataBytes = new byte[1024];
-        dataBuffer = ByteBuffer.wrap(dataBytes);
-        framesHandler = FramesHandler.newInstance(dataBuffer);
-    }
+    byte NO_FLAGS = 0x0;
 
-    @After
-    public final void tearDown() {
-        dataBytes = null;
-        dataBuffer = null;
-        framesHandler = null;
+    int getSize();
+    byte getFlags();
+    boolean isFlagSet(byte flag);
+
+    interface Builder {
+        Builder setPayloadSize(int length);
+        Builder setFlags(byte flags);
+        Frame build();
     }
 }

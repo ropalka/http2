@@ -1,0 +1,4 @@
+1) Default http2 protocol settings will be automagically
+configured when new StreamProcessor is created. Later
+these initial settings can be changed programatically.
+
