@@ -25,15 +25,15 @@ package org.fossnova.http2.protocol;
  */
 public interface Frame {
 
-    byte NO_FLAGS = 0x0;
+    int NO_FLAGS = 0x0;
 
     int getSize();
-    byte getFlags();
+    int getFlags();
     boolean isFlagSet(byte flag);
 
     interface Builder {
         Builder setPayloadSize(int length);
-        Builder setFlags(byte flags);
+        Builder setFlags(int flags);
         Frame build();
     }
 }

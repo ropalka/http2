@@ -23,31 +23,13 @@ package org.fossnova.http2.protocol;
  * // TODO: javadoc
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-public interface SettingsFrame extends Frame {
+public interface DataFrame extends Frame {
 
-    int FLAG_ACK = 0x1;
+    int FLAG_END_STREAM = 0x1;
+    int FLAG_PADDED = 0x8;
 
-    // parameter identifiers
-    int HEADER_TABLE_SIZE = 0x1;
-    int ENABLE_PUSH = 0x2;
-    int MAX_CONCURRENT_STREAMS = 0x3;
-    int INITIAL_WINDOW_SIZE = 0x4;
-    int MAX_FRAME_SIZE = 0x5;
-    int MAX_HEADER_LIST_SIZE = 0x6;
-
-    // parameter default values
-    int DEFAULT_HEADER_TABLE_SIZE = 1 << 12;
-    int DEFAULT_ENABLE_PUSH = 1;
-    int DEFAULT_MAX_CONCURRENT_STREAMS = 100;
-    int DEFAULT_INITIAL_WINDOW_SIZE = 1 << 16 - 1;
-    int DEFAULT_MAX_FRAME_SIZE = 1 << 14;
-    int DEFAULT_MAX_HEADER_LIST_SIZE = -1;
-
-    // other useful parameter values
-    int PUSH_ENABLED = 1;
-    int PUSH_DISABLED = 0;
-
-    int getParameter(int paramIdentifier);
+    byte[] getData();
+    int getPadLength();
 
     static Builder newBuilder() {
         // TODO: implement
@@ -55,7 +37,8 @@ public interface SettingsFrame extends Frame {
     }
 
     interface Builder extends Frame.Builder {
-        void setParameter(int identifier, int value);
-        SettingsFrame build();
+        void setPadLength(int padLength);
+        void setData(byte[] data);
+        DataFrame build();
     }
 }
