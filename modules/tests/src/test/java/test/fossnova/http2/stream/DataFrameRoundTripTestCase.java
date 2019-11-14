@@ -29,7 +29,6 @@ import static org.junit.Assert.*;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
-
     private static final byte[] MSG = "Hello World!".getBytes();
 
     @Test
@@ -45,12 +44,12 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeDataFrameWithPadding() {
-        DataFrame.Builder dataFB = newBuilder();
-        dataFB.setPayloadSize(15); // if not invoked defaults to 0
-        dataFB.setFlags(FLAG_END_STREAM | FLAG_PADDED);
-        dataFB.setPadLength(3);
-        dataFB.setData(MSG);
-        framesHandler.push(dataFB.build());
+        DataFrame.Builder builder = newBuilder();
+        builder.setPayloadSize(15); // if not invoked defaults to 0
+        builder.setFlags(FLAG_END_STREAM | FLAG_PADDED);
+        builder.setPadLength(3);
+        builder.setData(MSG);
+        framesHandler.push(builder.build());
     }
 
     private void readDataFrameWithPadding() {
@@ -63,11 +62,11 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeDataFrameWithoutPadding() {
-        DataFrame.Builder dataFB = newBuilder();
-        dataFB.setPayloadSize(12); // if not invoked defaults to 0
-        dataFB.setFlags(FLAG_END_STREAM);
-        dataFB.setData(MSG);
-        framesHandler.push(dataFB.build());
+        DataFrame.Builder builder = newBuilder();
+        builder.setPayloadSize(12); // if not invoked defaults to 0
+        builder.setFlags(FLAG_END_STREAM);
+        builder.setData(MSG);
+        framesHandler.push(builder.build());
     }
 
     private void readDataFrameWithoutPadding() {

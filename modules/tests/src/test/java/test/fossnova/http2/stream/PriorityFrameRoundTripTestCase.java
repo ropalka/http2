@@ -30,9 +30,6 @@ import static org.junit.Assert.assertNotNull;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public class PriorityFrameRoundTripTestCase extends AbstractHttp2TestCase {
-
-    private static final byte[] MSG = "Hello World!".getBytes();
-
     @Test
     public void priorityFrame() {
         writePriorityFrame();
@@ -40,11 +37,11 @@ public class PriorityFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writePriorityFrame() {
-        PriorityFrame.Builder headersFB = newBuilder();
-        headersFB.setPayloadSize(6); // if not invoked defaults to 0
-        headersFB.setStreamDependency(2);
-        headersFB.setWeight(1);
-        framesHandler.push(headersFB.build());
+        PriorityFrame.Builder builder = newBuilder();
+        builder.setPayloadSize(6); // if not invoked defaults to 0
+        builder.setStreamDependency(2);
+        builder.setWeight(1);
+        framesHandler.push(builder.build());
     }
 
     private void readPriorityFrame() {

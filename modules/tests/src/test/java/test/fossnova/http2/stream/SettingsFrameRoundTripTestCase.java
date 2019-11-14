@@ -43,15 +43,15 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeInitialSettingsFrame() {
-        SettingsFrame.Builder settingsFB = newBuilder();
-        settingsFB.setPayloadSize(36); // if not invoked defaults to 0
-        settingsFB.setParameter(HEADER_TABLE_SIZE, DEFAULT_HEADER_TABLE_SIZE);
-        settingsFB.setParameter(ENABLE_PUSH, DEFAULT_ENABLE_PUSH);
-        settingsFB.setParameter(MAX_CONCURRENT_STREAMS, DEFAULT_MAX_CONCURRENT_STREAMS);
-        settingsFB.setParameter(INITIAL_WINDOW_SIZE, DEFAULT_INITIAL_WINDOW_SIZE);
-        settingsFB.setParameter(MAX_FRAME_SIZE, DEFAULT_MAX_FRAME_SIZE);
-        settingsFB.setParameter(MAX_HEADER_LIST_SIZE, DEFAULT_MAX_HEADER_LIST_SIZE);
-        framesHandler.push(settingsFB.build());
+        SettingsFrame.Builder builder = newBuilder();
+        builder.setPayloadSize(36); // if not invoked defaults to 0
+        builder.setParameter(HEADER_TABLE_SIZE, DEFAULT_HEADER_TABLE_SIZE);
+        builder.setParameter(ENABLE_PUSH, DEFAULT_ENABLE_PUSH);
+        builder.setParameter(MAX_CONCURRENT_STREAMS, DEFAULT_MAX_CONCURRENT_STREAMS);
+        builder.setParameter(INITIAL_WINDOW_SIZE, DEFAULT_INITIAL_WINDOW_SIZE);
+        builder.setParameter(MAX_FRAME_SIZE, DEFAULT_MAX_FRAME_SIZE);
+        builder.setParameter(MAX_HEADER_LIST_SIZE, DEFAULT_MAX_HEADER_LIST_SIZE);
+        framesHandler.push(builder.build());
     }
 
     private void readInitialSettingsFrame() {
@@ -68,9 +68,9 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeConfirmationSettingsFrame() {
-        SettingsFrame.Builder settingsFB = newBuilder();
-        settingsFB.setFlags(SettingsFrame.FLAG_ACK); // if not invoked defaults to no flags set
-        framesHandler.push(settingsFB.build());
+        SettingsFrame.Builder builder = newBuilder();
+        builder.setFlags(SettingsFrame.FLAG_ACK); // if not invoked defaults to no flags set
+        framesHandler.push(builder.build());
     }
 
     private void readConfirmationSettingsFrame() {

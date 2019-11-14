@@ -30,7 +30,6 @@ import static org.junit.Assert.assertNotNull;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public class HeadersFrameRoundTripTestCase extends AbstractHttp2TestCase {
-
     private static final byte[] MSG = "Hello World!".getBytes();
 
     @Test
@@ -46,14 +45,14 @@ public class HeadersFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeHeadersFrameWithPadding() {
-        HeadersFrame.Builder headersFB = newBuilder();
-        headersFB.setPayloadSize(15); // if not invoked defaults to 0
-        headersFB.setFlags(FLAG_END_STREAM | FLAG_PADDED | FLAG_END_HEADERS | FLAG_PRIORITY);
-        headersFB.setPadLength(3);
-        headersFB.setStreamDependency(2);
-        headersFB.setWeight(1);
-        headersFB.setHeaderBlockFragment(MSG);
-        framesHandler.push(headersFB.build());
+        HeadersFrame.Builder builder = newBuilder();
+        builder.setPayloadSize(15); // if not invoked defaults to 0
+        builder.setFlags(FLAG_END_STREAM | FLAG_PADDED | FLAG_END_HEADERS | FLAG_PRIORITY);
+        builder.setPadLength(3);
+        builder.setStreamDependency(2);
+        builder.setWeight(1);
+        builder.setHeaderBlockFragment(MSG);
+        framesHandler.push(builder.build());
     }
 
     private void readHeadersFrameWithPadding() {
@@ -68,11 +67,11 @@ public class HeadersFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeHeadersFrameWithoutPadding() {
-        HeadersFrame.Builder headersFB = newBuilder();
-        headersFB.setPayloadSize(12); // if not invoked defaults to 0
-        headersFB.setFlags(FLAG_END_STREAM | FLAG_END_HEADERS);
-        headersFB.setHeaderBlockFragment(MSG);
-        framesHandler.push(headersFB.build());
+        HeadersFrame.Builder builder = newBuilder();
+        builder.setPayloadSize(12); // if not invoked defaults to 0
+        builder.setFlags(FLAG_END_STREAM | FLAG_END_HEADERS);
+        builder.setHeaderBlockFragment(MSG);
+        framesHandler.push(builder.build());
     }
 
     private void readHeadersFrameWithoutPadding() {
