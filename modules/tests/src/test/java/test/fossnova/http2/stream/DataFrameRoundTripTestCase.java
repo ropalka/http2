@@ -57,6 +57,7 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
         DataFrame frame = (DataFrame) framesHandler.pull();
         assertNotNull(frame);
         assertEquals(frame.getSize(), 15);
+        assertEquals(frame.getPadLength(), 3);
         assertEquals(frame.getFlags(), FLAG_END_STREAM | FLAG_PADDED);
         assertEquals(frame.getData(), MSG);
     }
@@ -73,6 +74,7 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
         DataFrame frame = (DataFrame) framesHandler.pull();
         assertNotNull(frame);
         assertEquals(frame.getSize(), 12);
+        assertEquals(frame.getPadLength(), 0);
         assertEquals(frame.getFlags(), FLAG_END_STREAM);
         assertEquals(frame.getData(), MSG);
     }

@@ -24,7 +24,6 @@ package org.fossnova.http2.protocol;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public interface SettingsFrame extends Frame {
-
     int FLAG_ACK = 0x1;
 
     // parameter identifiers

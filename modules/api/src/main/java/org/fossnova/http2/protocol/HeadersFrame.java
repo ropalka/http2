@@ -23,17 +23,27 @@ package org.fossnova.http2.protocol;
  * // TODO: javadoc
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-public interface Frame {
+public interface HeadersFrame extends Frame {
+    int FLAG_END_STREAM = 0x1;
+    int FLAG_END_HEADERS = 0x4;
+    int FLAG_PADDED = 0x8;
+    int FLAG_PRIORITY = 0x20;
 
-    int NO_FLAGS = 0x0;
+    int getPadLength();
+    int getStreamDependency();
+    int getWeight();
+    byte[] getHeaderBlockFragment();
 
-    int getSize();
-    int getFlags();
-    boolean isFlagSet(int flag);
+    static Builder newBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
 
-    interface Builder {
-        Builder setPayloadSize(int length);
-        Builder setFlags(int flags);
-        Frame build();
+    interface Builder extends Frame.Builder {
+        void setPadLength(int padLength);
+        void setStreamDependency(int streamId);
+        void setWeight(int weight);
+        void setHeaderBlockFragment(byte[] data);
+        HeadersFrame build();
     }
 }
