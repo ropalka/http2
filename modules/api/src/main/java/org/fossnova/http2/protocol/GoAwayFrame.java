@@ -23,8 +23,10 @@ package org.fossnova.http2.protocol;
  * // TODO: javadoc
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-public interface RstStreamFrame extends Frame {
+public interface GoAwayFrame extends Frame {
+    int getLastStreamId();
     int getErrorCode();
+    byte[] getAddidionalDebugData();
 
     static Builder newBuilder() {
         // TODO: implement
@@ -32,7 +34,9 @@ public interface RstStreamFrame extends Frame {
     }
 
     interface Builder extends Frame.Builder {
+        void setLastStreamId(int streamId);
         void setErrorCode(int errorId);
-        RstStreamFrame build();
+        void setAdditionalDebugData(byte[] debugInfo);
+        GoAwayFrame build();
     }
 }
