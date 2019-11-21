@@ -33,13 +33,13 @@ public class PushPromiseFrameRoundTripTestCase extends AbstractHttp2TestCase {
     private static final byte[] MSG = "Hello World!".getBytes();
 
     @Test
-    public void PushPromiseFrameWithPadding() {
+    public void pushPromiseFrameWithPadding() {
         writePushPromiseFrameWithPadding();
         readPushPromiseFrameWithPadding();
     }
 
     @Test
-    public void PushPromiseFrameWithoutPadding() {
+    public void pushPromiseFrameWithoutPadding() {
         writePushPromiseFrameWithoutPadding();
         readPushPromiseFrameWithoutPadding();
     }
