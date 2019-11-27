@@ -19,20 +19,37 @@
  */
 package org.fossnova.http2.protocol;
 
+import org.fossnova.finder.FactoryFinder;
+
 import java.nio.ByteBuffer;
 
 /**
  * // TODO: javadoc
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-public interface FramesHandler {
+public abstract class FramesHandler {
 
-    static FramesHandler newInstance(ByteBuffer buffer) {
-        // TODO: default frame settings will be automagically applied to FrameProcessor at construction time
-        // TODO: implement
-        throw new UnsupportedOperationException();
+    private static final FramesHandler INSTANCE = FactoryFinder.find( FramesHandler.class );
+
+    /**
+     * All implementations must provide public default constructor overriding this one.
+     */
+    protected FramesHandler() {
     }
 
-    void push(Frame frame);
-    Frame pull();
+    /**
+     * TODO: javadoc
+     */
+    public static FramesHandler newInstance(final ByteBuffer buffer) {
+        return INSTANCE;
+    }
+
+    /**
+     * TODO: javadoc
+     */
+    public abstract void push(final Frame frame);
+    /**
+     * TODO: javadoc
+     */
+    public abstract Frame pull();
 }

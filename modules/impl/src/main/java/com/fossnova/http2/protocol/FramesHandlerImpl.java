@@ -17,12 +17,29 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package com.fossnova.http2.stream;
+package com.fossnova.http2.protocol;
+
+import org.fossnova.http2.protocol.Frame;
+import org.fossnova.http2.protocol.FramesHandler;
 
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-final class Http2Constants {
-    private Http2Constants() {
+public final class FramesHandlerImpl extends FramesHandler {
+
+    public FramesHandlerImpl() {
     }
+
+    @Override
+    public void push(Frame frame) {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Frame pull() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
 }
