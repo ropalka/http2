@@ -26,11 +26,6 @@ package org.fossnova.http2.protocol;
 public interface WindowUpdateFrame extends Frame {
     int getWindowSizeIncrement();
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setWindowSizeIncrement(int length);
         WindowUpdateFrame build();

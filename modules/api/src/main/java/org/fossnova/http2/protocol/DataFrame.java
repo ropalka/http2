@@ -30,11 +30,6 @@ public interface DataFrame extends Frame {
     int getPadLength();
     byte[] getData();
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setPadLength(int padLength);
         void setData(byte[] data);

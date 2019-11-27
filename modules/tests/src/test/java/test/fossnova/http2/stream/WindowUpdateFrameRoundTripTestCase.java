@@ -22,7 +22,6 @@ package test.fossnova.http2.stream;
 import org.fossnova.http2.protocol.WindowUpdateFrame;
 import org.junit.Test;
 
-import static org.fossnova.http2.protocol.WindowUpdateFrame.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -31,19 +30,19 @@ import static org.junit.Assert.assertNotNull;
  */
 public class WindowUpdateFrameRoundTripTestCase extends AbstractHttp2TestCase {
     @Test
-    public void pingFrameWithAck() {
-        writePingFrameWithAck();
-        readPingFrameWithAck();
+    public void windowUpdate() {
+        writeWindowUpdateFrameWithAck();
+        readWindowUpdateFrameWithAck();
     }
 
-    private void writePingFrameWithAck() {
-        WindowUpdateFrame.Builder builder = newBuilder();
+    private void writeWindowUpdateFrameWithAck() {
+        WindowUpdateFrame.Builder builder = framesHandler.newWindowUpdateFrameBuilder();
         builder.setPayloadSize(4); // if not invoked defaults to 0
         builder.setWindowSizeIncrement(100);
         framesHandler.push(builder.build());
     }
 
-    private void readPingFrameWithAck() {
+    private void readWindowUpdateFrameWithAck() {
         WindowUpdateFrame frame = (WindowUpdateFrame) framesHandler.pull();
         assertNotNull(frame);
         assertEquals(frame.getSize(), 4);

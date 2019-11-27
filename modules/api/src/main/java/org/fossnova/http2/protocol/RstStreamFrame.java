@@ -26,11 +26,6 @@ package org.fossnova.http2.protocol;
 public interface RstStreamFrame extends Frame {
     int getErrorCode();
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setErrorCode(int errorId);
         RstStreamFrame build();

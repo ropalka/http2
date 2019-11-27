@@ -28,11 +28,6 @@ public interface ContinuationFrame extends Frame {
 
     byte[] getHeaderBlockFragment();
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setHeaderBlockFragment(byte[] data);
         ContinuationFrame build();

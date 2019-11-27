@@ -44,7 +44,7 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeDataFrameWithPadding() {
-        DataFrame.Builder builder = newBuilder();
+        DataFrame.Builder builder = framesHandler.newDataFrameBuilder();
         builder.setPayloadSize(15); // if not invoked defaults to 0
         builder.setFlags(FLAG_END_STREAM | FLAG_PADDED);
         builder.setPadLength(3);
@@ -62,7 +62,7 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeDataFrameWithoutPadding() {
-        DataFrame.Builder builder = newBuilder();
+        DataFrame.Builder builder = framesHandler.newDataFrameBuilder();
         builder.setPayloadSize(12); // if not invoked defaults to 0
         builder.setFlags(FLAG_END_STREAM);
         builder.setData(MSG);

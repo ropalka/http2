@@ -22,8 +22,7 @@ package test.fossnova.http2.stream;
 import org.fossnova.http2.protocol.GoAwayFrame;
 import org.junit.Test;
 
-import static org.fossnova.http2.protocol.GoAwayFrame.Builder;
-import static org.fossnova.http2.protocol.GoAwayFrame.newBuilder;
+import static org.fossnova.http2.protocol.GoAwayFrame.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -39,7 +38,7 @@ public class GoAwayFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeGoAwayFrame() {
-        Builder builder = newBuilder();
+        GoAwayFrame.Builder builder = framesHandler.newGoAwayFrameBuilder();
         builder.setPayloadSize(8); // if not invoked defaults to 0
         builder.setErrorCode(500);
         builder.setLastStreamId(1);

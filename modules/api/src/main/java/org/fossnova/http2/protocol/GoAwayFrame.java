@@ -28,11 +28,6 @@ public interface GoAwayFrame extends Frame {
     int getErrorCode();
     byte[] getAddidionalDebugData();
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setLastStreamId(int streamId);
         void setErrorCode(int errorId);

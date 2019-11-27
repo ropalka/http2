@@ -19,8 +19,7 @@
  */
 package com.fossnova.http2.protocol;
 
-import org.fossnova.http2.protocol.Frame;
-import org.fossnova.http2.protocol.FramesHandler;
+import org.fossnova.http2.protocol.*;
 
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
@@ -42,4 +41,63 @@ public final class FramesHandlerImpl extends FramesHandler {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public ContinuationFrame.Builder newContinuationFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public DataFrame.Builder newDataFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public GoAwayFrame.Builder newGoAwayFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public HeadersFrame.Builder newHeadersFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PingFrame.Builder newPingFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PriorityFrame.Builder newPriorityFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PushPromiseFrame.Builder newPushPromiseFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public RstStreamFrame.Builder newRstStreamFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SettingsFrame.Builder newSettingsFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public WindowUpdateFrame.Builder newWindowUpdateFrameBuilder() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
+    }
 }

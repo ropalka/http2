@@ -45,7 +45,7 @@ public class HeadersFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeHeadersFrameWithPadding() {
-        HeadersFrame.Builder builder = newBuilder();
+        HeadersFrame.Builder builder = framesHandler.newHeadersFrameBuilder();
         builder.setPayloadSize(15); // if not invoked defaults to 0
         builder.setFlags(FLAG_END_STREAM | FLAG_PADDED | FLAG_END_HEADERS | FLAG_PRIORITY);
         builder.setPadLength(3);
@@ -67,7 +67,7 @@ public class HeadersFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeHeadersFrameWithoutPadding() {
-        HeadersFrame.Builder builder = newBuilder();
+        HeadersFrame.Builder builder = framesHandler.newHeadersFrameBuilder();
         builder.setPayloadSize(12); // if not invoked defaults to 0
         builder.setFlags(FLAG_END_STREAM | FLAG_END_HEADERS);
         builder.setHeaderBlockFragment(MSG);

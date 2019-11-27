@@ -43,7 +43,7 @@ public class PingFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writePingFrameWithAck() {
-        PingFrame.Builder builder = newBuilder();
+        PingFrame.Builder builder = framesHandler.newPingFrameBuilder();
         builder.setPayloadSize(8); // if not invoked defaults to 0
         builder.setFlags(FLAG_ACK);
         builder.setOpaqueData(Long.MAX_VALUE);
@@ -58,7 +58,7 @@ public class PingFrameRoundTripTestCase extends AbstractHttp2TestCase {
         assertEquals(frame.getOpaqueData(), Long.MAX_VALUE);
     }
     private void writePingFrameWithoutAck() {
-        PingFrame.Builder builder = newBuilder();
+        PingFrame.Builder builder = framesHandler.newPingFrameBuilder();
         builder.setPayloadSize(8); // if not invoked defaults to 0
         builder.setOpaqueData(Long.MAX_VALUE);
         framesHandler.push(builder.build());

@@ -39,7 +39,7 @@ public class ContinuationFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeContinuationFrame() {
-        ContinuationFrame.Builder builder = newBuilder();
+        ContinuationFrame.Builder builder = framesHandler.newContinuationFrameBuilder();
         builder.setPayloadSize(15); // if not invoked defaults to 0
         builder.setFlags(FLAG_END_HEADERS);
         builder.setHeaderBlockFragment(MSG);

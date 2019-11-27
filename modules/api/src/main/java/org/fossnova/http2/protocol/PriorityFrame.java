@@ -27,11 +27,6 @@ public interface PriorityFrame extends Frame {
     int getStreamDependency();
     int getWeight();
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setStreamDependency(int streamId);
         void setWeight(int weight);

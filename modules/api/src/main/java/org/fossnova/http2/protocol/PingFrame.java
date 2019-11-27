@@ -28,11 +28,6 @@ public interface PingFrame extends Frame {
 
     long getOpaqueData();
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setOpaqueData(long unique);
         PingFrame build();

@@ -22,7 +22,6 @@ package test.fossnova.http2.stream;
 import org.fossnova.http2.protocol.PriorityFrame;
 import org.junit.Test;
 
-import static org.fossnova.http2.protocol.PriorityFrame.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -37,7 +36,7 @@ public class PriorityFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writePriorityFrame() {
-        PriorityFrame.Builder builder = newBuilder();
+        PriorityFrame.Builder builder = framesHandler.newPriorityFrameBuilder();
         builder.setPayloadSize(6); // if not invoked defaults to 0
         builder.setStreamDependency(2);
         builder.setWeight(1);

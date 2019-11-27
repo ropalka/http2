@@ -48,11 +48,6 @@ public interface SettingsFrame extends Frame {
 
     int getParameter(int paramIdentifier);
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setParameter(int identifier, int value);
         SettingsFrame build();

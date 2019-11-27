@@ -31,11 +31,6 @@ public interface PushPromiseFrame extends Frame {
     int getPromisedStreamId();
     byte[] getHeaderBlockFragment();
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setPadLength(int padLength);
         void setPromisedStreamId(int streamId);

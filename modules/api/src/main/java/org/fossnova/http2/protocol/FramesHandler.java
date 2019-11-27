@@ -43,13 +43,16 @@ public abstract class FramesHandler {
     public static FramesHandler newInstance(final ByteBuffer buffer) {
         return INSTANCE;
     }
-
-    /**
-     * TODO: javadoc
-     */
+    public abstract ContinuationFrame.Builder newContinuationFrameBuilder();
+    public abstract DataFrame.Builder newDataFrameBuilder();
+    public abstract GoAwayFrame.Builder newGoAwayFrameBuilder();
+    public abstract HeadersFrame.Builder newHeadersFrameBuilder();
+    public abstract PingFrame.Builder newPingFrameBuilder();
+    public abstract PriorityFrame.Builder newPriorityFrameBuilder();
+    public abstract PushPromiseFrame.Builder newPushPromiseFrameBuilder();
+    public abstract RstStreamFrame.Builder newRstStreamFrameBuilder();
+    public abstract SettingsFrame.Builder newSettingsFrameBuilder();
+    public abstract WindowUpdateFrame.Builder newWindowUpdateFrameBuilder();
     public abstract void push(final Frame frame);
-    /**
-     * TODO: javadoc
-     */
     public abstract Frame pull();
 }

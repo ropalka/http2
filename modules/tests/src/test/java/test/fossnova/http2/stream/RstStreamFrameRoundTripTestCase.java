@@ -22,8 +22,6 @@ package test.fossnova.http2.stream;
 import org.fossnova.http2.protocol.RstStreamFrame;
 import org.junit.Test;
 
-import static org.fossnova.http2.protocol.RstStreamFrame.Builder;
-import static org.fossnova.http2.protocol.RstStreamFrame.newBuilder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -38,7 +36,7 @@ public class RstStreamFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeRstStreamFrame() {
-        RstStreamFrame.Builder builder = newBuilder();
+        RstStreamFrame.Builder builder = framesHandler.newRstStreamFrameBuilder();
         builder.setPayloadSize(4); // if not invoked defaults to 0
         builder.setErrorCode(500);
         framesHandler.push(builder.build());

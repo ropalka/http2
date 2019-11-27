@@ -43,7 +43,7 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeInitialSettingsFrame() {
-        SettingsFrame.Builder builder = newBuilder();
+        SettingsFrame.Builder builder = framesHandler.newSettingsFrameBuilder();
         builder.setPayloadSize(36); // if not invoked defaults to 0
         builder.setParameter(HEADER_TABLE_SIZE, DEFAULT_HEADER_TABLE_SIZE);
         builder.setParameter(ENABLE_PUSH, DEFAULT_ENABLE_PUSH);
@@ -68,7 +68,7 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeConfirmationSettingsFrame() {
-        SettingsFrame.Builder builder = newBuilder();
+        SettingsFrame.Builder builder = framesHandler.newSettingsFrameBuilder();
         builder.setFlags(SettingsFrame.FLAG_ACK); // if not invoked defaults to no flags set
         framesHandler.push(builder.build());
     }

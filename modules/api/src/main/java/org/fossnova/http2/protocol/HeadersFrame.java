@@ -34,11 +34,6 @@ public interface HeadersFrame extends Frame {
     int getWeight();
     byte[] getHeaderBlockFragment();
 
-    static Builder newBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
-    }
-
     interface Builder extends Frame.Builder {
         void setPadLength(int padLength);
         void setStreamDependency(int streamId);
