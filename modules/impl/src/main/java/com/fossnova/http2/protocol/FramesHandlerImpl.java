@@ -21,6 +21,8 @@ package com.fossnova.http2.protocol;
 
 import org.fossnova.http2.protocol.*;
 
+import java.nio.ByteBuffer;
+
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -30,13 +32,12 @@ public final class FramesHandlerImpl extends FramesHandler {
     }
 
     @Override
-    public void push(Frame frame) {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+    public void push(final Frame frame, final ByteBuffer buffer, final boolean serverSide) {
+        ((AbstractFrameImpl) frame).writeTo(buffer);
     }
 
     @Override
-    public Frame pull() {
+    public Frame pull(final ByteBuffer buffer, final boolean serverSide) {
         // TODO: implement
         throw new UnsupportedOperationException();
     }
@@ -55,8 +56,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public GoAwayFrame.Builder newGoAwayFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new GoAwayFrameImpl.Builder(true); // TODO: propagate server or client side flag
     }
 
     @Override
