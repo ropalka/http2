@@ -25,12 +25,12 @@ package org.fossnova.http2.protocol;
  */
 public interface GoAwayFrame extends Frame {
     int getLastStreamId();
-    int getErrorCode();
-    byte[] getAddidionalDebugData();
+    ErrorCode getErrorCode();
+    byte[] getAdditionalDebugData();
 
     interface Builder extends Frame.Builder {
         void setLastStreamId(int streamId);
-        void setErrorCode(int errorId);
+        void setErrorCode(ErrorCode reason);
         void setAdditionalDebugData(byte[] debugInfo);
         GoAwayFrame build();
     }

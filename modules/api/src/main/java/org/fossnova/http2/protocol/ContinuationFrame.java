@@ -24,7 +24,7 @@ package org.fossnova.http2.protocol;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public interface ContinuationFrame extends Frame {
-    int FLAG_END_HEADERS = 0x4;
+    byte FLAG_END_HEADERS = 0x4;
 
     byte[] getHeaderBlockFragment();
 

@@ -24,7 +24,7 @@ package org.fossnova.http2.protocol;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public interface PingFrame extends Frame {
-    int FLAG_ACK = 0x1;
+    byte FLAG_ACK = 0x1;
 
     long getOpaqueData();
 

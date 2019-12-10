@@ -24,16 +24,15 @@ package org.fossnova.http2.protocol;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public interface Frame {
+    byte NO_FLAGS = 0x0;
 
-    int NO_FLAGS = 0x0;
-
-    int getSize();
-    int getFlags();
-    boolean isFlagSet(int flag);
+    int getPayloadSize();
+    byte getFlags();
 
     interface Builder {
         Builder setPayloadSize(int length);
         Builder setFlags(int flags);
+        Builder setStreamId(int streamId);
         Frame build();
     }
 }

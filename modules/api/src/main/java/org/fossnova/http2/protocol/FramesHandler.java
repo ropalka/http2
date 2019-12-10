@@ -40,7 +40,7 @@ public abstract class FramesHandler {
     /**
      * TODO: javadoc
      */
-    public static FramesHandler newInstance(final ByteBuffer buffer) {
+    public static FramesHandler newInstance() {
         return INSTANCE;
     }
     public abstract ContinuationFrame.Builder newContinuationFrameBuilder();
@@ -53,6 +53,6 @@ public abstract class FramesHandler {
     public abstract RstStreamFrame.Builder newRstStreamFrameBuilder();
     public abstract SettingsFrame.Builder newSettingsFrameBuilder();
     public abstract WindowUpdateFrame.Builder newWindowUpdateFrameBuilder();
-    public abstract void push(final Frame frame);
-    public abstract Frame pull();
+    public abstract void push(final Frame frame, final ByteBuffer buffer, final boolean serverSide);
+    public abstract Frame pull(final ByteBuffer buffer, final boolean serverSide);
 }

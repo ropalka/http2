@@ -24,8 +24,8 @@ package org.fossnova.http2.protocol;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public interface DataFrame extends Frame {
-    int FLAG_END_STREAM = 0x1;
-    int FLAG_PADDED = 0x8;
+    byte FLAG_END_STREAM = 0x1;
+    byte FLAG_PADDED = 0x8;
 
     int getPadLength();
     byte[] getData();
