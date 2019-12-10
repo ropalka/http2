@@ -19,10 +19,10 @@
  */
 package test.fossnova.http2.stream;
 
+import org.fossnova.http2.protocol.ErrorCode;
 import org.fossnova.http2.protocol.GoAwayFrame;
 import org.junit.Test;
 
-import static org.fossnova.http2.protocol.GoAwayFrame.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -32,25 +32,25 @@ import static org.junit.Assert.assertNull;
  */
 public class GoAwayFrameRoundTripTestCase extends AbstractHttp2TestCase {
     @Test
-    public void rstStreamFrame() {
+    public void goAwayFrame() {
         writeGoAwayFrame();
         readGoAwayFrame();
     }
 
     private void writeGoAwayFrame() {
-        GoAwayFrame.Builder builder = framesHandler.newGoAwayFrameBuilder();
+        GoAwayFrame.Builder builder = newGoAwayFrameBuilder();
         builder.setPayloadSize(8); // if not invoked defaults to 0
-        builder.setErrorCode(500);
+        builder.setErrorCode(ErrorCode.HTTP_1_1_REQUIRED);
         builder.setLastStreamId(1);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readGoAwayFrame() {
-        GoAwayFrame frame = (GoAwayFrame) framesHandler.pull();
+        GoAwayFrame frame = (GoAwayFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 8);
-        assertEquals(frame.getErrorCode(), 500);
+        assertEquals(frame.getPayloadSize(), 8);
+        assertEquals(frame.getErrorCode(), ErrorCode.HTTP_1_1_REQUIRED);
         assertEquals(frame.getLastStreamId(), 1);
-        assertNull(frame.getAddidionalDebugData());
+        assertNull(frame.getAdditionalDebugData());
     }
 }

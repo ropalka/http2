@@ -45,19 +45,19 @@ public class PushPromiseFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writePushPromiseFrameWithPadding() {
-        PushPromiseFrame.Builder builder = framesHandler.newPushPromiseFrameBuilder();
+        PushPromiseFrame.Builder builder = newPushPromiseFrameBuilder();
         builder.setPayloadSize(15); // if not invoked defaults to 0
         builder.setFlags(FLAG_PADDED | FLAG_END_HEADERS);
         builder.setPadLength(3);
         builder.setPromisedStreamId(2);
         builder.setHeaderBlockFragment(MSG);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readPushPromiseFrameWithPadding() {
-        PushPromiseFrame frame = (PushPromiseFrame) framesHandler.pull();
+        PushPromiseFrame frame = (PushPromiseFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 15);
+        assertEquals(frame.getPayloadSize(), 15);
         assertEquals(frame.getFlags(), FLAG_PADDED | FLAG_END_HEADERS);
         assertEquals(frame.getPadLength(), 3);
         assertEquals(frame.getPromisedStreamId(), 2);
@@ -65,18 +65,18 @@ public class PushPromiseFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writePushPromiseFrameWithoutPadding() {
-        PushPromiseFrame.Builder builder = framesHandler.newPushPromiseFrameBuilder();
+        PushPromiseFrame.Builder builder = newPushPromiseFrameBuilder();
         builder.setPayloadSize(12); // if not invoked defaults to 0
         builder.setFlags(FLAG_END_HEADERS);
         builder.setPromisedStreamId(2);
         builder.setHeaderBlockFragment(MSG);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readPushPromiseFrameWithoutPadding() {
-        PushPromiseFrame frame = (PushPromiseFrame) framesHandler.pull();
+        PushPromiseFrame frame = (PushPromiseFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 12);
+        assertEquals(frame.getPayloadSize(), 12);
         assertEquals(frame.getFlags(), FLAG_END_HEADERS);
         assertEquals(frame.getPadLength(), 0);
         assertEquals(frame.getPromisedStreamId(), 2);

@@ -19,7 +19,7 @@
 */
 package test.fossnova.http2.stream;
 
-import org.fossnova.http2.protocol.FramesHandler;
+import org.fossnova.http2.protocol.*;
 import org.junit.After;
 import org.junit.Before;
 
@@ -28,16 +28,16 @@ import java.nio.ByteBuffer;
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-public abstract class AbstractHttp2TestCase {
-    byte[] dataBytes;
-    ByteBuffer dataBuffer;
-    FramesHandler framesHandler;
+public class AbstractHttp2TestCase {
+    private byte[] dataBytes;
+    private ByteBuffer dataBuffer;
+    private FramesHandler framesHandler;
 
     @Before
     public final void setUp() {
         dataBytes = new byte[1024];
         dataBuffer = ByteBuffer.wrap(dataBytes);
-        framesHandler = FramesHandler.newInstance(dataBuffer);
+        framesHandler = FramesHandler.newInstance();
     }
 
     @After
@@ -46,4 +46,58 @@ public abstract class AbstractHttp2TestCase {
         dataBuffer = null;
         framesHandler = null;
     }
+
+    final void pushFrame(final Frame f) {
+        framesHandler.push(f, dataBuffer, false);
+        dataBuffer.flip();
+    }
+
+    final Frame pullFrame() {
+        try {
+            return framesHandler.pull(dataBuffer, false);
+        } finally {
+            dataBuffer.flip();
+        }
+    }
+
+    final ContinuationFrame.Builder newContinuationFrameBuilder() {
+        return framesHandler.newContinuationFrameBuilder();
+    }
+
+    final DataFrame.Builder newDataFrameBuilder() {
+        return framesHandler.newDataFrameBuilder();
+    }
+
+    final GoAwayFrame.Builder newGoAwayFrameBuilder() {
+        return framesHandler.newGoAwayFrameBuilder();
+    }
+
+    final HeadersFrame.Builder newHeadersFrameBuilder() {
+        return framesHandler.newHeadersFrameBuilder();
+    }
+
+    final PingFrame.Builder newPingFrameBuilder() {
+        return framesHandler.newPingFrameBuilder();
+    }
+
+    final PriorityFrame.Builder newPriorityFrameBuilder() {
+        return framesHandler.newPriorityFrameBuilder();
+    }
+
+    final PushPromiseFrame.Builder newPushPromiseFrameBuilder() {
+        return framesHandler.newPushPromiseFrameBuilder();
+    }
+
+    final RstStreamFrame.Builder newRstStreamFrameBuilder() {
+        return framesHandler.newRstStreamFrameBuilder();
+    }
+
+    final SettingsFrame.Builder newSettingsFrameBuilder() {
+        return framesHandler.newSettingsFrameBuilder();
+    }
+
+    final WindowUpdateFrame.Builder newWindowUpdateFrameBuilder() {
+        return framesHandler.newWindowUpdateFrameBuilder();
+    }
+
 }

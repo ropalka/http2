@@ -43,7 +43,7 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeInitialSettingsFrame() {
-        SettingsFrame.Builder builder = framesHandler.newSettingsFrameBuilder();
+        SettingsFrame.Builder builder = newSettingsFrameBuilder();
         builder.setPayloadSize(36); // if not invoked defaults to 0
         builder.setParameter(HEADER_TABLE_SIZE, DEFAULT_HEADER_TABLE_SIZE);
         builder.setParameter(ENABLE_PUSH, DEFAULT_ENABLE_PUSH);
@@ -51,13 +51,13 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
         builder.setParameter(INITIAL_WINDOW_SIZE, DEFAULT_INITIAL_WINDOW_SIZE);
         builder.setParameter(MAX_FRAME_SIZE, DEFAULT_MAX_FRAME_SIZE);
         builder.setParameter(MAX_HEADER_LIST_SIZE, DEFAULT_MAX_HEADER_LIST_SIZE);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readInitialSettingsFrame() {
-        SettingsFrame frame = (SettingsFrame) framesHandler.pull();
+        SettingsFrame frame = (SettingsFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 36);
+        assertEquals(frame.getPayloadSize(), 36);
         assertEquals(frame.getFlags(), NO_FLAGS);
         assertEquals(frame.getParameter(HEADER_TABLE_SIZE), DEFAULT_HEADER_TABLE_SIZE);
         assertEquals(frame.getParameter(ENABLE_PUSH), DEFAULT_ENABLE_PUSH);
@@ -68,16 +68,16 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeConfirmationSettingsFrame() {
-        SettingsFrame.Builder builder = framesHandler.newSettingsFrameBuilder();
+        SettingsFrame.Builder builder = newSettingsFrameBuilder();
         builder.setFlags(SettingsFrame.FLAG_ACK); // if not invoked defaults to no flags set
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readConfirmationSettingsFrame() {
-        SettingsFrame frame = (SettingsFrame) framesHandler.pull();
+        SettingsFrame frame = (SettingsFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 0);
-        assertTrue(frame.isFlagSet(SettingsFrame.FLAG_ACK));
+        assertEquals(frame.getPayloadSize(), 0);
+        assertEquals(frame.getFlags(), SettingsFrame.FLAG_ACK);
     }
 
 }

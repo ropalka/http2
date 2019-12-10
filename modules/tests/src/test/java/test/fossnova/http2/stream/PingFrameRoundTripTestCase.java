@@ -43,31 +43,31 @@ public class PingFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writePingFrameWithAck() {
-        PingFrame.Builder builder = framesHandler.newPingFrameBuilder();
+        PingFrame.Builder builder = newPingFrameBuilder();
         builder.setPayloadSize(8); // if not invoked defaults to 0
         builder.setFlags(FLAG_ACK);
         builder.setOpaqueData(Long.MAX_VALUE);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readPingFrameWithAck() {
-        PingFrame frame = (PingFrame) framesHandler.pull();
+        PingFrame frame = (PingFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 8);
+        assertEquals(frame.getPayloadSize(), 8);
         assertEquals(frame.getFlags(), FLAG_ACK);
         assertEquals(frame.getOpaqueData(), Long.MAX_VALUE);
     }
     private void writePingFrameWithoutAck() {
-        PingFrame.Builder builder = framesHandler.newPingFrameBuilder();
+        PingFrame.Builder builder = newPingFrameBuilder();
         builder.setPayloadSize(8); // if not invoked defaults to 0
         builder.setOpaqueData(Long.MAX_VALUE);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readPingFrameWithoutAck() {
-        PingFrame frame = (PingFrame) framesHandler.pull();
+        PingFrame frame = (PingFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 8);
+        assertEquals(frame.getPayloadSize(), 8);
         assertEquals(frame.getFlags(), NO_FLAGS);
         assertEquals(frame.getOpaqueData(), Long.MAX_VALUE);
     }

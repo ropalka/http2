@@ -36,16 +36,16 @@ public class RstStreamFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeRstStreamFrame() {
-        RstStreamFrame.Builder builder = framesHandler.newRstStreamFrameBuilder();
+        RstStreamFrame.Builder builder = newRstStreamFrameBuilder();
         builder.setPayloadSize(4); // if not invoked defaults to 0
         builder.setErrorCode(500);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readRstStreamFrame() {
-        RstStreamFrame frame = (RstStreamFrame) framesHandler.pull();
+        RstStreamFrame frame = (RstStreamFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 4);
+        assertEquals(frame.getPayloadSize(), 4);
         assertEquals(frame.getErrorCode(), 500);
     }
 }

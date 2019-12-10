@@ -44,35 +44,35 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeDataFrameWithPadding() {
-        DataFrame.Builder builder = framesHandler.newDataFrameBuilder();
+        DataFrame.Builder builder = newDataFrameBuilder();
         builder.setPayloadSize(15); // if not invoked defaults to 0
         builder.setFlags(FLAG_END_STREAM | FLAG_PADDED);
         builder.setPadLength(3);
         builder.setData(MSG);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readDataFrameWithPadding() {
-        DataFrame frame = (DataFrame) framesHandler.pull();
+        DataFrame frame = (DataFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 15);
+        assertEquals(frame.getPayloadSize(), 15);
         assertEquals(frame.getPadLength(), 3);
         assertEquals(frame.getFlags(), FLAG_END_STREAM | FLAG_PADDED);
         assertEquals(frame.getData(), MSG);
     }
 
     private void writeDataFrameWithoutPadding() {
-        DataFrame.Builder builder = framesHandler.newDataFrameBuilder();
+        DataFrame.Builder builder = newDataFrameBuilder();
         builder.setPayloadSize(12); // if not invoked defaults to 0
         builder.setFlags(FLAG_END_STREAM);
         builder.setData(MSG);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readDataFrameWithoutPadding() {
-        DataFrame frame = (DataFrame) framesHandler.pull();
+        DataFrame frame = (DataFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 12);
+        assertEquals(frame.getPayloadSize(), 12);
         assertEquals(frame.getPadLength(), 0);
         assertEquals(frame.getFlags(), FLAG_END_STREAM);
         assertEquals(frame.getData(), MSG);

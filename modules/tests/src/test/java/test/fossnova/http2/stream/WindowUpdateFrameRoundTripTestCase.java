@@ -36,16 +36,16 @@ public class WindowUpdateFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writeWindowUpdateFrameWithAck() {
-        WindowUpdateFrame.Builder builder = framesHandler.newWindowUpdateFrameBuilder();
+        WindowUpdateFrame.Builder builder = newWindowUpdateFrameBuilder();
         builder.setPayloadSize(4); // if not invoked defaults to 0
         builder.setWindowSizeIncrement(100);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readWindowUpdateFrameWithAck() {
-        WindowUpdateFrame frame = (WindowUpdateFrame) framesHandler.pull();
+        WindowUpdateFrame frame = (WindowUpdateFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 4);
+        assertEquals(frame.getPayloadSize(), 4);
         assertEquals(frame.getWindowSizeIncrement(), 100);
     }
 }

@@ -36,17 +36,17 @@ public class PriorityFrameRoundTripTestCase extends AbstractHttp2TestCase {
     }
 
     private void writePriorityFrame() {
-        PriorityFrame.Builder builder = framesHandler.newPriorityFrameBuilder();
+        PriorityFrame.Builder builder = newPriorityFrameBuilder();
         builder.setPayloadSize(6); // if not invoked defaults to 0
         builder.setStreamDependency(2);
         builder.setWeight(1);
-        framesHandler.push(builder.build());
+        pushFrame(builder.build());
     }
 
     private void readPriorityFrame() {
-        PriorityFrame frame = (PriorityFrame) framesHandler.pull();
+        PriorityFrame frame = (PriorityFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getSize(), 6);
+        assertEquals(frame.getPayloadSize(), 6);
         assertEquals(frame.getStreamDependency(), 2);
         assertEquals(frame.getWeight(), 1);
     }
