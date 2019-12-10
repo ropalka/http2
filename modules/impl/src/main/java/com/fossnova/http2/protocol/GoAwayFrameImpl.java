@@ -34,7 +34,7 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
     private final byte[] debugData;
 
     GoAwayFrameImpl(final int payloadSize, final int lastStreamId, final ErrorCode reason, final byte[] debugData) {
-        super(payloadSize, NO_FLAGS, FrameType.GOAWAY, 0);
+        super(payloadSize, FrameType.GOAWAY, NO_FLAGS, 0);
         this.lastStreamId = lastStreamId;
         this.reason = reason;
         this.debugData = debugData;
@@ -52,7 +52,7 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
 
     @Override
     public final byte[] getAdditionalDebugData() {
-        return debugData.clone();
+        return debugData != null ? debugData.clone() : null;
     }
 
     void writeTo(final ByteBuffer buffer) {
@@ -70,6 +70,35 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
         }
     }
 
+    static GoAwayFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
+        // TODO: protocol errors must be detected here
+        // preconditions
+        if (builder.payloadSize < 8) { // TODO: must be constant
+            throw new IllegalArgumentException();
+        }
+        // implementation
+        int lastStreamId = buffer.get() << 24;
+        lastStreamId |= buffer.get() << 16;
+        lastStreamId |= buffer.get() << 8;
+        lastStreamId |= buffer.get();
+        builder.setLastStreamId(lastStreamId);
+
+        int errorCodeValue = buffer.get() << 24;
+        errorCodeValue |= buffer.get() << 16;
+        errorCodeValue |= buffer.get() << 8;
+        errorCodeValue |= buffer.get();
+        final ErrorCode errorCode = ErrorCode.of(errorCodeValue);
+        builder.setErrorCode(errorCode);
+
+        if (builder.payloadSize > 8) {
+            byte[] debugData = new byte[builder.payloadSize - 8];
+            buffer.get(debugData);
+            builder.setAdditionalDebugData(debugData);
+        }
+
+        return builder.build();
+    }
+
     final static class Builder extends AbstractFrameImpl.Builder implements GoAwayFrame.Builder {
         final boolean serverSide;
         boolean built;
@@ -77,7 +106,17 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
         ErrorCode reason;
         byte[] debugInfo;
 
+        // TODO: configurable serverSide params
+
         Builder(final boolean serverSide) {
+            this.serverSide = serverSide;
+        }
+
+        Builder(final int payloadSize, final FrameType frameType, final byte flags, final int streamId, final boolean serverSide) {
+            super.setPayloadSize(payloadSize);
+            super.setFrameType(frameType);
+            super.setFlags(flags);
+            super.setStreamId(streamId);
             this.serverSide = serverSide;
         }
 
@@ -116,7 +155,7 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
         }
 
         @Override
-        public GoAwayFrame build() {
+        public GoAwayFrameImpl build() {
             // preconditions
             ensureThreadSafety();
             ensureNotBuilt();

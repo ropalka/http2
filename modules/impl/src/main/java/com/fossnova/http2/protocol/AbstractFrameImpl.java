@@ -37,10 +37,10 @@ abstract class AbstractFrameImpl implements Frame {
     private final int payloadSize;
     private final int streamId;
 
-    AbstractFrameImpl(final int payloadSize, final byte flags, final FrameType frameType, final int streamId) {
-        this.flags = flags;
-        this.frameType = frameType.getFrameId();
+    AbstractFrameImpl(final int payloadSize, final FrameType frameType, final byte flags, final int streamId) {
         this.payloadSize = payloadSize;
+        this.frameType = frameType.getFrameId();
+        this.flags = flags;
         this.streamId = streamId;
     }
 
@@ -69,10 +69,32 @@ abstract class AbstractFrameImpl implements Frame {
         buffer.put((byte)(streamId));
     }
 
+    static AbstractFrameImpl readFrom(final ByteBuffer buffer) {
+        if (buffer.capacity() < FRAME_HEADER_SIZE) {
+            throw new IllegalArgumentException();
+        }
+        int payloadSize = buffer.get() << 16;
+        payloadSize |= buffer.get() << 8;
+        payloadSize |= buffer.get();
+        final FrameType frameType = FrameType.of(buffer.get());
+        byte flags = buffer.get();
+        int streamId = buffer.get() << 24;
+        streamId |= buffer.get() << 16;
+        streamId |= buffer.get() << 8;
+        streamId |= buffer.get();
+
+        if (frameType == FrameType.GOAWAY) {
+            return GoAwayFrameImpl.readFrom(buffer, new GoAwayFrameImpl.Builder(payloadSize, frameType, flags, streamId, true));
+        } else {
+            throw new UnsupportedOperationException(); // TODO: implement
+        }
+    }
+
     abstract static class Builder implements Frame.Builder {
         final Thread installThread = currentThread();
-        int flags;
         int payloadSize;
+        FrameType frameType;
+        int flags;
         int streamId;
 
         @Override
@@ -100,6 +122,13 @@ abstract class AbstractFrameImpl implements Frame {
             if (streamId != 0) {
                 throw new IllegalArgumentException();
             }
+            return this;
+        }
+
+        final Frame.Builder setFrameType(final FrameType frameType) {
+            ensureThreadSafety();
+            ensureNotNull(frameType);
+            this.frameType = frameType;
             return this;
         }
 

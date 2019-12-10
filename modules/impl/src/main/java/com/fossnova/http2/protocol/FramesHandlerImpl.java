@@ -38,8 +38,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public Frame pull(final ByteBuffer buffer, final boolean serverSide) {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return AbstractFrameImpl.readFrom(buffer);
     }
 
     @Override
