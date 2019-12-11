@@ -37,7 +37,7 @@ public class PriorityFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writePriorityFrame() {
         PriorityFrame.Builder builder = newPriorityFrameBuilder();
-        builder.setPayloadSize(6); // if not invoked defaults to 0
+        builder.setPayloadSize(6);
         builder.setStreamDependency(2);
         builder.setWeight(1);
         pushFrame(builder.build());

@@ -37,7 +37,7 @@ public class RstStreamFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writeRstStreamFrame() {
         RstStreamFrame.Builder builder = newRstStreamFrameBuilder();
-        builder.setPayloadSize(4); // if not invoked defaults to 0
+        builder.setPayloadSize(4);
         builder.setErrorCode(500);
         pushFrame(builder.build());
     }

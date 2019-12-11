@@ -37,7 +37,7 @@ public class WindowUpdateFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writeWindowUpdateFrameWithAck() {
         WindowUpdateFrame.Builder builder = newWindowUpdateFrameBuilder();
-        builder.setPayloadSize(4); // if not invoked defaults to 0
+        builder.setPayloadSize(4);
         builder.setWindowSizeIncrement(100);
         pushFrame(builder.build());
     }

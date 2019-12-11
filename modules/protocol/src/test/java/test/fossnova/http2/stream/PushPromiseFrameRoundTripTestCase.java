@@ -46,7 +46,7 @@ public class PushPromiseFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writePushPromiseFrameWithPadding() {
         PushPromiseFrame.Builder builder = newPushPromiseFrameBuilder();
-        builder.setPayloadSize(15); // if not invoked defaults to 0
+        builder.setPayloadSize(15);
         builder.setFlags(FLAG_PADDED | FLAG_END_HEADERS);
         builder.setPadLength(3);
         builder.setPromisedStreamId(2);
@@ -66,7 +66,7 @@ public class PushPromiseFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writePushPromiseFrameWithoutPadding() {
         PushPromiseFrame.Builder builder = newPushPromiseFrameBuilder();
-        builder.setPayloadSize(12); // if not invoked defaults to 0
+        builder.setPayloadSize(12);
         builder.setFlags(FLAG_END_HEADERS);
         builder.setPromisedStreamId(2);
         builder.setHeaderBlockFragment(MSG);

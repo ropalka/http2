@@ -39,7 +39,7 @@ public class GoAwayFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writeGoAwayFrame() {
         GoAwayFrame.Builder builder = newGoAwayFrameBuilder();
-        builder.setPayloadSize(8); // if not invoked defaults to 0
+        builder.setPayloadSize(8);
         builder.setErrorCode(ErrorCode.HTTP_1_1_REQUIRED);
         builder.setLastStreamId(1);
         pushFrame(builder.build());

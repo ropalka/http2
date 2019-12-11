@@ -44,7 +44,7 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writeInitialSettingsFrame() {
         SettingsFrame.Builder builder = newSettingsFrameBuilder();
-        builder.setPayloadSize(36); // if not invoked defaults to 0
+        builder.setPayloadSize(36);
         builder.setParameter(HEADER_TABLE_SIZE, DEFAULT_HEADER_TABLE_SIZE);
         builder.setParameter(ENABLE_PUSH, DEFAULT_ENABLE_PUSH);
         builder.setParameter(MAX_CONCURRENT_STREAMS, DEFAULT_MAX_CONCURRENT_STREAMS);
@@ -69,7 +69,7 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writeConfirmationSettingsFrame() {
         SettingsFrame.Builder builder = newSettingsFrameBuilder();
-        builder.setFlags(SettingsFrame.FLAG_ACK); // if not invoked defaults to no flags set
+        builder.setFlags(SettingsFrame.FLAG_ACK);
         pushFrame(builder.build());
     }
 
