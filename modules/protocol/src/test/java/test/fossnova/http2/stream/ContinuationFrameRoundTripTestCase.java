@@ -23,6 +23,7 @@ import org.fossnova.http2.protocol.ContinuationFrame;
 import org.junit.Test;
 
 import static org.fossnova.http2.protocol.ContinuationFrame.*;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -40,7 +41,8 @@ public class ContinuationFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writeContinuationFrame() {
         ContinuationFrame.Builder builder = newContinuationFrameBuilder();
-        builder.setPayloadSize(15);
+        builder.setStreamId(1);
+        builder.setPayloadSize(12);
         builder.setFlags(FLAG_END_HEADERS);
         builder.setHeaderBlockFragment(MSG);
         pushFrame(builder.build());
@@ -49,9 +51,10 @@ public class ContinuationFrameRoundTripTestCase extends AbstractHttp2TestCase {
     private void readContinuationFrame() {
         ContinuationFrame frame = (ContinuationFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getPayloadSize(), 15);
+        assertEquals(frame.getStreamId(), 1);
+        assertEquals(frame.getPayloadSize(), 12);
         assertEquals(frame.getFlags(), FLAG_END_HEADERS);
-        assertEquals(frame.getHeaderBlockFragment(), MSG);
+        assertArrayEquals(frame.getHeaderBlockFragment(), MSG);
     }
 
 }

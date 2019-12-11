@@ -172,8 +172,24 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
         }
 
         @Override
-        int getAllowedFlags() {
-            return Frame.NO_FLAGS;
+        void validateFlags(final int flags) {
+            if (flags != 0) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        @Override
+        void validateStreamId(final int streamId) {
+            if (streamId != 0) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        @Override
+        void validatePayloadSize(final int payloadSize) {
+            if (payloadSize < 8) {
+                throw new IllegalArgumentException();
+            }
         }
 
         private void ensureNotBuilt() {

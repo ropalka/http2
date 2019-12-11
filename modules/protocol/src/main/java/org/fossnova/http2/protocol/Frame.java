@@ -28,6 +28,7 @@ public interface Frame {
 
     int getPayloadSize();
     byte getFlags();
+    int getStreamId();
 
     interface Builder {
         Builder setPayloadSize(int length);

@@ -48,8 +48,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public ContinuationFrame.Builder newContinuationFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new ContinuationFrameImpl.Builder(server, validate);
     }
 
     @Override

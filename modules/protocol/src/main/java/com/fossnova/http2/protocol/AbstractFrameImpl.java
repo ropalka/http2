@@ -21,6 +21,7 @@ package com.fossnova.http2.protocol;
 
 import static java.lang.Thread.currentThread;
 
+import org.fossnova.http2.protocol.ContinuationFrame;
 import org.fossnova.http2.protocol.Frame;
 
 import java.nio.ByteBuffer;
@@ -54,6 +55,11 @@ abstract class AbstractFrameImpl implements Frame {
         return flags;
     }
 
+    @Override
+    public int getStreamId() {
+        return streamId;
+    }
+
     void writeTo(final ByteBuffer buffer) {
         if (buffer.capacity() < FRAME_HEADER_SIZE + payloadSize) {
             throw new IllegalArgumentException();
@@ -85,6 +91,8 @@ abstract class AbstractFrameImpl implements Frame {
 
         if (frameType == FrameType.GOAWAY) {
             return GoAwayFrameImpl.readFrom(buffer, new GoAwayFrameImpl.Builder(server, validate, payloadSize, frameType, flags, streamId));
+        } else if (frameType == FrameType.CONTINUATION) {
+            return ContinuationFrameImpl.readFrom(buffer, new ContinuationFrameImpl.Builder(server, validate, payloadSize, frameType, flags, streamId));
         } else {
             throw new UnsupportedOperationException(); // TODO: implement
         }
@@ -110,9 +118,7 @@ abstract class AbstractFrameImpl implements Frame {
             ensureThreadSafety();
             // validations
             if (validate) {
-                if ((~getAllowedFlags() & flags) != 0) {
-                    throw new IllegalArgumentException();
-                }
+                validateFlags(flags);
             }
             // implementation
             this.flags = flags;
@@ -126,6 +132,7 @@ abstract class AbstractFrameImpl implements Frame {
             // validations
             if (validate) {
                 ensure24BitsOnlySet(length);
+                validatePayloadSize(length);
             }
             // Connection.validateFrameLength(length); // TODO: do it here or in build() method? Anyway payload size configured in connection should only increase in time PRECONDITION (not clear from the spec)
             // implementation
@@ -139,11 +146,10 @@ abstract class AbstractFrameImpl implements Frame {
             ensureThreadSafety();
             // validations
             if (validate) {
-                if (streamId != 0) {
-                    throw new IllegalArgumentException();
-                }
+                validateStreamId(streamId);
             }
             // implementation
+            this.streamId = streamId;
             return this;
         }
 
@@ -156,7 +162,9 @@ abstract class AbstractFrameImpl implements Frame {
             return this;
         }
 
-        abstract int getAllowedFlags();
+        abstract void validateFlags(int flags);
+        abstract void validateStreamId(int streamId);
+        abstract void validatePayloadSize(int payloadSize);
 
         final void ensureThreadSafety() {
             if (currentThread() != installThread) {
