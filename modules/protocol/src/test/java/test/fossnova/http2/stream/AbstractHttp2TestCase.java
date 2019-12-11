@@ -37,7 +37,7 @@ public class AbstractHttp2TestCase {
     public final void setUp() {
         dataBytes = new byte[1024];
         dataBuffer = ByteBuffer.wrap(dataBytes);
-        framesHandler = FramesHandler.newInstance();
+        framesHandler = FramesHandler.newInstance(true, true);
     }
 
     @After
@@ -48,13 +48,13 @@ public class AbstractHttp2TestCase {
     }
 
     final void pushFrame(final Frame f) {
-        framesHandler.push(f, dataBuffer, false);
+        framesHandler.push(f, dataBuffer);
         dataBuffer.flip();
     }
 
     final Frame pullFrame() {
         try {
-            return framesHandler.pull(dataBuffer, false);
+            return framesHandler.pull(dataBuffer);
         } finally {
             dataBuffer.flip();
         }

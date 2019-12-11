@@ -69,7 +69,7 @@ abstract class AbstractFrameImpl implements Frame {
         buffer.put((byte)(streamId));
     }
 
-    static AbstractFrameImpl readFrom(final ByteBuffer buffer) {
+    static AbstractFrameImpl readFrom(final ByteBuffer buffer, final boolean server, final boolean validate) {
         if (buffer.capacity() < FRAME_HEADER_SIZE) {
             throw new IllegalArgumentException();
         }
@@ -84,7 +84,7 @@ abstract class AbstractFrameImpl implements Frame {
         streamId |= buffer.get();
 
         if (frameType == FrameType.GOAWAY) {
-            return GoAwayFrameImpl.readFrom(buffer, new GoAwayFrameImpl.Builder(payloadSize, frameType, flags, streamId, true));
+            return GoAwayFrameImpl.readFrom(buffer, new GoAwayFrameImpl.Builder(server, validate, payloadSize, frameType, flags, streamId));
         } else {
             throw new UnsupportedOperationException(); // TODO: implement
         }
@@ -92,42 +92,66 @@ abstract class AbstractFrameImpl implements Frame {
 
     abstract static class Builder implements Frame.Builder {
         final Thread installThread = currentThread();
+        final boolean server;
+        final boolean validate;
         int payloadSize;
         FrameType frameType;
         int flags;
         int streamId;
 
+        Builder(final boolean server, final boolean validate) {
+            this.server = server;
+            this.validate = validate;
+        }
+
         @Override
         public final Frame.Builder setFlags(final int flags) {
+            // preconditions
             ensureThreadSafety();
-            if ((~getAllowedFlags() & flags) != 0) {
-                throw new IllegalArgumentException();
+            // validations
+            if (validate) {
+                if ((~getAllowedFlags() & flags) != 0) {
+                    throw new IllegalArgumentException();
+                }
             }
+            // implementation
             this.flags = flags;
             return this;
         }
 
         @Override
         public final Frame.Builder setPayloadSize(final int length) {
+            // preconditions
             ensureThreadSafety();
-            ensure24BitsOnlySet(length);
+            // validations
+            if (validate) {
+                ensure24BitsOnlySet(length);
+            }
             // Connection.validateFrameLength(length); // TODO: do it here or in build() method? Anyway payload size configured in connection should only increase in time PRECONDITION (not clear from the spec)
+            // implementation
             payloadSize = length;
             return this;
         }
 
         @Override
         public final Frame.Builder setStreamId(final int streamId) {
+            // preconditions
             ensureThreadSafety();
-            if (streamId != 0) {
-                throw new IllegalArgumentException();
+            // validations
+            if (validate) {
+                if (streamId != 0) {
+                    throw new IllegalArgumentException();
+                }
             }
+            // implementation
             return this;
         }
 
         final Frame.Builder setFrameType(final FrameType frameType) {
+            // preconditions
             ensureThreadSafety();
             ensureNotNull(frameType);
+            // implementation
             this.frameType = frameType;
             return this;
         }

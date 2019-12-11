@@ -28,17 +28,22 @@ import java.nio.ByteBuffer;
  */
 public final class FramesHandlerImpl extends FramesHandler {
 
-    public FramesHandlerImpl() {
+    private final boolean server;
+    private final boolean validate;
+
+    public FramesHandlerImpl(final boolean server, final boolean validate) {
+        this.server = server;
+        this.validate = validate;
     }
 
     @Override
-    public void push(final Frame frame, final ByteBuffer buffer, final boolean serverSide) {
+    public void push(final Frame frame, final ByteBuffer buffer) {
         ((AbstractFrameImpl) frame).writeTo(buffer);
     }
 
     @Override
-    public Frame pull(final ByteBuffer buffer, final boolean serverSide) {
-        return AbstractFrameImpl.readFrom(buffer);
+    public Frame pull(final ByteBuffer buffer) {
+        return AbstractFrameImpl.readFrom(buffer, server, validate);
     }
 
     @Override
@@ -55,7 +60,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public GoAwayFrame.Builder newGoAwayFrameBuilder() {
-        return new GoAwayFrameImpl.Builder(true); // TODO: propagate server or client side flag
+        return new GoAwayFrameImpl.Builder(server, validate);
     }
 
     @Override

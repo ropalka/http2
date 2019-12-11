@@ -29,8 +29,6 @@ import java.nio.ByteBuffer;
  */
 public abstract class FramesHandler {
 
-    private static final FramesHandler INSTANCE = new FramesHandlerImpl();
-
     /**
      * All implementations must provide public default constructor overriding this one.
      */
@@ -40,8 +38,8 @@ public abstract class FramesHandler {
     /**
      * TODO: javadoc
      */
-    public static FramesHandler newInstance() {
-        return INSTANCE;
+    public static FramesHandler newInstance(final boolean server, final boolean validate) {
+        return new FramesHandlerImpl(server, validate);
     }
     public abstract ContinuationFrame.Builder newContinuationFrameBuilder();
     public abstract DataFrame.Builder newDataFrameBuilder();
@@ -53,6 +51,6 @@ public abstract class FramesHandler {
     public abstract RstStreamFrame.Builder newRstStreamFrameBuilder();
     public abstract SettingsFrame.Builder newSettingsFrameBuilder();
     public abstract WindowUpdateFrame.Builder newWindowUpdateFrameBuilder();
-    public abstract void push(final Frame frame, final ByteBuffer buffer, final boolean serverSide);
-    public abstract Frame pull(final ByteBuffer buffer, final boolean serverSide);
+    public abstract void push(final Frame frame, final ByteBuffer buffer);
+    public abstract Frame pull(final ByteBuffer buffer);
 }

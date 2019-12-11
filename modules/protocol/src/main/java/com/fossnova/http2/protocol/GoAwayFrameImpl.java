@@ -30,13 +30,13 @@ import java.nio.ByteBuffer;
  */
 final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
     private final int lastStreamId;
-    private final ErrorCode reason;
+    private final int errorCode;
     private final byte[] debugData;
 
-    GoAwayFrameImpl(final int payloadSize, final int lastStreamId, final ErrorCode reason, final byte[] debugData) {
+    GoAwayFrameImpl(final int payloadSize, final int lastStreamId, final int errorCode, final byte[] debugData) {
         super(payloadSize, FrameType.GOAWAY, NO_FLAGS, 0);
         this.lastStreamId = lastStreamId;
-        this.reason = reason;
+        this.errorCode = errorCode;
         this.debugData = debugData;
     }
 
@@ -46,8 +46,8 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
     }
 
     @Override
-    public final ErrorCode getErrorCode() {
-        return reason;
+    public final int getErrorCode() {
+        return errorCode;
     }
 
     @Override
@@ -61,10 +61,10 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
         buffer.put((byte)(lastStreamId << 16));
         buffer.put((byte)(lastStreamId << 8));
         buffer.put((byte)(lastStreamId));
-        buffer.put((byte)(reason.getValue() << 24));
-        buffer.put((byte)(reason.getValue() << 16));
-        buffer.put((byte)(reason.getValue() << 8));
-        buffer.put((byte)(reason.getValue()));
+        buffer.put((byte)(errorCode << 24));
+        buffer.put((byte)(errorCode << 16));
+        buffer.put((byte)(errorCode << 8));
+        buffer.put((byte)(errorCode));
         if (debugData != null) {
             buffer.put(debugData);
         }
@@ -83,11 +83,10 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
         lastStreamId |= buffer.get();
         builder.setLastStreamId(lastStreamId);
 
-        int errorCodeValue = buffer.get() << 24;
-        errorCodeValue |= buffer.get() << 16;
-        errorCodeValue |= buffer.get() << 8;
-        errorCodeValue |= buffer.get();
-        final ErrorCode errorCode = ErrorCode.of(errorCodeValue);
+        int errorCode = buffer.get() << 24;
+        errorCode |= buffer.get() << 16;
+        errorCode |= buffer.get() << 8;
+        errorCode |= buffer.get();
         builder.setErrorCode(errorCode);
 
         if (builder.payloadSize > 8) {
@@ -100,24 +99,21 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
     }
 
     final static class Builder extends AbstractFrameImpl.Builder implements GoAwayFrame.Builder {
-        final boolean serverSide;
-        boolean built;
         int lastStreamId;
-        ErrorCode reason;
+        int errorCode;
         byte[] debugInfo;
+        boolean built;
 
-        // TODO: configurable serverSide params
-
-        Builder(final boolean serverSide) {
-            this.serverSide = serverSide;
+        Builder(final boolean server, final boolean validate) {
+            super(server, validate);
         }
 
-        Builder(final int payloadSize, final FrameType frameType, final byte flags, final int streamId, final boolean serverSide) {
+        Builder(final boolean server, final boolean validate, final int payloadSize, final FrameType frameType, final byte flags, final int streamId) {
+            super(server, validate);
             super.setPayloadSize(payloadSize);
             super.setFrameType(frameType);
             super.setFlags(flags);
             super.setStreamId(streamId);
-            this.serverSide = serverSide;
         }
 
         @Override
@@ -125,23 +121,31 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
             // preconditions
             ensureThreadSafety();
             ensureNotBuilt();
-            if (serverSide) {
-                ensureClientStreamId(lastStreamId);
-            } else {
-                ensureServerStreamId(lastStreamId);
+            // validations
+            if (validate) {
+                if (server) {
+                    ensureClientStreamId(lastStreamId);
+                } else {
+                    ensureServerStreamId(lastStreamId);
+                }
             }
             // implementation
             this.lastStreamId = lastStreamId;
         }
 
         @Override
-        public void setErrorCode(final ErrorCode reason) {
+        public void setErrorCode(final int errorCode) {
             // preconditions
             ensureThreadSafety();
             ensureNotBuilt();
-            ensureNotNull(reason);
+            // validations
+            if (validate) {
+                if (errorCode < 0) {
+                    throw new IllegalArgumentException();
+                }
+            }
             // implementation
-            this.reason = reason;
+            this.errorCode = validate && errorCode > ErrorCode.HTTP_1_1_REQUIRED ? ErrorCode.INTERNAL_ERROR : errorCode;
         }
 
         @Override
@@ -161,10 +165,10 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
             ensureNotBuilt();
             // implementation
             built = true;
-            if ((reason == null) || lastStreamId == 0) {
+            if (lastStreamId == 0) {
                 throw new IllegalStateException();
             }
-            return new GoAwayFrameImpl(debugInfo == null ? 8 : (8 + debugInfo.length), lastStreamId, reason, debugInfo);
+            return new GoAwayFrameImpl(debugInfo == null ? 8 : (8 + debugInfo.length), lastStreamId, errorCode, debugInfo);
         }
 
         @Override
