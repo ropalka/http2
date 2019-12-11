@@ -21,7 +21,6 @@
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-module com.fossnova.http2.impl {
-    requires org.fossnova.http2.api;
-    exports com.fossnova.http2.protocol to org.fossnova.http2.protocol;
+module org.fossnova.http2.protocol {
+    exports org.fossnova.http2.protocol;
 }

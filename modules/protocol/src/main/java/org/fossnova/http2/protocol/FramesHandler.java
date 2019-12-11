@@ -19,7 +19,7 @@
  */
 package org.fossnova.http2.protocol;
 
-import org.fossnova.finder.FactoryFinder;
+import com.fossnova.http2.protocol.FramesHandlerImpl;
 
 import java.nio.ByteBuffer;
 
@@ -29,7 +29,7 @@ import java.nio.ByteBuffer;
  */
 public abstract class FramesHandler {
 
-    private static final FramesHandler INSTANCE = FactoryFinder.find( FramesHandler.class );
+    private static final FramesHandler INSTANCE = new FramesHandlerImpl();
 
     /**
      * All implementations must provide public default constructor overriding this one.

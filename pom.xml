@@ -50,33 +50,15 @@
 
   <properties>
     <fossnova.factory.finder.version>1.0.1-SNAPSHOT</fossnova.factory.finder.version>
-    <junit.version>4.10</junit.version>
+    <junit.version>4.12</junit.version>
   </properties>
 
   <modules>
-    <module>modules/api</module>
-    <module>modules/impl</module>
-    <module>modules/tests</module>
+    <module>modules/protocol</module>
   </modules>
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.fossnova</groupId>
-        <artifactId>fossnova-factory-finder</artifactId>
-        <version>${fossnova.factory.finder.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.fossnova</groupId>
-        <artifactId>fossnova-http2-api</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.fossnova</groupId>
-        <artifactId>fossnova-http2-impl</artifactId>
-        <version>${project.version}</version>
-        <scope>test</scope>
-      </dependency>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
