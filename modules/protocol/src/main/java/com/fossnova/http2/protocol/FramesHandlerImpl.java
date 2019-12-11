@@ -53,8 +53,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public DataFrame.Builder newDataFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new DataFrameImpl.Builder(server, validate);
     }
 
     @Override

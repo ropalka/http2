@@ -45,9 +45,9 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writeDataFrameWithPadding() {
         DataFrame.Builder builder = newDataFrameBuilder();
-        builder.setPayloadSize(15);
+        builder.setPayloadSize(250);
         builder.setFlags(FLAG_END_STREAM | FLAG_PADDED);
-        builder.setPadLength(3);
+        builder.setStreamId(1);
         builder.setData(MSG);
         pushFrame(builder.build());
     }
@@ -55,16 +55,17 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
     private void readDataFrameWithPadding() {
         DataFrame frame = (DataFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getPayloadSize(), 15);
-        assertEquals(frame.getPadLength(), 3);
+        assertEquals(frame.getPayloadSize(), 250);
         assertEquals(frame.getFlags(), FLAG_END_STREAM | FLAG_PADDED);
-        assertEquals(frame.getData(), MSG);
+        assertEquals(frame.getStreamId(), 1);
+        assertArrayEquals(frame.getData(), MSG);
     }
 
     private void writeDataFrameWithoutPadding() {
         DataFrame.Builder builder = newDataFrameBuilder();
         builder.setPayloadSize(12);
         builder.setFlags(FLAG_END_STREAM);
+        builder.setStreamId(1);
         builder.setData(MSG);
         pushFrame(builder.build());
     }
@@ -73,9 +74,9 @@ public class DataFrameRoundTripTestCase extends AbstractHttp2TestCase {
         DataFrame frame = (DataFrame) pullFrame();
         assertNotNull(frame);
         assertEquals(frame.getPayloadSize(), 12);
-        assertEquals(frame.getPadLength(), 0);
         assertEquals(frame.getFlags(), FLAG_END_STREAM);
-        assertEquals(frame.getData(), MSG);
+        assertEquals(frame.getStreamId(), 1);
+        assertArrayEquals(frame.getData(), MSG);
     }
 
 }

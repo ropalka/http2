@@ -33,6 +33,7 @@ import java.util.ConcurrentModificationException;
 abstract class AbstractFrameImpl implements Frame {
 
     static final int FRAME_HEADER_SIZE = 9;
+    static final byte[] EMPTY_ARRAY = new byte[0];
     private final byte flags;
     private final byte frameType;
     private final int payloadSize;
@@ -56,7 +57,7 @@ abstract class AbstractFrameImpl implements Frame {
     }
 
     @Override
-    public int getStreamId() {
+    public final int getStreamId() {
         return streamId;
     }
 
@@ -64,14 +65,14 @@ abstract class AbstractFrameImpl implements Frame {
         if (buffer.capacity() < FRAME_HEADER_SIZE + payloadSize) {
             throw new IllegalArgumentException();
         }
-        buffer.put((byte)(payloadSize << 16));
-        buffer.put((byte)(payloadSize << 8));
+        buffer.put((byte)(payloadSize >>> 16));
+        buffer.put((byte)(payloadSize >>> 8));
         buffer.put((byte)(payloadSize));
         buffer.put(frameType);
         buffer.put(flags);
-        buffer.put((byte)(streamId << 24));
-        buffer.put((byte)(streamId << 16));
-        buffer.put((byte)(streamId << 8));
+        buffer.put((byte)(streamId >>> 24));
+        buffer.put((byte)(streamId >>> 16));
+        buffer.put((byte)(streamId >>> 8));
         buffer.put((byte)(streamId));
     }
 
@@ -79,20 +80,22 @@ abstract class AbstractFrameImpl implements Frame {
         if (buffer.capacity() < FRAME_HEADER_SIZE) {
             throw new IllegalArgumentException();
         }
-        int payloadSize = buffer.get() << 16;
-        payloadSize |= buffer.get() << 8;
-        payloadSize |= buffer.get();
+        int payloadSize = 0x00_FF_00_00 & buffer.get() << 16;
+        payloadSize |= 0x00_00_FF_00 & buffer.get() << 8;
+        payloadSize |= 0x00_00_00_FF & buffer.get();
         final FrameType frameType = FrameType.of(buffer.get());
         byte flags = buffer.get();
-        int streamId = buffer.get() << 24;
-        streamId |= buffer.get() << 16;
-        streamId |= buffer.get() << 8;
-        streamId |= buffer.get();
+        int streamId = 0xFF_00_00_00 & buffer.get() << 24;
+        streamId |= 0x00_FF_00_00 & buffer.get() << 16;
+        streamId |= 0x00_00_FF_00 & buffer.get() << 8;
+        streamId |= 0x00_00_00_FF & buffer.get();
 
         if (frameType == FrameType.GOAWAY) {
             return GoAwayFrameImpl.readFrom(buffer, new GoAwayFrameImpl.Builder(server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.CONTINUATION) {
             return ContinuationFrameImpl.readFrom(buffer, new ContinuationFrameImpl.Builder(server, validate, payloadSize, frameType, flags, streamId));
+        } else if (frameType == FrameType.DATA) {
+            return DataFrameImpl.readFrom(buffer, new DataFrameImpl.Builder(server, validate, payloadSize, frameType, flags, streamId));
         } else {
             throw new UnsupportedOperationException(); // TODO: implement
         }

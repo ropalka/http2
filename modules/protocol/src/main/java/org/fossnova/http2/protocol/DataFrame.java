@@ -27,11 +27,9 @@ public interface DataFrame extends Frame {
     byte FLAG_END_STREAM = 0x1;
     byte FLAG_PADDED = 0x8;
 
-    int getPadLength();
     byte[] getData();
 
     interface Builder extends Frame.Builder {
-        void setPadLength(int padLength);
         void setData(byte[] data);
         DataFrame build();
     }
