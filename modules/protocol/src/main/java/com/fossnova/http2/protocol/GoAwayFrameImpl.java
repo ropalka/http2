@@ -71,11 +71,6 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
     }
 
     static GoAwayFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // TODO: protocol errors must be detected here
-        // preconditions
-        if (builder.payloadSize < 8) { // TODO: must be constant
-            throw new IllegalArgumentException();
-        }
         // implementation
         int lastStreamId = buffer.get() << 24;
         lastStreamId |= buffer.get() << 16;
@@ -163,11 +158,12 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
             // preconditions
             ensureThreadSafety();
             ensureNotBuilt();
-            // implementation
-            built = true;
+            // validation
             if (lastStreamId == 0) {
                 throw new IllegalStateException();
             }
+            // implementation
+            built = true;
             return new GoAwayFrameImpl(debugInfo == null ? 8 : (8 + debugInfo.length), lastStreamId, errorCode, debugInfo);
         }
 
