@@ -21,7 +21,6 @@ package com.fossnova.http2.protocol;
 
 import static java.lang.Thread.currentThread;
 
-import org.fossnova.http2.protocol.ContinuationFrame;
 import org.fossnova.http2.protocol.Frame;
 
 import java.nio.ByteBuffer;
@@ -32,7 +31,7 @@ import java.util.ConcurrentModificationException;
  */
 abstract class AbstractFrameImpl implements Frame {
 
-    static final int FRAME_HEADER_SIZE = 9;
+    private static final int FRAME_HEADER_SIZE = 9;
     static final byte[] EMPTY_ARRAY = new byte[0];
     private final byte flags;
     private final byte frameType;
@@ -91,11 +90,11 @@ abstract class AbstractFrameImpl implements Frame {
         streamId |= 0x00_00_00_FF & buffer.get();
 
         if (frameType == FrameType.GOAWAY) {
-            return GoAwayFrameImpl.readFrom(buffer, new GoAwayFrameImpl.Builder(server, validate, payloadSize, frameType, flags, streamId));
+            return GoAwayFrameImpl.readFrom(buffer, new GoAwayFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.CONTINUATION) {
-            return ContinuationFrameImpl.readFrom(buffer, new ContinuationFrameImpl.Builder(server, validate, payloadSize, frameType, flags, streamId));
+            return ContinuationFrameImpl.readFrom(buffer, new ContinuationFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.DATA) {
-            return DataFrameImpl.readFrom(buffer, new DataFrameImpl.Builder(server, validate, payloadSize, frameType, flags, streamId));
+            return DataFrameImpl.readFrom(buffer, new DataFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else {
             throw new UnsupportedOperationException(); // TODO: implement
         }
@@ -104,14 +103,16 @@ abstract class AbstractFrameImpl implements Frame {
     abstract static class Builder implements Frame.Builder {
         final Thread installThread = currentThread();
         final boolean server;
+        final boolean request;
         final boolean validate;
         int payloadSize;
         FrameType frameType;
         int flags;
         int streamId;
 
-        Builder(final boolean server, final boolean validate) {
+        Builder(final boolean server, final boolean request, final boolean validate) {
             this.server = server;
+            this.request = request;
             this.validate = validate;
         }
 

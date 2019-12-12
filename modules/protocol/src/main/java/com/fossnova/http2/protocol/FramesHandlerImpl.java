@@ -48,17 +48,17 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public ContinuationFrame.Builder newContinuationFrameBuilder() {
-        return new ContinuationFrameImpl.Builder(server, validate);
+        return new ContinuationFrameImpl.Builder(server, !server, validate);
     }
 
     @Override
     public DataFrame.Builder newDataFrameBuilder() {
-        return new DataFrameImpl.Builder(server, validate);
+        return new DataFrameImpl.Builder(server, !server, validate);
     }
 
     @Override
     public GoAwayFrame.Builder newGoAwayFrameBuilder() {
-        return new GoAwayFrameImpl.Builder(server, validate);
+        return new GoAwayFrameImpl.Builder(server, !server, validate);
     }
 
     @Override

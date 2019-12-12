@@ -31,73 +31,75 @@ import java.nio.ByteBuffer;
 public class AbstractHttp2TestCase {
     private byte[] dataBytes;
     private ByteBuffer dataBuffer;
-    private FramesHandler framesHandler;
+    private FramesHandler clientFramesHandler, serverFramesHandler;
 
     @Before
     public final void setUp() {
         dataBytes = new byte[1024];
         dataBuffer = ByteBuffer.wrap(dataBytes);
-        framesHandler = FramesHandler.newInstance(true, true);
+        clientFramesHandler = FramesHandler.newInstance(false, true);
+        serverFramesHandler = FramesHandler.newInstance(true, true);
     }
 
     @After
     public final void tearDown() {
         dataBytes = null;
         dataBuffer = null;
-        framesHandler = null;
+        clientFramesHandler = null;
+        serverFramesHandler = null;
     }
 
     final void pushFrame(final Frame f) {
-        framesHandler.push(f, dataBuffer);
+        clientFramesHandler.push(f, dataBuffer);
         dataBuffer.flip();
     }
 
     final Frame pullFrame() {
         try {
-            return framesHandler.pull(dataBuffer);
+            return serverFramesHandler.pull(dataBuffer);
         } finally {
             dataBuffer.flip();
         }
     }
 
     final ContinuationFrame.Builder newContinuationFrameBuilder() {
-        return framesHandler.newContinuationFrameBuilder();
+        return clientFramesHandler.newContinuationFrameBuilder();
     }
 
     final DataFrame.Builder newDataFrameBuilder() {
-        return framesHandler.newDataFrameBuilder();
+        return clientFramesHandler.newDataFrameBuilder();
     }
 
     final GoAwayFrame.Builder newGoAwayFrameBuilder() {
-        return framesHandler.newGoAwayFrameBuilder();
+        return clientFramesHandler.newGoAwayFrameBuilder();
     }
 
     final HeadersFrame.Builder newHeadersFrameBuilder() {
-        return framesHandler.newHeadersFrameBuilder();
+        return clientFramesHandler.newHeadersFrameBuilder();
     }
 
     final PingFrame.Builder newPingFrameBuilder() {
-        return framesHandler.newPingFrameBuilder();
+        return clientFramesHandler.newPingFrameBuilder();
     }
 
     final PriorityFrame.Builder newPriorityFrameBuilder() {
-        return framesHandler.newPriorityFrameBuilder();
+        return clientFramesHandler.newPriorityFrameBuilder();
     }
 
     final PushPromiseFrame.Builder newPushPromiseFrameBuilder() {
-        return framesHandler.newPushPromiseFrameBuilder();
+        return clientFramesHandler.newPushPromiseFrameBuilder();
     }
 
     final RstStreamFrame.Builder newRstStreamFrameBuilder() {
-        return framesHandler.newRstStreamFrameBuilder();
+        return clientFramesHandler.newRstStreamFrameBuilder();
     }
 
     final SettingsFrame.Builder newSettingsFrameBuilder() {
-        return framesHandler.newSettingsFrameBuilder();
+        return clientFramesHandler.newSettingsFrameBuilder();
     }
 
     final WindowUpdateFrame.Builder newWindowUpdateFrameBuilder() {
-        return framesHandler.newWindowUpdateFrameBuilder();
+        return clientFramesHandler.newWindowUpdateFrameBuilder();
     }
 
 }

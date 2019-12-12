@@ -20,7 +20,6 @@
 package com.fossnova.http2.protocol;
 
 import org.fossnova.http2.protocol.ErrorCode;
-import org.fossnova.http2.protocol.Frame;
 import org.fossnova.http2.protocol.GoAwayFrame;
 
 import java.nio.ByteBuffer;
@@ -57,13 +56,13 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
 
     void writeTo(final ByteBuffer buffer) {
         super.writeTo(buffer);
-        buffer.put((byte)(lastStreamId << 24));
-        buffer.put((byte)(lastStreamId << 16));
-        buffer.put((byte)(lastStreamId << 8));
+        buffer.put((byte)(lastStreamId >>> 24));
+        buffer.put((byte)(lastStreamId >>> 16));
+        buffer.put((byte)(lastStreamId >>> 8));
         buffer.put((byte)(lastStreamId));
-        buffer.put((byte)(errorCode << 24));
-        buffer.put((byte)(errorCode << 16));
-        buffer.put((byte)(errorCode << 8));
+        buffer.put((byte)(errorCode >>> 24));
+        buffer.put((byte)(errorCode >>> 16));
+        buffer.put((byte)(errorCode >>> 8));
         buffer.put((byte)(errorCode));
         if (debugData != null) {
             buffer.put(debugData);
@@ -72,16 +71,16 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
 
     static GoAwayFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
         // implementation
-        int lastStreamId = buffer.get() << 24;
-        lastStreamId |= buffer.get() << 16;
-        lastStreamId |= buffer.get() << 8;
-        lastStreamId |= buffer.get();
+        int lastStreamId = 0xFF_00_00_00 & buffer.get() << 24;
+        lastStreamId |= 0x00_FF_00_00 & buffer.get() << 16;
+        lastStreamId |= 0x00_00_FF_00 & buffer.get() << 8;
+        lastStreamId |= 0x00_00_00_FF & buffer.get();
         builder.setLastStreamId(lastStreamId);
 
-        int errorCode = buffer.get() << 24;
-        errorCode |= buffer.get() << 16;
-        errorCode |= buffer.get() << 8;
-        errorCode |= buffer.get();
+        int errorCode = 0xFF_00_00_00 & buffer.get() << 24;
+        errorCode |= 0x00_FF_00_00 & buffer.get() << 16;
+        errorCode |= 0x00_00_FF_00 & buffer.get() << 8;
+        errorCode |= 0x00_00_00_FF & buffer.get();
         builder.setErrorCode(errorCode);
 
         if (builder.payloadSize > 8) {
@@ -99,12 +98,12 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
         byte[] debugInfo;
         boolean built;
 
-        Builder(final boolean server, final boolean validate) {
-            super(server, validate);
+        Builder(final boolean server, final boolean request, final boolean validate) {
+            super(server, request, validate);
         }
 
-        Builder(final boolean server, final boolean validate, final int payloadSize, final FrameType frameType, final byte flags, final int streamId) {
-            super(server, validate);
+        Builder(final boolean server, final boolean request, final boolean validate, final int payloadSize, final FrameType frameType, final byte flags, final int streamId) {
+            super(server, request, validate);
             super.setPayloadSize(payloadSize);
             super.setFrameType(frameType);
             super.setFlags(flags);
@@ -119,9 +118,17 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
             // validations
             if (validate) {
                 if (server) {
-                    ensureClientStreamId(lastStreamId);
+                    if (request) {
+                        ensureServerStreamId(lastStreamId);
+                    } else {
+                        ensureClientStreamId(lastStreamId);
+                    }
                 } else {
-                    ensureServerStreamId(lastStreamId);
+                    if (request) {
+                        ensureServerStreamId(lastStreamId);
+                    } else {
+                        ensureClientStreamId(lastStreamId);
+                    }
                 }
             }
             // implementation

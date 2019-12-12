@@ -41,7 +41,7 @@ public class GoAwayFrameRoundTripTestCase extends AbstractHttp2TestCase {
         GoAwayFrame.Builder builder = newGoAwayFrameBuilder();
         builder.setPayloadSize(8);
         builder.setErrorCode(ErrorCode.HTTP_1_1_REQUIRED);
-        builder.setLastStreamId(1);
+        builder.setLastStreamId(2);
         pushFrame(builder.build());
     }
 
@@ -50,7 +50,7 @@ public class GoAwayFrameRoundTripTestCase extends AbstractHttp2TestCase {
         assertNotNull(frame);
         assertEquals(frame.getPayloadSize(), 8);
         assertEquals(frame.getErrorCode(), ErrorCode.HTTP_1_1_REQUIRED);
-        assertEquals(frame.getLastStreamId(), 1);
+        assertEquals(frame.getLastStreamId(), 2);
         assertNull(frame.getAdditionalDebugData());
     }
 }

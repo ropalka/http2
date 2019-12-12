@@ -75,12 +75,12 @@ final class DataFrameImpl extends AbstractFrameImpl implements DataFrame {
         byte[] data = AbstractFrameImpl.EMPTY_ARRAY;
         boolean built;
 
-        Builder(final boolean server, final boolean validate) {
-            super(server, validate);
+        Builder(final boolean server, final boolean request, final boolean validate) {
+            super(server, request, validate);
         }
 
-        Builder(final boolean server, final boolean validate, final int payloadSize, final FrameType frameType, final byte flags, final int streamId) {
-            super(server, validate);
+        Builder(final boolean server, final boolean request, final boolean validate, final int payloadSize, final FrameType frameType, final byte flags, final int streamId) {
+            super(server, request, validate);
             super.setPayloadSize(payloadSize);
             super.setFrameType(frameType);
             super.setFlags(flags);
