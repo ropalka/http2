@@ -166,6 +166,7 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
             ensureThreadSafety();
             ensureNotBuilt();
             // validation
+            validateStreamId(streamId);
             if (lastStreamId == 0) {
                 throw new IllegalStateException();
             }

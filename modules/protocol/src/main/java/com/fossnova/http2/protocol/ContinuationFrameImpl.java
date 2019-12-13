@@ -89,6 +89,7 @@ final class ContinuationFrameImpl extends AbstractFrameImpl implements Continuat
             ensureThreadSafety();
             ensureNotBuilt();
             // implementation
+            validateStreamId(streamId);
             built = true;
             return new ContinuationFrameImpl(headerBlockFragment == null ? 0 : (headerBlockFragment.length), (byte)flags, streamId, headerBlockFragment);
         }

@@ -29,14 +29,14 @@ public interface HeadersFrame extends Frame {
     byte FLAG_PADDED = 0x8;
     byte FLAG_PRIORITY = 0x20;
 
-    int getPadLength();
-    int getStreamDependency();
+    boolean isDependencyExclusive();
+    int getDependencyStream();
     int getWeight();
     byte[] getHeaderBlockFragment();
 
     interface Builder extends Frame.Builder {
-        void setPadLength(int padLength);
-        void setStreamDependency(int streamId);
+        void setDependencyStream(int streamId);
+        void setDependencyExclusive(boolean exclusive);
         void setWeight(int weight);
         void setHeaderBlockFragment(byte[] data);
         HeadersFrame build();

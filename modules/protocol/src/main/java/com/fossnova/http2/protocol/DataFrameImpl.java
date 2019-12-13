@@ -42,7 +42,7 @@ final class DataFrameImpl extends AbstractFrameImpl implements DataFrame {
     void writeTo(final ByteBuffer buffer) {
         super.writeTo(buffer);
         final int padLength = getPayloadSize() - data.length;
-        if (padLength > 0) {
+        if ((getFlags() & FLAG_PADDED) != 0) {
             buffer.put((byte) padLength);
         }
         if (data.length != 0) {
@@ -103,6 +103,7 @@ final class DataFrameImpl extends AbstractFrameImpl implements DataFrame {
             ensureThreadSafety();
             ensureNotBuilt();
             // validation
+            validateStreamId(streamId);
             if ((flags & DataFrame.FLAG_PADDED) != 0) {
                 if (payloadSize - data.length >= 255) {
                     throw new IllegalArgumentException();

@@ -95,6 +95,8 @@ abstract class AbstractFrameImpl implements Frame {
             return ContinuationFrameImpl.readFrom(buffer, new ContinuationFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.DATA) {
             return DataFrameImpl.readFrom(buffer, new DataFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+        } else if (frameType == FrameType.HEADERS) {
+            return HeadersFrameImpl.readFrom(buffer, new HeadersFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else {
             throw new UnsupportedOperationException(); // TODO: implement
         }
@@ -182,8 +184,20 @@ abstract class AbstractFrameImpl implements Frame {
             }
         }
 
+        final void ensure8BitsOnlySet(final int value) {
+            if ((value & 0xFF_FF_FF_00) != 0) {
+                throw new IllegalArgumentException();
+            }
+        }
+
         final void ensure24BitsOnlySet(final int value) {
             if ((value & 0xFF_00_00_00) != 0) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        final void ensure31BitsOnlySet(final int value) {
+            if ((value & 0b10000000_00000000_00000000_00000000) != 0) {
                 throw new IllegalArgumentException();
             }
         }

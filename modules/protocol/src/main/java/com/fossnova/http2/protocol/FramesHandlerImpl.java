@@ -63,8 +63,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public HeadersFrame.Builder newHeadersFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new HeadersFrameImpl.Builder(server, !server, validate);
     }
 
     @Override

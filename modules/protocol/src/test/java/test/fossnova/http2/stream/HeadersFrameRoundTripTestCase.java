@@ -23,14 +23,23 @@ import org.fossnova.http2.protocol.HeadersFrame;
 import org.junit.Test;
 
 import static org.fossnova.http2.protocol.HeadersFrame.*;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public class HeadersFrameRoundTripTestCase extends AbstractHttp2TestCase {
     private static final byte[] MSG = "Hello World!".getBytes();
+
+    @Test
+    public void headersFrameWithPaddingExclusive() {
+        writeHeadersFrameWithPaddingExclusive();
+        readHeadersFrameWithPaddingExclusive();
+    }
 
     @Test
     public void headersFrameWithPadding() {
@@ -44,12 +53,37 @@ public class HeadersFrameRoundTripTestCase extends AbstractHttp2TestCase {
         readHeadersFrameWithoutPadding();
     }
 
+    private void writeHeadersFrameWithPaddingExclusive() {
+        HeadersFrame.Builder builder = newHeadersFrameBuilder();
+        builder.setPayloadSize(17);
+        builder.setStreamId(1);
+        builder.setFlags(FLAG_END_STREAM | FLAG_PADDED | FLAG_END_HEADERS | FLAG_PRIORITY);
+        builder.setDependencyExclusive(true);
+        builder.setDependencyStream(2);
+        builder.setWeight(1);
+        builder.setHeaderBlockFragment(MSG);
+        pushFrame(builder.build());
+    }
+
+    private void readHeadersFrameWithPaddingExclusive() {
+        HeadersFrame frame = (HeadersFrame) pullFrame();
+        assertNotNull(frame);
+        assertEquals(frame.getStreamId(), 1);
+        assertEquals(frame.getPayloadSize(), 17);
+        assertEquals(frame.getFlags(), FLAG_END_STREAM | FLAG_PADDED | FLAG_END_HEADERS | FLAG_PRIORITY);
+        assertTrue(frame.isDependencyExclusive());
+        assertEquals(frame.getDependencyStream(), 2);
+        assertEquals(frame.getWeight(), 1);
+        assertArrayEquals(frame.getHeaderBlockFragment(), MSG);
+    }
+
     private void writeHeadersFrameWithPadding() {
         HeadersFrame.Builder builder = newHeadersFrameBuilder();
-        builder.setPayloadSize(15);
+        builder.setPayloadSize(20);
+        builder.setStreamId(1);
         builder.setFlags(FLAG_END_STREAM | FLAG_PADDED | FLAG_END_HEADERS | FLAG_PRIORITY);
-        builder.setPadLength(3);
-        builder.setStreamDependency(2);
+        builder.setDependencyExclusive(false);
+        builder.setDependencyStream(2);
         builder.setWeight(1);
         builder.setHeaderBlockFragment(MSG);
         pushFrame(builder.build());
@@ -58,16 +92,18 @@ public class HeadersFrameRoundTripTestCase extends AbstractHttp2TestCase {
     private void readHeadersFrameWithPadding() {
         HeadersFrame frame = (HeadersFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getPayloadSize(), 15);
+        assertEquals(frame.getStreamId(), 1);
+        assertEquals(frame.getPayloadSize(), 20);
         assertEquals(frame.getFlags(), FLAG_END_STREAM | FLAG_PADDED | FLAG_END_HEADERS | FLAG_PRIORITY);
-        assertEquals(frame.getPadLength(), 3);
-        assertEquals(frame.getStreamDependency(), 2);
+        assertFalse(frame.isDependencyExclusive());
+        assertEquals(frame.getDependencyStream(), 2);
         assertEquals(frame.getWeight(), 1);
-        assertEquals(frame.getHeaderBlockFragment(), MSG);
+        assertArrayEquals(frame.getHeaderBlockFragment(), MSG);
     }
 
     private void writeHeadersFrameWithoutPadding() {
         HeadersFrame.Builder builder = newHeadersFrameBuilder();
+        builder.setStreamId(1);
         builder.setPayloadSize(12);
         builder.setFlags(FLAG_END_STREAM | FLAG_END_HEADERS);
         builder.setHeaderBlockFragment(MSG);
@@ -77,12 +113,12 @@ public class HeadersFrameRoundTripTestCase extends AbstractHttp2TestCase {
     private void readHeadersFrameWithoutPadding() {
         HeadersFrame frame = (HeadersFrame) pullFrame();
         assertNotNull(frame);
+        assertEquals(frame.getStreamId(), 1);
         assertEquals(frame.getPayloadSize(), 12);
         assertEquals(frame.getFlags(), FLAG_END_STREAM | FLAG_END_HEADERS);
-        assertEquals(frame.getPadLength(), 0);
-        assertEquals(frame.getStreamDependency(), -1);
-        assertEquals(frame.getWeight(), -1);
-        assertEquals(frame.getHeaderBlockFragment(), MSG);
+        assertEquals(frame.getDependencyStream(), 0);
+        assertEquals(frame.getWeight(), 0);
+        assertArrayEquals(frame.getHeaderBlockFragment(), MSG);
     }
 
 }
