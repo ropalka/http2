@@ -27,12 +27,10 @@ public interface PushPromiseFrame extends Frame {
     byte FLAG_END_HEADERS = 0x4;
     byte FLAG_PADDED = 0x8;
 
-    int getPadLength();
     int getPromisedStreamId();
     byte[] getHeaderBlockFragment();
 
     interface Builder extends Frame.Builder {
-        void setPadLength(int padLength);
         void setPromisedStreamId(int streamId);
         void setHeaderBlockFragment(byte[] data);
         PushPromiseFrame build();

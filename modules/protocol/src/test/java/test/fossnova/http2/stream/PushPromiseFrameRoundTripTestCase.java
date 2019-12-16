@@ -23,6 +23,7 @@ import org.fossnova.http2.protocol.PushPromiseFrame;
 import org.junit.Test;
 
 import static org.fossnova.http2.protocol.PushPromiseFrame.*;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -48,8 +49,7 @@ public class PushPromiseFrameRoundTripTestCase extends AbstractHttp2TestCase {
         PushPromiseFrame.Builder builder = newPushPromiseFrameBuilder();
         builder.setPayloadSize(15);
         builder.setFlags(FLAG_PADDED | FLAG_END_HEADERS);
-        builder.setPadLength(3);
-        builder.setPromisedStreamId(2);
+        builder.setPromisedStreamId(3);
         builder.setHeaderBlockFragment(MSG);
         pushFrame(builder.build());
     }
@@ -59,16 +59,15 @@ public class PushPromiseFrameRoundTripTestCase extends AbstractHttp2TestCase {
         assertNotNull(frame);
         assertEquals(frame.getPayloadSize(), 15);
         assertEquals(frame.getFlags(), FLAG_PADDED | FLAG_END_HEADERS);
-        assertEquals(frame.getPadLength(), 3);
-        assertEquals(frame.getPromisedStreamId(), 2);
-        assertEquals(frame.getHeaderBlockFragment(), MSG);
+        assertEquals(frame.getPromisedStreamId(), 3);
+        assertArrayEquals(frame.getHeaderBlockFragment(), MSG);
     }
 
     private void writePushPromiseFrameWithoutPadding() {
         PushPromiseFrame.Builder builder = newPushPromiseFrameBuilder();
         builder.setPayloadSize(12);
         builder.setFlags(FLAG_END_HEADERS);
-        builder.setPromisedStreamId(2);
+        builder.setPromisedStreamId(1);
         builder.setHeaderBlockFragment(MSG);
         pushFrame(builder.build());
     }
@@ -78,9 +77,8 @@ public class PushPromiseFrameRoundTripTestCase extends AbstractHttp2TestCase {
         assertNotNull(frame);
         assertEquals(frame.getPayloadSize(), 12);
         assertEquals(frame.getFlags(), FLAG_END_HEADERS);
-        assertEquals(frame.getPadLength(), 0);
-        assertEquals(frame.getPromisedStreamId(), 2);
-        assertEquals(frame.getHeaderBlockFragment(), MSG);
+        assertEquals(frame.getPromisedStreamId(), 1);
+        assertArrayEquals(frame.getHeaderBlockFragment(), MSG);
     }
 
 }

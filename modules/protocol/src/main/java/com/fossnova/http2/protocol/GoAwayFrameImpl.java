@@ -117,6 +117,7 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
             ensureNotBuilt();
             // validations
             if (validate) {
+                ensure31BitsOnlySet(streamId);
                 if (server) {
                     if (request) {
                         ensureServerStreamId(lastStreamId);

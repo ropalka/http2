@@ -186,26 +186,26 @@ final class HeadersFrameImpl extends AbstractFrameImpl implements HeadersFrame {
             // validation
             validateStreamId(streamId);
             if ((flags & FLAG_PRIORITY) == 0 && (exclusive || streamWeight > 0 || dependencyStreamId > 0)) {
-                throw new IllegalArgumentException();
+                throw new IllegalStateException();
             }
             if ((flags & FLAG_PADDED) != 0) {
                 if ((flags & FLAG_PRIORITY) != 0) {
                     if (payloadSize < data.length + 5 || payloadSize - data.length - 5 >= 255) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalStateException();
                     }
                 } else {
                     if (payloadSize < data.length || payloadSize - data.length >= 255) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalStateException();
                     }
                 }
             } else {
                 if ((flags & FLAG_PRIORITY) != 0) {
                     if (payloadSize != (data.length + 5)) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalStateException();
                     }
                 } else {
                     if (payloadSize != data.length) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalStateException();
                     }
                 }
             }

@@ -78,8 +78,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public PushPromiseFrame.Builder newPushPromiseFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new PushPromiseFrameImpl.Builder(server, !server, validate);
     }
 
     @Override
