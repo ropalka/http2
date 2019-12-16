@@ -97,6 +97,8 @@ abstract class AbstractFrameImpl implements Frame {
             return DataFrameImpl.readFrom(buffer, new DataFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.HEADERS) {
             return HeadersFrameImpl.readFrom(buffer, new HeadersFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+        } else if (frameType == FrameType.PING) {
+            return PingFrameImpl.readFrom(buffer, new PingFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else {
             throw new UnsupportedOperationException(); // TODO: implement
         }

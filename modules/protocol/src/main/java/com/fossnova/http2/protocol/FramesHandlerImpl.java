@@ -68,8 +68,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public PingFrame.Builder newPingFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new PingFrameImpl.Builder(server, !server, validate);
     }
 
     @Override
