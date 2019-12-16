@@ -85,8 +85,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public RstStreamFrame.Builder newRstStreamFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new RstStreamFrameImpl.Builder(server, !server, validate);
     }
 
     @Override

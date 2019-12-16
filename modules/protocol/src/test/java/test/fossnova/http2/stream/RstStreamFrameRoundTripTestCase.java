@@ -19,6 +19,7 @@
  */
 package test.fossnova.http2.stream;
 
+import org.fossnova.http2.protocol.ErrorCode;
 import org.fossnova.http2.protocol.RstStreamFrame;
 import org.junit.Test;
 
@@ -37,15 +38,17 @@ public class RstStreamFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writeRstStreamFrame() {
         RstStreamFrame.Builder builder = newRstStreamFrameBuilder();
+        builder.setStreamId(1);
         builder.setPayloadSize(4);
-        builder.setErrorCode(500);
+        builder.setErrorCode(ErrorCode.INTERNAL_ERROR);
         pushFrame(builder.build());
     }
 
     private void readRstStreamFrame() {
         RstStreamFrame frame = (RstStreamFrame) pullFrame();
         assertNotNull(frame);
+        assertEquals(frame.getStreamId(), 1);
         assertEquals(frame.getPayloadSize(), 4);
-        assertEquals(frame.getErrorCode(), 500);
+        assertEquals(frame.getErrorCode(), ErrorCode.INTERNAL_ERROR);
     }
 }
