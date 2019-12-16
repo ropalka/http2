@@ -99,6 +99,8 @@ abstract class AbstractFrameImpl implements Frame {
             return HeadersFrameImpl.readFrom(buffer, new HeadersFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.PING) {
             return PingFrameImpl.readFrom(buffer, new PingFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+        } else if (frameType == FrameType.WINDOW_UPDATE) {
+            return WindowUpdateFrameImpl.readFrom(buffer, new WindowUpdateFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else {
             throw new UnsupportedOperationException(); // TODO: implement
         }
@@ -154,6 +156,7 @@ abstract class AbstractFrameImpl implements Frame {
             ensureThreadSafety();
             // validations
             if (validate) {
+                ensure31BitsOnlySet(streamId);
                 validateStreamId(streamId);
             }
             // implementation

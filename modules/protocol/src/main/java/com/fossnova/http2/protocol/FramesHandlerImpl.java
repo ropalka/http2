@@ -97,7 +97,6 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public WindowUpdateFrame.Builder newWindowUpdateFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new WindowUpdateFrameImpl.Builder(server, !server, validate);
     }
 }
