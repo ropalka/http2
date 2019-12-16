@@ -73,8 +73,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public PriorityFrame.Builder newPriorityFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new PriorityFrameImpl.Builder(server, !server, validate);
     }
 
     @Override

@@ -24,6 +24,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
@@ -37,8 +38,10 @@ public class PriorityFrameRoundTripTestCase extends AbstractHttp2TestCase {
 
     private void writePriorityFrame() {
         PriorityFrame.Builder builder = newPriorityFrameBuilder();
-        builder.setPayloadSize(6);
-        builder.setStreamDependency(2);
+        builder.setStreamId(1);
+        builder.setPayloadSize(5);
+        builder.setDependencyExclusive(true);
+        builder.setDependencyStream(2);
         builder.setWeight(1);
         pushFrame(builder.build());
     }
@@ -46,8 +49,10 @@ public class PriorityFrameRoundTripTestCase extends AbstractHttp2TestCase {
     private void readPriorityFrame() {
         PriorityFrame frame = (PriorityFrame) pullFrame();
         assertNotNull(frame);
-        assertEquals(frame.getPayloadSize(), 6);
-        assertEquals(frame.getStreamDependency(), 2);
+        assertEquals(frame.getStreamId(), 1);
+        assertEquals(frame.getPayloadSize(), 5);
+        assertTrue(frame.isDependencyExclusive());
+        assertEquals(frame.getDependencyStream(), 2);
         assertEquals(frame.getWeight(), 1);
     }
 }

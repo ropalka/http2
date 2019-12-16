@@ -24,11 +24,13 @@ package org.fossnova.http2.protocol;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public interface PriorityFrame extends Frame {
-    int getStreamDependency();
+    boolean isDependencyExclusive();
+    int getDependencyStream();
     int getWeight();
 
     interface Builder extends Frame.Builder {
-        void setStreamDependency(int streamId);
+        void setDependencyStream(int streamId);
+        void setDependencyExclusive(boolean exclusive);
         void setWeight(int weight);
         PriorityFrame build();
     }
