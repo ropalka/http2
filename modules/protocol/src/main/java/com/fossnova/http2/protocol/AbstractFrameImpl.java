@@ -77,7 +77,7 @@ abstract class AbstractFrameImpl implements Frame {
 
     static AbstractFrameImpl readFrom(final ByteBuffer buffer, final boolean server, final boolean validate) {
         if (buffer.capacity() < FRAME_HEADER_SIZE) {
-            throw new IllegalArgumentException();
+            throw new IllegalStateException();
         }
         int payloadSize = 0x00_FF_00_00 & buffer.get() << 16;
         payloadSize |= 0x00_00_FF_00 & buffer.get() << 8;
@@ -88,6 +88,10 @@ abstract class AbstractFrameImpl implements Frame {
         streamId |= 0x00_FF_00_00 & buffer.get() << 16;
         streamId |= 0x00_00_FF_00 & buffer.get() << 8;
         streamId |= 0x00_00_00_FF & buffer.get();
+
+        if (buffer.capacity() < payloadSize) {
+            throw new IllegalStateException();
+        }
 
         if (frameType == FrameType.GOAWAY) {
             return GoAwayFrameImpl.readFrom(buffer, new GoAwayFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
@@ -110,7 +114,8 @@ abstract class AbstractFrameImpl implements Frame {
         } else if (frameType == FrameType.SETTINGS) {
             return SettingsFrameImpl.readFrom(buffer, new SettingsFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else {
-            throw new UnsupportedOperationException(); // TODO: implement
+            buffer.position(payloadSize);
+            return null; // TODO: we return null for unknown frame types, shouldn't we process next frame instead?
         }
     }
 
