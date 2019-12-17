@@ -88,8 +88,7 @@ public final class FramesHandlerImpl extends FramesHandler {
 
     @Override
     public SettingsFrame.Builder newSettingsFrameBuilder() {
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return new SettingsFrameImpl.Builder(server, !server, validate);
     }
 
     @Override

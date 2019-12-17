@@ -107,6 +107,8 @@ abstract class AbstractFrameImpl implements Frame {
             return RstStreamFrameImpl.readFrom(buffer, new RstStreamFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.WINDOW_UPDATE) {
             return WindowUpdateFrameImpl.readFrom(buffer, new WindowUpdateFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+        } else if (frameType == FrameType.SETTINGS) {
+            return SettingsFrameImpl.readFrom(buffer, new SettingsFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else {
             throw new UnsupportedOperationException(); // TODO: implement
         }

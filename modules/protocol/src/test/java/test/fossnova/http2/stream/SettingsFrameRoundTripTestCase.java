@@ -79,5 +79,4 @@ public class SettingsFrameRoundTripTestCase extends AbstractHttp2TestCase {
         assertEquals(frame.getPayloadSize(), 0);
         assertEquals(frame.getFlags(), SettingsFrame.FLAG_ACK);
     }
-
 }

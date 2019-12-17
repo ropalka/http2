@@ -40,7 +40,7 @@ public interface SettingsFrame extends Frame {
     int DEFAULT_MAX_CONCURRENT_STREAMS = 100;
     int DEFAULT_INITIAL_WINDOW_SIZE = 1 << 16 - 1;
     int DEFAULT_MAX_FRAME_SIZE = 1 << 14;
-    int DEFAULT_MAX_HEADER_LIST_SIZE = -1;
+    int DEFAULT_MAX_HEADER_LIST_SIZE = 1 << 12;
 
     // other useful parameter values
     int PUSH_ENABLED = 1;
