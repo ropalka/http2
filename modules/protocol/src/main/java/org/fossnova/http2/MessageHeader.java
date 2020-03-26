@@ -19,6 +19,8 @@
  */
 package org.fossnova.http2;
 
+import static org.fossnova.http2.Utils.validateToken;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -50,42 +52,12 @@ public final class MessageHeader {
      *
      * @param name header name
      * @return message header instance
-     * @throws IllegalArgumentException if message header doesn't match HTTP's spec. <code>token</code> definition
+     * @throws IllegalArgumentException if message header name doesn't match HTTP's spec. <code>token</code> definition
      */
     public static MessageHeader of(final String name) {
         validateToken(name);
         MessageHeader retVal = KNOWN_HEADERS.get(name.toLowerCase());
         return retVal != null ? retVal : new MessageHeader(name);
-    }
-
-    private static final char[] TOKEN_EXTRAS = new char[] {
-            '!', '#', '$', '%', '&', '\'', '*', '+', '-', '.', '^', '_', '`', '|', '~'
-    };
-
-    private static void validateToken(final String token) {
-        if (token == null || token.length() == 0) throw new IllegalArgumentException();
-        for (int i = 0; i < token.length(); i++) {
-            if (!isTokenChar(token.charAt(i))) {
-                throw new IllegalArgumentException();
-            }
-        }
-    }
-
-    private static boolean isAlphaChar(final char c) {
-        return 'a' <= c && c <= 'z' || 'A' <= c && c <= 'Z';
-    }
-
-    private static boolean isDigitChar(final char c) {
-        return '0' <= c && c <= '9';
-    }
-
-    private static boolean isTokenChar(final char c) {
-        if (isAlphaChar(c)) return true;
-        if (isDigitChar(c)) return true;
-        for (int i = 0; i < TOKEN_EXTRAS.length; i++) {
-            if (TOKEN_EXTRAS[i] == c) return true;
-        }
-        return false;
     }
 
 }

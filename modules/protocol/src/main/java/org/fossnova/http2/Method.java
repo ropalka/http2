@@ -22,6 +22,8 @@ package org.fossnova.http2;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.fossnova.http2.Utils.validateToken;
+
 /**
  * HTTP request methods.
  *
@@ -40,10 +42,17 @@ public final class Method {
     public static final Method OPTIONS = new Method("OPTIONS", true);
     public static final Method TRACE = new Method("TRACE", true);
 
-    public static final Method of(final String method) {
-        if (method == null || method.length() == 0) throw new IllegalArgumentException();
-        Method retVal = KNOWN_METHODS.get(method.toUpperCase());
-        return retVal != null ? retVal : new Method(method, false);
+    /**
+     * Creates specified request method.
+     *
+     * @param name method name
+     * @return request method instance
+     * @throws IllegalArgumentException if request method name doesn't match HTTP's spec. <code>token</code> definition
+     */
+    public static final Method of(final String name) {
+        validateToken(name);
+        Method retVal = KNOWN_METHODS.get(name.toUpperCase());
+        return retVal != null ? retVal : new Method(name, false);
     }
 
     private Method(final String method, final boolean register) {
