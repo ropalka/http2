@@ -401,6 +401,130 @@ public final class MessageHeader {
      * <code>Negotiate</code> message header, see <code>RFC4229</code>.
      */
     public static final MessageHeader NEGOTIATE = new MessageHeader("Negotiate");
+    /**
+     * <code>OData-EntityId</code> message header, see <code>OData Version 4.01</code>.
+     */
+    public static final MessageHeader ODATA_ENTITY_ID = new MessageHeader("OData-EntityId");
+    /**
+     * <code>OData-Isolation</code> message header, see <code>OData Version 4.01</code>.
+     */
+    public static final MessageHeader ODATA_ISOLATION = new MessageHeader("OData-Isolation");
+    /**
+     * <code>OData-MaxVersion</code> message header, see <code>OData Version 4.01</code>.
+     */
+    public static final MessageHeader ODATA_MAX_VERSION = new MessageHeader("OData-MaxVersion");
+    /**
+     * <code>OData-Version</code> message header, see <code>OData Version 4.01</code>.
+     */
+    public static final MessageHeader ODATA_VERSION = new MessageHeader("OData-Version");
+    /**
+     * <code>Opt</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader OPT = new MessageHeader("Opt");
+    /**
+     * <code>Optional-WWW-Authenticate</code> message header, see <code>RFC8053</code>.
+     */
+    public static final MessageHeader OPTIONAL_WWW_AUTHENTICATE = new MessageHeader("Optional-WWW-Authenticate");
+    /**
+     * <code>Ordering-Type</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader ORDERING_TYPE = new MessageHeader("Ordering-Type");
+    /**
+     * <code>Origin</code> message header, see <code>RFC6454</code>.
+     */
+    public static final MessageHeader ORIGIN = new MessageHeader("Origin");
+    /**
+     * <code>OSCORE</code> message header, see <code>RFC8613</code>.
+     */
+    public static final MessageHeader OSCORE = new MessageHeader("OSCORE");
+    /**
+     * <code>Overwrite</code> message header, see <code>RFC4918</code>.
+     */
+    public static final MessageHeader OVERWRITE = new MessageHeader("Overwrite");
+    /**
+     * <code>P3P</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader P3P = new MessageHeader("P3P");
+    /**
+     * <code>PEP</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PEP = new MessageHeader("PEP");
+    /**
+     * <code>PICS-Label</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PICS_LABEL = new MessageHeader("PICS-Label");
+    /**
+     * <code>Pep-Info</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PEP_INFO = new MessageHeader("Pep-Info");
+    /**
+     * <code>Position</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader POSITION = new MessageHeader("Position");
+    /**
+     * <code>Pragma</code> message header, see <code>RFC7234</code>.
+     */
+    public static final MessageHeader PRAGMA = new MessageHeader("Pragma");
+    /**
+     * <code>Prefer</code> message header, see <code>RFC7240</code>.
+     */
+    public static final MessageHeader PREFER = new MessageHeader("Prefer");
+    /**
+     * <code>Preference-Applied</code> message header, see <code>RFC7240</code>.
+     */
+    public static final MessageHeader PREFERENCE_APPLIED = new MessageHeader("Preference-Applied");
+    /**
+     * <code>ProfileObject</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PROFILE_OBJECT = new MessageHeader("ProfileObject");
+    /**
+     * <code>Protocol</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PROTOCOL = new MessageHeader("Protocol");
+    /**
+     * <code>Protocol-Info</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PROTOCOL_INFO = new MessageHeader("Protocol-Info");
+    /**
+     * <code>Protocol-Query</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PROTOCOL_QUERY = new MessageHeader("Protocol-Query");
+    /**
+     * <code>Protocol-Request</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PROTOCOL_REQUEST = new MessageHeader("Protocol-Request");
+    /**
+     * <code>Proxy-Authenticate</code> message header, see <code>RFC7235</code>.
+     */
+    public static final MessageHeader PROXY_AUTHENTICATE = new MessageHeader("Proxy-Authenticate");
+    /**
+     * <code>Proxy-Authentication-Info</code> message header, see <code>RFC7615</code>.
+     */
+    public static final MessageHeader PROXY_AUTHENTICATION_INFO = new MessageHeader("Proxy-Authentication-Info");
+    /**
+     * <code>Proxy-Authorization</code> message header, see <code>RFC7235</code>.
+     */
+    public static final MessageHeader PROXY_AUTHORIZATION = new MessageHeader("Proxy-Authorization");
+    /**
+     * <code>Proxy-Features</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PROXY_FEATURES = new MessageHeader("Proxy-Features");
+    /**
+     * <code>Proxy-Instruction</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PROXY_INSTRUCTION = new MessageHeader("Proxy-Instruction");
+    /**
+     * <code>Public</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader PUBLIC = new MessageHeader("Public");
+    /**
+     * <code>Public-Key-Pins</code> message header, see <code>RFC7469</code>.
+     */
+    public static final MessageHeader PUBLIC_KEY_PINS = new MessageHeader("Public-Key-Pins");
+    /**
+     * <code>Public-Key-Pins-Report-Only</code> message header, see <code>RFC7469</code>.
+     */
+    public static final MessageHeader PUBLIC_KEY_PINS_REPORT_ONLY = new MessageHeader("Public-Key-Pins-Report-Only");
 
     private static final Map<String, MessageHeader> KNOWN_HEADERS = new HashMap<>();
 
