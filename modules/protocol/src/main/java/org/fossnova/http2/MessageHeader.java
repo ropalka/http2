@@ -629,6 +629,82 @@ public final class MessageHeader {
      * <code>Surrogate-Control</code> message header, see <code>RFC4229</code>.
      */
     public static final MessageHeader SURROGATE_CONTROL = new MessageHeader("Surrogate-Control");
+    /**
+     * <code>TCN</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader TCN = new MessageHeader("TCN");
+    /**
+     * <code>TE</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader TE = new MessageHeader("TE");
+    /**
+     * <code>Timeout</code> message header, see <code>RFC4918</code>.
+     */
+    public static final MessageHeader TIMEOUT = new MessageHeader("Timeout");
+    /**
+     * <code>Topic</code> message header, see <code>RFC8030</code>.
+     */
+    public static final MessageHeader TOPIC = new MessageHeader("Topic");
+    /**
+     * <code>Trailer</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader TRAILER = new MessageHeader("Trailer");
+    /**
+     * <code>Transfer-Encoding</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader TRANSFER_ENCODING = new MessageHeader("Transfer-Encoding");
+    /**
+     * <code>TTL</code> message header, see <code>RFC8030</code>.
+     */
+    public static final MessageHeader TTL = new MessageHeader("TTL");
+    /**
+     * <code>Urgency</code> message header, see <code>RFC8030</code>.
+     */
+    public static final MessageHeader URGENCY = new MessageHeader("Urgency");
+    /**
+     * <code>URI</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader URI = new MessageHeader("URI");
+    /**
+     * <code>Upgrade</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader UPGRADE = new MessageHeader("Upgrade");
+    /**
+     * <code>User-Agent</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader USER_AGENT = new MessageHeader("User-Agent");
+    /**
+     * <code>Variant-Vary</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader VARIANT_VARY = new MessageHeader("Variant-Vary");
+    /**
+     * <code>Vary</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader VARY = new MessageHeader("Vary");
+    /**
+     * <code>Via</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader VIA = new MessageHeader("Via");
+    /**
+     * <code>WWW-Authenticate</code> message header, see <code>RFC7235</code>.
+     */
+    public static final MessageHeader WWW_AUTHENTICATE = new MessageHeader("WWW-Authenticate");
+    /**
+     * <code>Want-Digest</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader WANT_DIGEST = new MessageHeader("Want-Digest");
+    /**
+     * <code>Warning</code> message header, see <code>RFC7234</code>.
+     */
+    public static final MessageHeader WARNING = new MessageHeader("Warning");
+    /**
+     * <code>X-Content-Type-Options</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader X_CONTENT_TYPE_OPTIONS = new MessageHeader("X-Content-Type-Options");
+    /**
+     * <code>X-Frame-Options</code> message header, see <code>RFC7034</code>.
+     */
+    public static final MessageHeader X_FRAME_OPTIONS = new MessageHeader("X-Frame-Options");
 
     private static final Map<String, MessageHeader> KNOWN_HEADERS = new HashMap<>();
 
