@@ -317,6 +317,90 @@ public final class MessageHeader {
      * <code>HTTP2-Settings</code> message header, see <code>RFC7540</code>.
      */
     public static final MessageHeader HTTP2_SETTINGS = new MessageHeader("HTTP2-Settings");
+    /**
+     * <code>IM</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader IM = new MessageHeader("IM");
+    /**
+     * <code>If</code> message header, see <code>RFC4918</code>.
+     */
+    public static final MessageHeader IF = new MessageHeader("If");
+    /**
+     * <code>If-Match</code> message header, see <code>RFC7232</code>.
+     */
+    public static final MessageHeader IF_MATCH = new MessageHeader("If-Match");
+    /**
+     * <code>If-Modified-Since</code> message header, see <code>RFC7232</code>.
+     */
+    public static final MessageHeader IF_MODIFIED_SINCE = new MessageHeader("If-Modified-Since");
+    /**
+     * <code>If-None-Match</code> message header, see <code>RFC7232</code>.
+     */
+    public static final MessageHeader IF_NONE_MATCH = new MessageHeader("If-None-Match");
+    /**
+     * <code>If-Range</code> message header, see <code>RFC7233</code>.
+     */
+    public static final MessageHeader IF_RANGE = new MessageHeader("If-Range");
+    /**
+     * <code>If-Schedule-Tag-Match</code> message header, see <code>RFC6638</code>.
+     */
+    public static final MessageHeader IF_SCHEDULE_TAG_MATCH = new MessageHeader("If-Schedule-Tag-Match");
+    /**
+     * <code>If-Unmodified-Since</code> message header, see <code>RFC7232</code>.
+     */
+    public static final MessageHeader IF_UNMODIFIED_SINCE = new MessageHeader("If-Unmodified-Since");
+    /**
+     * <code>Include-Referred-Token-Binding-ID</code> message header, see <code>RFC8473</code>.
+     */
+    public static final MessageHeader INCLUDE_REFERRED_TOKEN_BINDING_ID = new MessageHeader("Include-Referred-Token-Binding-ID");
+    /**
+     * <code>Keep-Alive</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader KEEP_ALIVE = new MessageHeader("Keep-Alive");
+    /**
+     * <code>Label</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader LABEL = new MessageHeader("Label");
+    /**
+     * <code>Last-Modified</code> message header, see <code>RFC7232</code>.
+     */
+    public static final MessageHeader LAST_MODIFIED = new MessageHeader("Last-Modified");
+    /**
+     * <code>Link</code> message header, see <code>RFC8288</code>.
+     */
+    public static final MessageHeader LINK = new MessageHeader("Link");
+    /**
+     * <code>Location</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader LOCATION = new MessageHeader("Location");
+    /**
+     * <code>Lock-Token</code> message header, see <code>RFC4918</code>.
+     */
+    public static final MessageHeader LOCK_TOKEN = new MessageHeader("Lock-Token");
+    /**
+     * <code>Man</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader MAN = new MessageHeader("Man");
+    /**
+     * <code>Max-Forwards</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader MAX_FORWARDS = new MessageHeader("Max-Forwards");
+    /**
+     * <code>Memento-Datetime</code> message header, see <code>RFC7089</code>.
+     */
+    public static final MessageHeader MEMENTO_DATETIME = new MessageHeader("Memento-Datetime");
+    /**
+     * <code>Meter</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader METER = new MessageHeader("Meter");
+    /**
+     * <code>MIME-Version</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader MIME_VERSION = new MessageHeader("MIME-Version");
+    /**
+     * <code>Negotiate</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader NEGOTIATE = new MessageHeader("Negotiate");
 
     private static final Map<String, MessageHeader> KNOWN_HEADERS = new HashMap<>();
 
