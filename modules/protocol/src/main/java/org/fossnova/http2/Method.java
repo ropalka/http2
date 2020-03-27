@@ -33,14 +33,14 @@ public final class Method {
     private static final Map<String, Method> KNOWN_METHODS = new HashMap<>();
     private final String method;
 
-    public static final Method GET = new Method("GET", true);
-    public static final Method HEAD = new Method("HEAD", true);
-    public static final Method POST = new Method("POST", true);
-    public static final Method PUT = new Method("PUT", true);
-    public static final Method DELETE = new Method("DELETE", true);
-    public static final Method CONNECT = new Method("CONNECT", true);
-    public static final Method OPTIONS = new Method("OPTIONS", true);
-    public static final Method TRACE = new Method("TRACE", true);
+    public static final Method GET = new Method("GET");
+    public static final Method HEAD = new Method("HEAD");
+    public static final Method POST = new Method("POST");
+    public static final Method PUT = new Method("PUT");
+    public static final Method DELETE = new Method("DELETE");
+    public static final Method CONNECT = new Method("CONNECT");
+    public static final Method OPTIONS = new Method("OPTIONS");
+    public static final Method TRACE = new Method("TRACE");
 
     /**
      * Creates specified request method.
@@ -51,8 +51,12 @@ public final class Method {
      */
     public static final Method of(final String name) {
         validateToken(name);
-        Method retVal = KNOWN_METHODS.get(name.toUpperCase());
+        final Method retVal = KNOWN_METHODS.get(name);
         return retVal != null ? retVal : new Method(name, false);
+    }
+
+    private Method(final String method) {
+        this(method, true);
     }
 
     private Method(final String method, final boolean register) {
