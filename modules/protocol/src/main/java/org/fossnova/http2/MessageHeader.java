@@ -229,6 +229,94 @@ public final class MessageHeader {
      * <code>Cookie2</code> message header, see <code>RFC2965</code> and <code>RFC6265</code>.
      */
     public static final MessageHeader COOKIE2 = new MessageHeader("Cookie2");
+    /**
+     * <code>DASL</code> message header, see <code>RFC5323</code>.
+     */
+    public static final MessageHeader DASL = new MessageHeader("DASL");
+    /**
+     * <code>DAV</code> message header, see <code>RFC4918</code>.
+     */
+    public static final MessageHeader DAV = new MessageHeader("DAV");
+    /**
+     * <code>Date</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader DATE = new MessageHeader("Date");
+    /**
+     * <code>Default-Style</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader DEFAULT_STYLE = new MessageHeader("Default-Style");
+    /**
+     * <code>Delta-Base</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader DELTA_BASE = new MessageHeader("Delta-Base");
+    /**
+     * <code>Depth</code> message header, see <code>RFC4918</code>.
+     */
+    public static final MessageHeader DEPTH = new MessageHeader("Depth");
+    /**
+     * <code>Derived-From</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader DERIVED_FROM = new MessageHeader("Derived-From");
+    /**
+     * <code>Destination</code> message header, see <code>RFC4918</code>.
+     */
+    public static final MessageHeader DESTINATION = new MessageHeader("Destination");
+    /**
+     * <code>Differential-ID</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader DIFFERENTIAL_ID = new MessageHeader("Differential-ID");
+    /**
+     * <code>Digest</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader DIGEST = new MessageHeader("Digest");
+    /**
+     * <code>Early-Data</code> message header, see <code>RFC8470</code>.
+     */
+    public static final MessageHeader EARLY_DATA = new MessageHeader("Early-Data");
+    /**
+     * <code>ETag</code> message header, see <code>RFC7232</code>.
+     */
+    public static final MessageHeader ETAG = new MessageHeader("ETag");
+    /**
+     * <code>Expect</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader EXPECT = new MessageHeader("Expect");
+    /**
+     * <code>Expect-CT</code> message header, see <code>RFC-ietf-httpbis-expect-ct-08</code>.
+     */
+    public static final MessageHeader EXPECT_CT = new MessageHeader("Expect-CT");
+    /**
+     * <code>Expires</code> message header, see <code>RFC7234</code>.
+     */
+    public static final MessageHeader EXPIRES = new MessageHeader("Expires");
+    /**
+     * <code>Ext</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader EXT = new MessageHeader("Ext");
+    /**
+     * <code>Forwarded</code> message header, see <code>RFC7239</code>.
+     */
+    public static final MessageHeader FORWARDED = new MessageHeader("Forwarded");
+    /**
+     * <code>From</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader FROM = new MessageHeader("From");
+    /**
+     * <code>GetProfile</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader GET_PROFILE = new MessageHeader("GetProfile");
+    /**
+     * <code>Hobareg</code> message header, see <code>RFC7486</code>.
+     */
+    public static final MessageHeader HOBAREG = new MessageHeader("Hobareg");
+    /**
+     * <code>Host</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader HOST = new MessageHeader("Host");
+    /**
+     * <code>HTTP2-Settings</code> message header, see <code>RFC7540</code>.
+     */
+    public static final MessageHeader HTTP2_SETTINGS = new MessageHeader("HTTP2-Settings");
 
     private static final Map<String, MessageHeader> KNOWN_HEADERS = new HashMap<>();
 
