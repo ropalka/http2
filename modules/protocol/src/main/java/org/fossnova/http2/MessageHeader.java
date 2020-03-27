@@ -37,9 +37,15 @@ public final class MessageHeader {
 
     private final String name;
 
-    MessageHeader(final String name) {
+    private MessageHeader(final String name) {
+        this(name, true);
+    }
+
+    private MessageHeader(final String name, final boolean register) {
         this.name = name;
-        KNOWN_HEADERS.put(name.toLowerCase(Locale.US), this);
+        if (register) {
+            KNOWN_HEADERS.put(name.toLowerCase(Locale.US), this);
+        }
     }
 
     @Override
@@ -56,8 +62,8 @@ public final class MessageHeader {
      */
     public static MessageHeader of(final String name) {
         validateToken(name);
-        MessageHeader retVal = KNOWN_HEADERS.get(name.toLowerCase());
-        return retVal != null ? retVal : new MessageHeader(name);
+        MessageHeader retVal = KNOWN_HEADERS.get(name.toLowerCase(Locale.US));
+        return retVal != null ? retVal : new MessageHeader(name, false);
     }
 
 }
