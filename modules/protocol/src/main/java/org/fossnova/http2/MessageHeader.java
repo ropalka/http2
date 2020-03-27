@@ -33,6 +33,91 @@ import java.util.Map;
  */
 public final class MessageHeader {
 
+    /**
+     * <code>A-IM</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader A_IM = new MessageHeader("A-IM");
+    /**
+     * <code>Accept</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader ACCEPT = new MessageHeader("Accept");
+    /**
+     * <code>Accept-Additions</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader ACCEPT_ADDITIONS = new MessageHeader("Accept-Additions");
+    /**
+     * <code>Accept-Charset</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader ACCEPT_CHARSET = new MessageHeader("Accept-Charset");
+    /**
+     * <code>Accept-Datetime</code> message header, see <code>RFC7089</code>.
+     */
+    public static final MessageHeader ACCEPT_DATETIME = new MessageHeader("Accept-Datetime");
+    /**
+     * <code>Accept-Encoding</code> message header, see <code>RFC7231</code> and <code>RFC7694</code>.
+     */
+    public static final MessageHeader ACCEPT_ENCODING = new MessageHeader("Accept-Encoding");
+    /**
+     * <code>Accept-Features</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader ACCEPT_FEATURES = new MessageHeader("Accept-Features");
+    /**
+     * <code>Accept-Language</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader ACCEPT_LANGUAGE = new MessageHeader("Accept-Language");
+    /**
+     * <code>Accept-Patch</code> message header, see <code>RFC5789</code>.
+     */
+    public static final MessageHeader ACCEPT_PATCH = new MessageHeader("Accept-Patch");
+    /**
+     * <code>Accept-Post</code> message header, see <code>https://www.w3.org/TR/ldp/</code>.
+     */
+    public static final MessageHeader ACCEPT_POST = new MessageHeader("Accept-Post");
+    /**
+     * <code>Accept-Ranges</code> message header, see <code>RFC7233</code>.
+     */
+    public static final MessageHeader ACCEPT_RANGES = new MessageHeader("Accept-Ranges");
+    /**
+     * <code>Age</code> message header, see <code>RFC7234</code>.
+     */
+    public static final MessageHeader AGE = new MessageHeader("Age");
+    /**
+     * <code>Allow</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader ALLOW = new MessageHeader("Allow");
+    /**
+     * <code>ALPN</code> message header, see <code>RFC7639</code>.
+     */
+    public static final MessageHeader ALPN = new MessageHeader("ALPN");
+    /**
+     * <code>Alt-Svc</code> message header, see <code>RFC7838</code>.
+     */
+    public static final MessageHeader ALT_SVC = new MessageHeader("Alt-Svc");
+    /**
+     * <code>Alt-Used</code> message header, see <code>RFC7838</code>.
+     */
+    public static final MessageHeader ALT_USED = new MessageHeader("Alt-Used");
+    /**
+     * <code>Alternates</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader ALTERNATES = new MessageHeader("Alternates");
+    /**
+     * <code>Apply-To-Redirect-Ref</code> message header, see <code>RFC4437</code>.
+     */
+    public static final MessageHeader APPLY_TO_REDIRECT_REF = new MessageHeader("Apply-To-Redirect-Ref");
+    /**
+     * <code>Authentication-Control</code> message header, see <code>RFC8053</code>.
+     */
+    public static final MessageHeader AUTHENTICATION_CONTROL = new MessageHeader("Authentication-Control");
+    /**
+     * <code>Authentication-Info</code> message header, see <code>RFC7615</code>.
+     */
+    public static final MessageHeader AUTHENTICATION_INFO = new MessageHeader("Authentication-Info");
+    /**
+     * <code>Authorization</code> message header, see <code>RFC7235</code>.
+     */
+    public static final MessageHeader AUTHORIZATION = new MessageHeader("Authorization");
+
     private static final Map<String, MessageHeader> KNOWN_HEADERS = new HashMap<>();
 
     private final String name;
