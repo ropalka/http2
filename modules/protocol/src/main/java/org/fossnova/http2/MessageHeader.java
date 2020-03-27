@@ -117,6 +117,118 @@ public final class MessageHeader {
      * <code>Authorization</code> message header, see <code>RFC7235</code>.
      */
     public static final MessageHeader AUTHORIZATION = new MessageHeader("Authorization");
+    /**
+     * <code>C-Ext</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader C_EXT = new MessageHeader("C-Ext");
+    /**
+     * <code>C-Man</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader C_MAN = new MessageHeader("C-Man");
+    /**
+     * <code>C-Opt</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader C_OPT = new MessageHeader("C-Opt");
+    /**
+     * <code>C-PEP</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader C_PEP = new MessageHeader("C-PEP");
+    /**
+     * <code>C-PEP-Info</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader C_PEP_INFO = new MessageHeader("C-PEP-Info");
+    /**
+     * <code>Cache-Control</code> message header, see <code>RFC7234</code>.
+     */
+    public static final MessageHeader CACHE_CONTROL = new MessageHeader("Cache-Control");
+    /**
+     * <code>Cal-Managed-ID</code> message header, see <code>RFC8607</code>.
+     */
+    public static final MessageHeader CAL_MANAGED_ID = new MessageHeader("Cal-Managed-ID");
+    /**
+     * <code>CalDAV-Timezones</code> message header, see <code>RFC7809</code>.
+     */
+    public static final MessageHeader CALDAV_TIMEZONES = new MessageHeader("CalDAV-Timezones");
+    /**
+     * <code>CDN-Loop</code> message header, see <code>RFC8586</code>.
+     */
+    public static final MessageHeader CDN_LOOP = new MessageHeader("CDN-Loop");
+    /**
+     * <code>Cert-Not-After</code> message header, see <code>RFC8739</code>.
+     */
+    public static final MessageHeader CERT_NOT_AFTER = new MessageHeader("Cert-Not-After");
+    /**
+     * <code>Cert-Not-Before</code> message header, see <code>RFC8739</code>.
+     */
+    public static final MessageHeader CERT_NOT_BEFORE = new MessageHeader("Cert-Not-Before");
+    /**
+     * <code>Close</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader CLOSE = new MessageHeader("Close");
+    /**
+     * <code>Connection</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader CONNECTION = new MessageHeader("Connection");
+    /**
+     * <code>Content-Base</code> message header, see <code>RFC2068</code> and <code>RFC2616</code>.
+     */
+    public static final MessageHeader CONTENT_BASE = new MessageHeader("Content-Base");
+    /**
+     * <code>Content-Disposition</code> message header, see <code>RFC6266</code>.
+     */
+    public static final MessageHeader CONTENT_DISPOSITION = new MessageHeader("Content-Disposition");
+    /**
+     * <code>Content-Encoding</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader CONTENT_ENCODING = new MessageHeader("Content-Encoding");
+    /**
+     * <code>Content-ID</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader CONTENT_ID = new MessageHeader("Content-ID");
+    /**
+     * <code>Content-Language</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader CONTENT_LANGUAGE = new MessageHeader("Content-Language");
+    /**
+     * <code>Content-Length</code> message header, see <code>RFC7230</code>.
+     */
+    public static final MessageHeader CONTENT_LENGTH = new MessageHeader("Content-Length");
+    /**
+     * <code>Content-Location</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader CONTENT_LOCATION = new MessageHeader("Content-Location");
+    /**
+     * <code>Content-MD5</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader CONTENT_MD5 = new MessageHeader("Content-MD5");
+    /**
+     * <code>Content-Range</code> message header, see <code>RFC7233</code>.
+     */
+    public static final MessageHeader CONTENT_RANGE = new MessageHeader("Content-Range");
+    /**
+     * <code>Content-Script-Type</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader CONTENT_SCRIPT_TYPE = new MessageHeader("Content-Script-Type");
+    /**
+     * <code>Content-Style-Type</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader CONTENT_STYLE_TYPE = new MessageHeader("Content-Style-Type");
+    /**
+     * <code>Content-Type</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader CONTENT_TYPE = new MessageHeader("Content-Type");
+    /**
+     * <code>Content-Version</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader CONTENT_VERSION = new MessageHeader("Content-Version");
+    /**
+     * <code>Cookie</code> message header, see <code>RFC6265</code>.
+     */
+    public static final MessageHeader COOKIE = new MessageHeader("Cookie");
+    /**
+     * <code>Cookie2</code> message header, see <code>RFC2965</code> and <code>RFC6265</code>.
+     */
+    public static final MessageHeader COOKIE2 = new MessageHeader("Cookie2");
 
     private static final Map<String, MessageHeader> KNOWN_HEADERS = new HashMap<>();
 
