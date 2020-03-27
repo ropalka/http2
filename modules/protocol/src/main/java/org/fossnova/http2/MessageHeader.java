@@ -525,6 +525,110 @@ public final class MessageHeader {
      * <code>Public-Key-Pins-Report-Only</code> message header, see <code>RFC7469</code>.
      */
     public static final MessageHeader PUBLIC_KEY_PINS_REPORT_ONLY = new MessageHeader("Public-Key-Pins-Report-Only");
+    /**
+     * <code>Range</code> message header, see <code>RFC7233</code>.
+     */
+    public static final MessageHeader RANGE = new MessageHeader("Range");
+    /**
+     * <code>Redirect-Ref</code> message header, see <code>RFC4437</code>.
+     */
+    public static final MessageHeader REDIRECT_REF = new MessageHeader("Redirect-Ref");
+    /**
+     * <code>Referer</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader REFERER = new MessageHeader("Referer");
+    /**
+     * <code>Replay-Nonce</code> message header, see <code>RFC8555</code>.
+     */
+    public static final MessageHeader REPLAY_NONCE = new MessageHeader("Replay-Nonce");
+    /**
+     * <code>Retry-After</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader RETRY_AFTER = new MessageHeader("Retry-After");
+    /**
+     * <code>Safe</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader SAFE = new MessageHeader("Safe");
+    /**
+     * <code>Schedule-Reply</code> message header, see <code>RFC6638</code>.
+     */
+    public static final MessageHeader SCHEDULE_REPLY = new MessageHeader("Schedule-Reply");
+    /**
+     * <code>Schedule-Tag</code> message header, see <code>RFC6638</code>.
+     */
+    public static final MessageHeader SCHEDULE_TAG = new MessageHeader("Schedule-Tag");
+    /**
+     * <code>Sec-Token-Binding</code> message header, see <code>RFC8473</code>.
+     */
+    public static final MessageHeader SEC_TOKEN_BINDING = new MessageHeader("Sec-Token-Binding");
+    /**
+     * <code>Sec-WebSocket-Accept</code> message header, see <code>RFC6455</code>.
+     */
+    public static final MessageHeader SEC_WEBSOCKET_ACCEPT = new MessageHeader("Sec-WebSocket-Accept");
+    /**
+     * <code>Sec-WebSocket-Extensions</code> message header, see <code>RFC6455</code>.
+     */
+    public static final MessageHeader SEC_WEBSOCKET_EXTENSIONS = new MessageHeader("Sec-WebSocket-Extensions");
+    /**
+     * <code>Sec-WebSocket-Key</code> message header, see <code>RFC6455</code>.
+     */
+    public static final MessageHeader SEC_WEBSOCKET_KEY = new MessageHeader("Sec-WebSocket-Key");
+    /**
+     * <code>Sec-WebSocket-Protocol</code> message header, see <code>RFC6455</code>.
+     */
+    public static final MessageHeader SEC_WEBSOCKET_PROTOCOL = new MessageHeader("Sec-WebSocket-Protocol");
+    /**
+     * <code>Sec-WebSocket-Version</code> message header, see <code>RFC6455</code>.
+     */
+    public static final MessageHeader SEC_WEBSOCKET_VERSION = new MessageHeader("Sec-WebSocket-Version");
+    /**
+     * <code>Security-Scheme</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader SECURITY_SCHEME = new MessageHeader("Security-Scheme");
+    /**
+     * <code>Server</code> message header, see <code>RFC7231</code>.
+     */
+    public static final MessageHeader SERVER = new MessageHeader("Server");
+    /**
+     * <code>Set-Cookie</code> message header, see <code>RFC6265</code>.
+     */
+    public static final MessageHeader SET_COOKIE = new MessageHeader("Set-Cookie");
+    /**
+     * <code>Set-Cookie2</code> message header, see <code>RFC2965</code> and <code>RFC6265</code>.
+     */
+    public static final MessageHeader SET_COOKIE2 = new MessageHeader("Set-Cookie2");
+    /**
+     * <code>SetProfile</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader SET_PROFILE = new MessageHeader("SetProfile");
+    /**
+     * <code>SLUG</code> message header, see <code>RFC5023</code>.
+     */
+    public static final MessageHeader SLUG = new MessageHeader("SLUG");
+    /**
+     * <code>SoapAction</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader SOAP_ACTION = new MessageHeader("SoapAction");
+    /**
+     * <code>Status-URI</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader STATUS_URI = new MessageHeader("Status-URI");
+    /**
+     * <code>Strict-Transport-Security</code> message header, see <code>RFC6797</code>.
+     */
+    public static final MessageHeader STRICT_TRANSPORT_SECURITY = new MessageHeader("Strict-Transport-Security");
+    /**
+     * <code>Sunset</code> message header, see <code>RFC8594</code>.
+     */
+    public static final MessageHeader SUNSET = new MessageHeader("Sunset");
+    /**
+     * <code>Surrogate-Capability</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader SURROGATE_CAPABILITY = new MessageHeader("Surrogate-Capability");
+    /**
+     * <code>Surrogate-Control</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader SURROGATE_CONTROL = new MessageHeader("Surrogate-Control");
 
     private static final Map<String, MessageHeader> KNOWN_HEADERS = new HashMap<>();
 
