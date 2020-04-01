@@ -78,6 +78,38 @@ public final class MessageHeader {
      */
     public static final MessageHeader ACCEPT_RANGES = new MessageHeader("Accept-Ranges");
     /**
+     * <code>Access-Control</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader ACCESS_CONTROL = new MessageHeader("Access-Control");
+    /**
+     * <code>Access-Control-Allow-Credentials</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader ACCESS_CONTROL_ALLOW_CREDENTIALS = new MessageHeader("Access-Control-Allow-Credentials");
+    /**
+     * <code>Access-Control-Allow-Headers</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader ACCESS_CONTROL_ALLOW_HEADERS = new MessageHeader("Access-Control-Allow-Headers");
+    /**
+     * <code>Access-Control-Allow-Methods</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader ACCESS_CONTROL_ALLOW_METHODS = new MessageHeader("Access-Control-Allow-Methods");
+    /**
+     * <code>Access-Control-Allow-Origin</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader ACCESS_CONTROL_ALLOW_ORIGIN = new MessageHeader("Access-Control-Allow-Origin");
+    /**
+     * <code>Access-Control-Max-Age</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader ACCESS_CONTROL_MAX_AGE = new MessageHeader("Access-Control-Max-Age");
+    /**
+     * <code>Access-Control-Request-Method</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader ACCESS_CONTROL_REQUEST_METHOD = new MessageHeader("Access-Control-Request-Method");
+    /**
+     * <code>Access-Control-Request-Headers</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader ACCESS_CONTROL_REQUEST_HEADERS = new MessageHeader("Access-Control-Request-Headers");
+    /**
      * <code>Age</code> message header, see <code>RFC7234</code>.
      */
     public static final MessageHeader AGE = new MessageHeader("Age");
@@ -101,6 +133,10 @@ public final class MessageHeader {
      * <code>Alternates</code> message header, see <code>RFC4229</code>.
      */
     public static final MessageHeader ALTERNATES = new MessageHeader("Alternates");
+    /**
+     * <code>AMP-Cache-Transform</code> message header, see <code>https://github.com/ampproject/amphtml/blob/master/spec/amp-cache-transform.md</code>.
+     */
+    public static final MessageHeader AMP_CACHE_TRANSFORM = new MessageHeader("AMP-Cache-Transform");
     /**
      * <code>Apply-To-Redirect-Ref</code> message header, see <code>RFC4437</code>.
      */
@@ -214,6 +250,10 @@ public final class MessageHeader {
      */
     public static final MessageHeader CONTENT_STYLE_TYPE = new MessageHeader("Content-Style-Type");
     /**
+     * <code>Content-Transfer-Encoding</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader CONTENT_TRANSFER_ENCODING = new MessageHeader("Content-Transfer-Encoding");
+    /**
      * <code>Content-Type</code> message header, see <code>RFC7231</code>.
      */
     public static final MessageHeader CONTENT_TYPE = new MessageHeader("Content-Type");
@@ -222,6 +262,10 @@ public final class MessageHeader {
      */
     public static final MessageHeader CONTENT_VERSION = new MessageHeader("Content-Version");
     /**
+     * <code>Compliance</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader COMPLIANCE = new MessageHeader("Compliance");
+    /**
      * <code>Cookie</code> message header, see <code>RFC6265</code>.
      */
     public static final MessageHeader COOKIE = new MessageHeader("Cookie");
@@ -229,6 +273,10 @@ public final class MessageHeader {
      * <code>Cookie2</code> message header, see <code>RFC2965</code> and <code>RFC6265</code>.
      */
     public static final MessageHeader COOKIE2 = new MessageHeader("Cookie2");
+    /**
+     * <code>Cost</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader COST = new MessageHeader("Cost");
     /**
      * <code>DASL</code> message header, see <code>RFC5323</code>.
      */
@@ -273,6 +321,10 @@ public final class MessageHeader {
      * <code>Early-Data</code> message header, see <code>RFC8470</code>.
      */
     public static final MessageHeader EARLY_DATA = new MessageHeader("Early-Data");
+    /**
+     * <code>EDIINT-Features</code> message header, see <code>RFC6017</code>.
+     */
+    public static final MessageHeader EDIINT_FEATURES = new MessageHeader("EDIINT-Features");
     /**
      * <code>ETag</code> message header, see <code>RFC7232</code>.
      */
@@ -354,6 +406,10 @@ public final class MessageHeader {
      */
     public static final MessageHeader INCLUDE_REFERRED_TOKEN_BINDING_ID = new MessageHeader("Include-Referred-Token-Binding-ID");
     /**
+     * <code>Isolation</code> message header, see <code>OData Version 4.01</code>.
+     */
+    public static final MessageHeader ISOLATION = new MessageHeader("Isolation");
+    /**
      * <code>Keep-Alive</code> message header, see <code>RFC4229</code>.
      */
     public static final MessageHeader KEEP_ALIVE = new MessageHeader("Keep-Alive");
@@ -390,9 +446,21 @@ public final class MessageHeader {
      */
     public static final MessageHeader MEMENTO_DATETIME = new MessageHeader("Memento-Datetime");
     /**
+     * <code>Message-ID</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader MESSAGE_ID = new MessageHeader("Message-ID");
+    /**
      * <code>Meter</code> message header, see <code>RFC4229</code>.
      */
     public static final MessageHeader METER = new MessageHeader("Meter");
+    /**
+     * <code>Method-Check</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader METHOD_CHECK = new MessageHeader("Method-Check");
+    /**
+     * <code>Method-Check-Expires</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader METHOD_CHECK_EXPIRES = new MessageHeader("Method-Check-Expires");
     /**
      * <code>MIME-Version</code> message header, see <code>RFC7231</code>.
      */
@@ -401,6 +469,10 @@ public final class MessageHeader {
      * <code>Negotiate</code> message header, see <code>RFC4229</code>.
      */
     public static final MessageHeader NEGOTIATE = new MessageHeader("Negotiate");
+    /**
+     * <code>Non-Compliance</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader NON_COMPLIANCE = new MessageHeader("Non-Compliance");
     /**
      * <code>OData-EntityId</code> message header, see <code>OData Version 4.01</code>.
      */
@@ -421,6 +493,10 @@ public final class MessageHeader {
      * <code>Opt</code> message header, see <code>RFC4229</code>.
      */
     public static final MessageHeader OPT = new MessageHeader("Opt");
+    /**
+     * <code>Optional</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader OPTIONAL = new MessageHeader("Optional");
     /**
      * <code>Optional-WWW-Authenticate</code> message header, see <code>RFC8053</code>.
      */
@@ -538,9 +614,25 @@ public final class MessageHeader {
      */
     public static final MessageHeader REFERER = new MessageHeader("Referer");
     /**
+     * <code>Referer-Root</code> message header, see <code>W3C Web Application Formats Working Group</code>.
+     */
+    public static final MessageHeader REFERER_ROOT = new MessageHeader("Referer-Root");
+    /**
+     * <code>Refresh</code> message header, see <code>https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigating-across-documents%3Ashared-declarative-refresh-steps</code>.
+     */
+    public static final MessageHeader REFRESH = new MessageHeader("Refresh");
+    /**
      * <code>Replay-Nonce</code> message header, see <code>RFC8555</code>.
      */
     public static final MessageHeader REPLAY_NONCE = new MessageHeader("Replay-Nonce");
+    /**
+     * <code>Resolution-Hint</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader RESOLUTION_HINT = new MessageHeader("Resolution-Hint");
+    /**
+     * <code>Resolver-Location</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader RESOLVER_LOCATION = new MessageHeader("Resolver-Location");
     /**
      * <code>Retry-After</code> message header, see <code>RFC7231</code>.
      */
@@ -618,6 +710,14 @@ public final class MessageHeader {
      */
     public static final MessageHeader STRICT_TRANSPORT_SECURITY = new MessageHeader("Strict-Transport-Security");
     /**
+     * <code>SubOK</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader SUBOK = new MessageHeader("SubOK");
+    /**
+     * <code>Subst</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader SUBST = new MessageHeader("Subst");
+    /**
      * <code>Sunset</code> message header, see <code>RFC8594</code>.
      */
     public static final MessageHeader SUNSET = new MessageHeader("Sunset");
@@ -642,9 +742,25 @@ public final class MessageHeader {
      */
     public static final MessageHeader TIMEOUT = new MessageHeader("Timeout");
     /**
+     * <code>Timing-Allow-Origin</code> message header, see <code>https://www.w3.org/TR/resource-timing-1/#timing-allow-origin</code>.
+     */
+    public static final MessageHeader TIMING_ALLOW_ORIGIN = new MessageHeader("Timing-Allow-Origin");
+    /**
+     * <code>Title</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader TITLE = new MessageHeader("Title");
+    /**
      * <code>Topic</code> message header, see <code>RFC8030</code>.
      */
     public static final MessageHeader TOPIC = new MessageHeader("Topic");
+    /**
+     * <code>Traceparent</code> message header, see <code>https://www.w3.org/TR/trace-context/#traceparent-field</code>.
+     */
+    public static final MessageHeader TRACEPARENT = new MessageHeader("Traceparent");
+    /**
+     * <code>Tracestate</code> message header, see <code>https://www.w3.org/TR/trace-context/#tracestate-field</code>.
+     */
+    public static final MessageHeader TRACESTATE = new MessageHeader("Tracestate");
     /**
      * <code>Trailer</code> message header, see <code>RFC7230</code>.
      */
@@ -657,6 +773,26 @@ public final class MessageHeader {
      * <code>TTL</code> message header, see <code>RFC8030</code>.
      */
     public static final MessageHeader TTL = new MessageHeader("TTL");
+    /**
+     * <code>UA-Color</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader UA_COLOR = new MessageHeader("UA-Color");
+    /**
+     * <code>UA-Media</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader UA_MEDIA = new MessageHeader("UA-Media");
+    /**
+     * <code>UA-Pixels</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader UA_PIXELS = new MessageHeader("UA-Pixels");
+    /**
+     * <code>UA-Resolution</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader UA_RESOLUTION = new MessageHeader("UA-Resolution");
+    /**
+     * <code>UA-Windowpixels</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader UA_WINDOWPIXELS = new MessageHeader("UA-Windowpixels");
     /**
      * <code>Urgency</code> message header, see <code>RFC8030</code>.
      */
@@ -686,6 +822,10 @@ public final class MessageHeader {
      */
     public static final MessageHeader VIA = new MessageHeader("Via");
     /**
+     * <code>Version</code> message header, see <code>RFC4229</code>.
+     */
+    public static final MessageHeader VERSION = new MessageHeader("Version");
+    /**
      * <code>WWW-Authenticate</code> message header, see <code>RFC7235</code>.
      */
     public static final MessageHeader WWW_AUTHENTICATE = new MessageHeader("WWW-Authenticate");
@@ -701,6 +841,26 @@ public final class MessageHeader {
      * <code>X-Content-Type-Options</code> message header, see <code>RFC7230</code>.
      */
     public static final MessageHeader X_CONTENT_TYPE_OPTIONS = new MessageHeader("X-Content-Type-Options");
+    /**
+     * <code>X-Device-Accept</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
+     */
+    public static final MessageHeader X_DEVICE_ACCEPT = new MessageHeader("X-Device-Accept");
+    /**
+     * <code>X-Device-Accept-Charset</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
+     */
+    public static final MessageHeader X_DEVICE_ACCEPT_CHARSET = new MessageHeader("X-Device-Accept-Charset");
+    /**
+     * <code>X-Device-Accept-Encoding</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
+     */
+    public static final MessageHeader X_DEVICE_ACCEPT_ENCODING = new MessageHeader("X-Device-Accept-Encoding");
+    /**
+     * <code>X-Device-Accept-Language</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
+     */
+    public static final MessageHeader X_DEVICE_ACCEPT_LANGUAGE = new MessageHeader("X-Device-Accept-Language");
+    /**
+     * <code>X-Device-User-Agent</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
+     */
+    public static final MessageHeader X_DEVICE_USER_AGENT = new MessageHeader("X-Device-User-Agent");
     /**
      * <code>X-Frame-Options</code> message header, see <code>RFC7034</code>.
      */
