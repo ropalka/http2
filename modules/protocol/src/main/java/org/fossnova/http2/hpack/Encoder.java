@@ -19,6 +19,8 @@
  */
 package org.fossnova.http2.hpack;
 
+import org.fossnova.http2.MessageHeader;
+
 import static org.fossnova.http2.MessageHeader.*;
 
 import java.nio.charset.Charset;
@@ -29,6 +31,29 @@ import java.nio.charset.StandardCharsets;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public final class Encoder {
+
+    public enum Instruction {
+        INDEXED((byte) 0x80),
+        SIZE_UPDATE((byte) 0x20),
+        WITH_INDEXING((byte) 0x40),
+        WITHOUT_INDEXING((byte) 0x0),
+        NEVER_INDEXED((byte) 0x10);
+
+        private final byte flag;
+
+        Instruction(final byte flag) {
+            this.flag = flag;
+        }
+
+        public static Instruction of(final byte b) {
+            if ((b & INDEXED.flag) != 0) return INDEXED;
+            if ((b & SIZE_UPDATE.flag) != 0) return SIZE_UPDATE;
+            if ((b & WITH_INDEXING.flag) != 0) return WITH_INDEXING;
+            if ((b & NEVER_INDEXED.flag) != 0) return NEVER_INDEXED;
+            return WITHOUT_INDEXING;
+        }
+
+    }
 
     private static final Charset CHARSET = StandardCharsets.UTF_8;
     private static final byte[][] STATIC_TABLE_HEADER_NAMES = new byte[62][];
@@ -119,6 +144,14 @@ public final class Encoder {
 
     private Encoder(final int maxTableSize) {
         this.maxTableSize = maxTableSize;
+    }
+
+    public void addHeader(final MessageHeader name, final String value, final Instruction i) {
+        // TODO: implement
+    }
+
+    public void addHeader(final MessageHeader name, final Number value, final Instruction i) {
+        // TODO: implement
     }
 
     /**
