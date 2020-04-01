@@ -708,27 +708,44 @@ public final class MessageHeader {
 
     private static final Map<String, MessageHeader> KNOWN_HEADERS = new HashMap<>();
 
-    private final String name;
+    private final String titleCaseName;
+    private final String lowerCaseName;
 
     private MessageHeader(final String name) {
         this(name, true);
     }
 
     private MessageHeader(final String name, final boolean register) {
-        this.name = name;
+        this.titleCaseName = name;
+        this.lowerCaseName = name.toLowerCase();
         if (register) {
-            KNOWN_HEADERS.put(name.toLowerCase(Locale.US), this);
+            KNOWN_HEADERS.put(lowerCaseName, this);
         }
+    }
+
+    /**
+     * Returns message header name as defined by HTTP specifications.
+     * @return message header name in its original form
+     */
+    public String getTitleCaseName() {
+        return titleCaseName;
+    }
+
+    /**
+     * Returns message header name with all letters de-capitalized.
+     * @return message header name in lower case form
+     */
+    public String getLowerCaseName() {
+        return lowerCaseName;
     }
 
     @Override
     public String toString() {
-        return name;
+        return titleCaseName;
     }
 
     /**
      * Creates specified message header.
-     *
      * @param name header name
      * @return message header instance
      * @throws IllegalArgumentException if message header name doesn't match HTTP's spec. <code>token</code> definition
