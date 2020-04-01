@@ -33,6 +33,32 @@ import java.util.Map;
  */
 public final class HeaderName {
 
+    /////////////////////////////
+    // HTTP 2 specific headers //
+    /////////////////////////////
+    /**
+     * <code>:authority</code> message header, see <code>RFC7540</code>.
+     */
+    public static final HeaderName AUTHORITY = new HeaderName(":authority");
+    /**
+     * <code>:method</code> message header, see <code>RFC7540</code>.
+     */
+    public static final HeaderName METHOD = new HeaderName(":method");
+    /**
+     * <code>:path</code> message header, see <code>RFC7540</code>.
+     */
+    public static final HeaderName PATH = new HeaderName(":path");
+    /**
+     * <code>:scheme</code> message header, see <code>RFC7540</code>.
+     */
+    public static final HeaderName SCHEME = new HeaderName(":scheme");
+    /**
+     * <code>:status</code> message header, see <code>RFC7540</code>.
+     */
+    public static final HeaderName STATUS = new HeaderName(":status");
+    ///////////////////////////////
+    // HTTP 1.1 specific headers //
+    ///////////////////////////////
     /**
      * <code>A-IM</code> message header, see <code>RFC4229</code>.
      */
