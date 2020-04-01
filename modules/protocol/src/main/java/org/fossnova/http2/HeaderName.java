@@ -31,851 +31,851 @@ import java.util.Map;
  *
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
-public final class MessageHeader {
+public final class HeaderName {
 
     /**
      * <code>A-IM</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader A_IM = new MessageHeader("A-IM");
+    public static final HeaderName A_IM = new HeaderName("A-IM");
     /**
      * <code>Accept</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader ACCEPT = new MessageHeader("Accept");
+    public static final HeaderName ACCEPT = new HeaderName("Accept");
     /**
      * <code>Accept-Additions</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader ACCEPT_ADDITIONS = new MessageHeader("Accept-Additions");
+    public static final HeaderName ACCEPT_ADDITIONS = new HeaderName("Accept-Additions");
     /**
      * <code>Accept-Charset</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader ACCEPT_CHARSET = new MessageHeader("Accept-Charset");
+    public static final HeaderName ACCEPT_CHARSET = new HeaderName("Accept-Charset");
     /**
      * <code>Accept-Datetime</code> message header, see <code>RFC7089</code>.
      */
-    public static final MessageHeader ACCEPT_DATETIME = new MessageHeader("Accept-Datetime");
+    public static final HeaderName ACCEPT_DATETIME = new HeaderName("Accept-Datetime");
     /**
      * <code>Accept-Encoding</code> message header, see <code>RFC7231</code> and <code>RFC7694</code>.
      */
-    public static final MessageHeader ACCEPT_ENCODING = new MessageHeader("Accept-Encoding");
+    public static final HeaderName ACCEPT_ENCODING = new HeaderName("Accept-Encoding");
     /**
      * <code>Accept-Features</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader ACCEPT_FEATURES = new MessageHeader("Accept-Features");
+    public static final HeaderName ACCEPT_FEATURES = new HeaderName("Accept-Features");
     /**
      * <code>Accept-Language</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader ACCEPT_LANGUAGE = new MessageHeader("Accept-Language");
+    public static final HeaderName ACCEPT_LANGUAGE = new HeaderName("Accept-Language");
     /**
      * <code>Accept-Patch</code> message header, see <code>RFC5789</code>.
      */
-    public static final MessageHeader ACCEPT_PATCH = new MessageHeader("Accept-Patch");
+    public static final HeaderName ACCEPT_PATCH = new HeaderName("Accept-Patch");
     /**
      * <code>Accept-Post</code> message header, see <code>https://www.w3.org/TR/ldp/</code>.
      */
-    public static final MessageHeader ACCEPT_POST = new MessageHeader("Accept-Post");
+    public static final HeaderName ACCEPT_POST = new HeaderName("Accept-Post");
     /**
      * <code>Accept-Ranges</code> message header, see <code>RFC7233</code>.
      */
-    public static final MessageHeader ACCEPT_RANGES = new MessageHeader("Accept-Ranges");
+    public static final HeaderName ACCEPT_RANGES = new HeaderName("Accept-Ranges");
     /**
      * <code>Access-Control</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader ACCESS_CONTROL = new MessageHeader("Access-Control");
+    public static final HeaderName ACCESS_CONTROL = new HeaderName("Access-Control");
     /**
      * <code>Access-Control-Allow-Credentials</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader ACCESS_CONTROL_ALLOW_CREDENTIALS = new MessageHeader("Access-Control-Allow-Credentials");
+    public static final HeaderName ACCESS_CONTROL_ALLOW_CREDENTIALS = new HeaderName("Access-Control-Allow-Credentials");
     /**
      * <code>Access-Control-Allow-Headers</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader ACCESS_CONTROL_ALLOW_HEADERS = new MessageHeader("Access-Control-Allow-Headers");
+    public static final HeaderName ACCESS_CONTROL_ALLOW_HEADERS = new HeaderName("Access-Control-Allow-Headers");
     /**
      * <code>Access-Control-Allow-Methods</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader ACCESS_CONTROL_ALLOW_METHODS = new MessageHeader("Access-Control-Allow-Methods");
+    public static final HeaderName ACCESS_CONTROL_ALLOW_METHODS = new HeaderName("Access-Control-Allow-Methods");
     /**
      * <code>Access-Control-Allow-Origin</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader ACCESS_CONTROL_ALLOW_ORIGIN = new MessageHeader("Access-Control-Allow-Origin");
+    public static final HeaderName ACCESS_CONTROL_ALLOW_ORIGIN = new HeaderName("Access-Control-Allow-Origin");
     /**
      * <code>Access-Control-Max-Age</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader ACCESS_CONTROL_MAX_AGE = new MessageHeader("Access-Control-Max-Age");
+    public static final HeaderName ACCESS_CONTROL_MAX_AGE = new HeaderName("Access-Control-Max-Age");
     /**
      * <code>Access-Control-Request-Method</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader ACCESS_CONTROL_REQUEST_METHOD = new MessageHeader("Access-Control-Request-Method");
+    public static final HeaderName ACCESS_CONTROL_REQUEST_METHOD = new HeaderName("Access-Control-Request-Method");
     /**
      * <code>Access-Control-Request-Headers</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader ACCESS_CONTROL_REQUEST_HEADERS = new MessageHeader("Access-Control-Request-Headers");
+    public static final HeaderName ACCESS_CONTROL_REQUEST_HEADERS = new HeaderName("Access-Control-Request-Headers");
     /**
      * <code>Age</code> message header, see <code>RFC7234</code>.
      */
-    public static final MessageHeader AGE = new MessageHeader("Age");
+    public static final HeaderName AGE = new HeaderName("Age");
     /**
      * <code>Allow</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader ALLOW = new MessageHeader("Allow");
+    public static final HeaderName ALLOW = new HeaderName("Allow");
     /**
      * <code>ALPN</code> message header, see <code>RFC7639</code>.
      */
-    public static final MessageHeader ALPN = new MessageHeader("ALPN");
+    public static final HeaderName ALPN = new HeaderName("ALPN");
     /**
      * <code>Alt-Svc</code> message header, see <code>RFC7838</code>.
      */
-    public static final MessageHeader ALT_SVC = new MessageHeader("Alt-Svc");
+    public static final HeaderName ALT_SVC = new HeaderName("Alt-Svc");
     /**
      * <code>Alt-Used</code> message header, see <code>RFC7838</code>.
      */
-    public static final MessageHeader ALT_USED = new MessageHeader("Alt-Used");
+    public static final HeaderName ALT_USED = new HeaderName("Alt-Used");
     /**
      * <code>Alternates</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader ALTERNATES = new MessageHeader("Alternates");
+    public static final HeaderName ALTERNATES = new HeaderName("Alternates");
     /**
      * <code>AMP-Cache-Transform</code> message header, see <code>https://github.com/ampproject/amphtml/blob/master/spec/amp-cache-transform.md</code>.
      */
-    public static final MessageHeader AMP_CACHE_TRANSFORM = new MessageHeader("AMP-Cache-Transform");
+    public static final HeaderName AMP_CACHE_TRANSFORM = new HeaderName("AMP-Cache-Transform");
     /**
      * <code>Apply-To-Redirect-Ref</code> message header, see <code>RFC4437</code>.
      */
-    public static final MessageHeader APPLY_TO_REDIRECT_REF = new MessageHeader("Apply-To-Redirect-Ref");
+    public static final HeaderName APPLY_TO_REDIRECT_REF = new HeaderName("Apply-To-Redirect-Ref");
     /**
      * <code>Authentication-Control</code> message header, see <code>RFC8053</code>.
      */
-    public static final MessageHeader AUTHENTICATION_CONTROL = new MessageHeader("Authentication-Control");
+    public static final HeaderName AUTHENTICATION_CONTROL = new HeaderName("Authentication-Control");
     /**
      * <code>Authentication-Info</code> message header, see <code>RFC7615</code>.
      */
-    public static final MessageHeader AUTHENTICATION_INFO = new MessageHeader("Authentication-Info");
+    public static final HeaderName AUTHENTICATION_INFO = new HeaderName("Authentication-Info");
     /**
      * <code>Authorization</code> message header, see <code>RFC7235</code>.
      */
-    public static final MessageHeader AUTHORIZATION = new MessageHeader("Authorization");
+    public static final HeaderName AUTHORIZATION = new HeaderName("Authorization");
     /**
      * <code>C-Ext</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader C_EXT = new MessageHeader("C-Ext");
+    public static final HeaderName C_EXT = new HeaderName("C-Ext");
     /**
      * <code>C-Man</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader C_MAN = new MessageHeader("C-Man");
+    public static final HeaderName C_MAN = new HeaderName("C-Man");
     /**
      * <code>C-Opt</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader C_OPT = new MessageHeader("C-Opt");
+    public static final HeaderName C_OPT = new HeaderName("C-Opt");
     /**
      * <code>C-PEP</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader C_PEP = new MessageHeader("C-PEP");
+    public static final HeaderName C_PEP = new HeaderName("C-PEP");
     /**
      * <code>C-PEP-Info</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader C_PEP_INFO = new MessageHeader("C-PEP-Info");
+    public static final HeaderName C_PEP_INFO = new HeaderName("C-PEP-Info");
     /**
      * <code>Cache-Control</code> message header, see <code>RFC7234</code>.
      */
-    public static final MessageHeader CACHE_CONTROL = new MessageHeader("Cache-Control");
+    public static final HeaderName CACHE_CONTROL = new HeaderName("Cache-Control");
     /**
      * <code>Cal-Managed-ID</code> message header, see <code>RFC8607</code>.
      */
-    public static final MessageHeader CAL_MANAGED_ID = new MessageHeader("Cal-Managed-ID");
+    public static final HeaderName CAL_MANAGED_ID = new HeaderName("Cal-Managed-ID");
     /**
      * <code>CalDAV-Timezones</code> message header, see <code>RFC7809</code>.
      */
-    public static final MessageHeader CALDAV_TIMEZONES = new MessageHeader("CalDAV-Timezones");
+    public static final HeaderName CALDAV_TIMEZONES = new HeaderName("CalDAV-Timezones");
     /**
      * <code>CDN-Loop</code> message header, see <code>RFC8586</code>.
      */
-    public static final MessageHeader CDN_LOOP = new MessageHeader("CDN-Loop");
+    public static final HeaderName CDN_LOOP = new HeaderName("CDN-Loop");
     /**
      * <code>Cert-Not-After</code> message header, see <code>RFC8739</code>.
      */
-    public static final MessageHeader CERT_NOT_AFTER = new MessageHeader("Cert-Not-After");
+    public static final HeaderName CERT_NOT_AFTER = new HeaderName("Cert-Not-After");
     /**
      * <code>Cert-Not-Before</code> message header, see <code>RFC8739</code>.
      */
-    public static final MessageHeader CERT_NOT_BEFORE = new MessageHeader("Cert-Not-Before");
+    public static final HeaderName CERT_NOT_BEFORE = new HeaderName("Cert-Not-Before");
     /**
      * <code>Close</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader CLOSE = new MessageHeader("Close");
+    public static final HeaderName CLOSE = new HeaderName("Close");
     /**
      * <code>Connection</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader CONNECTION = new MessageHeader("Connection");
+    public static final HeaderName CONNECTION = new HeaderName("Connection");
     /**
      * <code>Content-Base</code> message header, see <code>RFC2068</code> and <code>RFC2616</code>.
      */
-    public static final MessageHeader CONTENT_BASE = new MessageHeader("Content-Base");
+    public static final HeaderName CONTENT_BASE = new HeaderName("Content-Base");
     /**
      * <code>Content-Disposition</code> message header, see <code>RFC6266</code>.
      */
-    public static final MessageHeader CONTENT_DISPOSITION = new MessageHeader("Content-Disposition");
+    public static final HeaderName CONTENT_DISPOSITION = new HeaderName("Content-Disposition");
     /**
      * <code>Content-Encoding</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader CONTENT_ENCODING = new MessageHeader("Content-Encoding");
+    public static final HeaderName CONTENT_ENCODING = new HeaderName("Content-Encoding");
     /**
      * <code>Content-ID</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader CONTENT_ID = new MessageHeader("Content-ID");
+    public static final HeaderName CONTENT_ID = new HeaderName("Content-ID");
     /**
      * <code>Content-Language</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader CONTENT_LANGUAGE = new MessageHeader("Content-Language");
+    public static final HeaderName CONTENT_LANGUAGE = new HeaderName("Content-Language");
     /**
      * <code>Content-Length</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader CONTENT_LENGTH = new MessageHeader("Content-Length");
+    public static final HeaderName CONTENT_LENGTH = new HeaderName("Content-Length");
     /**
      * <code>Content-Location</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader CONTENT_LOCATION = new MessageHeader("Content-Location");
+    public static final HeaderName CONTENT_LOCATION = new HeaderName("Content-Location");
     /**
      * <code>Content-MD5</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader CONTENT_MD5 = new MessageHeader("Content-MD5");
+    public static final HeaderName CONTENT_MD5 = new HeaderName("Content-MD5");
     /**
      * <code>Content-Range</code> message header, see <code>RFC7233</code>.
      */
-    public static final MessageHeader CONTENT_RANGE = new MessageHeader("Content-Range");
+    public static final HeaderName CONTENT_RANGE = new HeaderName("Content-Range");
     /**
      * <code>Content-Script-Type</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader CONTENT_SCRIPT_TYPE = new MessageHeader("Content-Script-Type");
+    public static final HeaderName CONTENT_SCRIPT_TYPE = new HeaderName("Content-Script-Type");
     /**
      * <code>Content-Style-Type</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader CONTENT_STYLE_TYPE = new MessageHeader("Content-Style-Type");
+    public static final HeaderName CONTENT_STYLE_TYPE = new HeaderName("Content-Style-Type");
     /**
      * <code>Content-Transfer-Encoding</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader CONTENT_TRANSFER_ENCODING = new MessageHeader("Content-Transfer-Encoding");
+    public static final HeaderName CONTENT_TRANSFER_ENCODING = new HeaderName("Content-Transfer-Encoding");
     /**
      * <code>Content-Type</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader CONTENT_TYPE = new MessageHeader("Content-Type");
+    public static final HeaderName CONTENT_TYPE = new HeaderName("Content-Type");
     /**
      * <code>Content-Version</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader CONTENT_VERSION = new MessageHeader("Content-Version");
+    public static final HeaderName CONTENT_VERSION = new HeaderName("Content-Version");
     /**
      * <code>Compliance</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader COMPLIANCE = new MessageHeader("Compliance");
+    public static final HeaderName COMPLIANCE = new HeaderName("Compliance");
     /**
      * <code>Cookie</code> message header, see <code>RFC6265</code>.
      */
-    public static final MessageHeader COOKIE = new MessageHeader("Cookie");
+    public static final HeaderName COOKIE = new HeaderName("Cookie");
     /**
      * <code>Cookie2</code> message header, see <code>RFC2965</code> and <code>RFC6265</code>.
      */
-    public static final MessageHeader COOKIE2 = new MessageHeader("Cookie2");
+    public static final HeaderName COOKIE2 = new HeaderName("Cookie2");
     /**
      * <code>Cost</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader COST = new MessageHeader("Cost");
+    public static final HeaderName COST = new HeaderName("Cost");
     /**
      * <code>DASL</code> message header, see <code>RFC5323</code>.
      */
-    public static final MessageHeader DASL = new MessageHeader("DASL");
+    public static final HeaderName DASL = new HeaderName("DASL");
     /**
      * <code>DAV</code> message header, see <code>RFC4918</code>.
      */
-    public static final MessageHeader DAV = new MessageHeader("DAV");
+    public static final HeaderName DAV = new HeaderName("DAV");
     /**
      * <code>Date</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader DATE = new MessageHeader("Date");
+    public static final HeaderName DATE = new HeaderName("Date");
     /**
      * <code>Default-Style</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader DEFAULT_STYLE = new MessageHeader("Default-Style");
+    public static final HeaderName DEFAULT_STYLE = new HeaderName("Default-Style");
     /**
      * <code>Delta-Base</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader DELTA_BASE = new MessageHeader("Delta-Base");
+    public static final HeaderName DELTA_BASE = new HeaderName("Delta-Base");
     /**
      * <code>Depth</code> message header, see <code>RFC4918</code>.
      */
-    public static final MessageHeader DEPTH = new MessageHeader("Depth");
+    public static final HeaderName DEPTH = new HeaderName("Depth");
     /**
      * <code>Derived-From</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader DERIVED_FROM = new MessageHeader("Derived-From");
+    public static final HeaderName DERIVED_FROM = new HeaderName("Derived-From");
     /**
      * <code>Destination</code> message header, see <code>RFC4918</code>.
      */
-    public static final MessageHeader DESTINATION = new MessageHeader("Destination");
+    public static final HeaderName DESTINATION = new HeaderName("Destination");
     /**
      * <code>Differential-ID</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader DIFFERENTIAL_ID = new MessageHeader("Differential-ID");
+    public static final HeaderName DIFFERENTIAL_ID = new HeaderName("Differential-ID");
     /**
      * <code>Digest</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader DIGEST = new MessageHeader("Digest");
+    public static final HeaderName DIGEST = new HeaderName("Digest");
     /**
      * <code>Early-Data</code> message header, see <code>RFC8470</code>.
      */
-    public static final MessageHeader EARLY_DATA = new MessageHeader("Early-Data");
+    public static final HeaderName EARLY_DATA = new HeaderName("Early-Data");
     /**
      * <code>EDIINT-Features</code> message header, see <code>RFC6017</code>.
      */
-    public static final MessageHeader EDIINT_FEATURES = new MessageHeader("EDIINT-Features");
+    public static final HeaderName EDIINT_FEATURES = new HeaderName("EDIINT-Features");
     /**
      * <code>ETag</code> message header, see <code>RFC7232</code>.
      */
-    public static final MessageHeader ETAG = new MessageHeader("ETag");
+    public static final HeaderName ETAG = new HeaderName("ETag");
     /**
      * <code>Expect</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader EXPECT = new MessageHeader("Expect");
+    public static final HeaderName EXPECT = new HeaderName("Expect");
     /**
      * <code>Expect-CT</code> message header, see <code>RFC-ietf-httpbis-expect-ct-08</code>.
      */
-    public static final MessageHeader EXPECT_CT = new MessageHeader("Expect-CT");
+    public static final HeaderName EXPECT_CT = new HeaderName("Expect-CT");
     /**
      * <code>Expires</code> message header, see <code>RFC7234</code>.
      */
-    public static final MessageHeader EXPIRES = new MessageHeader("Expires");
+    public static final HeaderName EXPIRES = new HeaderName("Expires");
     /**
      * <code>Ext</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader EXT = new MessageHeader("Ext");
+    public static final HeaderName EXT = new HeaderName("Ext");
     /**
      * <code>Forwarded</code> message header, see <code>RFC7239</code>.
      */
-    public static final MessageHeader FORWARDED = new MessageHeader("Forwarded");
+    public static final HeaderName FORWARDED = new HeaderName("Forwarded");
     /**
      * <code>From</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader FROM = new MessageHeader("From");
+    public static final HeaderName FROM = new HeaderName("From");
     /**
      * <code>GetProfile</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader GET_PROFILE = new MessageHeader("GetProfile");
+    public static final HeaderName GET_PROFILE = new HeaderName("GetProfile");
     /**
      * <code>Hobareg</code> message header, see <code>RFC7486</code>.
      */
-    public static final MessageHeader HOBAREG = new MessageHeader("Hobareg");
+    public static final HeaderName HOBAREG = new HeaderName("Hobareg");
     /**
      * <code>Host</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader HOST = new MessageHeader("Host");
+    public static final HeaderName HOST = new HeaderName("Host");
     /**
      * <code>HTTP2-Settings</code> message header, see <code>RFC7540</code>.
      */
-    public static final MessageHeader HTTP2_SETTINGS = new MessageHeader("HTTP2-Settings");
+    public static final HeaderName HTTP2_SETTINGS = new HeaderName("HTTP2-Settings");
     /**
      * <code>IM</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader IM = new MessageHeader("IM");
+    public static final HeaderName IM = new HeaderName("IM");
     /**
      * <code>If</code> message header, see <code>RFC4918</code>.
      */
-    public static final MessageHeader IF = new MessageHeader("If");
+    public static final HeaderName IF = new HeaderName("If");
     /**
      * <code>If-Match</code> message header, see <code>RFC7232</code>.
      */
-    public static final MessageHeader IF_MATCH = new MessageHeader("If-Match");
+    public static final HeaderName IF_MATCH = new HeaderName("If-Match");
     /**
      * <code>If-Modified-Since</code> message header, see <code>RFC7232</code>.
      */
-    public static final MessageHeader IF_MODIFIED_SINCE = new MessageHeader("If-Modified-Since");
+    public static final HeaderName IF_MODIFIED_SINCE = new HeaderName("If-Modified-Since");
     /**
      * <code>If-None-Match</code> message header, see <code>RFC7232</code>.
      */
-    public static final MessageHeader IF_NONE_MATCH = new MessageHeader("If-None-Match");
+    public static final HeaderName IF_NONE_MATCH = new HeaderName("If-None-Match");
     /**
      * <code>If-Range</code> message header, see <code>RFC7233</code>.
      */
-    public static final MessageHeader IF_RANGE = new MessageHeader("If-Range");
+    public static final HeaderName IF_RANGE = new HeaderName("If-Range");
     /**
      * <code>If-Schedule-Tag-Match</code> message header, see <code>RFC6638</code>.
      */
-    public static final MessageHeader IF_SCHEDULE_TAG_MATCH = new MessageHeader("If-Schedule-Tag-Match");
+    public static final HeaderName IF_SCHEDULE_TAG_MATCH = new HeaderName("If-Schedule-Tag-Match");
     /**
      * <code>If-Unmodified-Since</code> message header, see <code>RFC7232</code>.
      */
-    public static final MessageHeader IF_UNMODIFIED_SINCE = new MessageHeader("If-Unmodified-Since");
+    public static final HeaderName IF_UNMODIFIED_SINCE = new HeaderName("If-Unmodified-Since");
     /**
      * <code>Include-Referred-Token-Binding-ID</code> message header, see <code>RFC8473</code>.
      */
-    public static final MessageHeader INCLUDE_REFERRED_TOKEN_BINDING_ID = new MessageHeader("Include-Referred-Token-Binding-ID");
+    public static final HeaderName INCLUDE_REFERRED_TOKEN_BINDING_ID = new HeaderName("Include-Referred-Token-Binding-ID");
     /**
      * <code>Isolation</code> message header, see <code>OData Version 4.01</code>.
      */
-    public static final MessageHeader ISOLATION = new MessageHeader("Isolation");
+    public static final HeaderName ISOLATION = new HeaderName("Isolation");
     /**
      * <code>Keep-Alive</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader KEEP_ALIVE = new MessageHeader("Keep-Alive");
+    public static final HeaderName KEEP_ALIVE = new HeaderName("Keep-Alive");
     /**
      * <code>Label</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader LABEL = new MessageHeader("Label");
+    public static final HeaderName LABEL = new HeaderName("Label");
     /**
      * <code>Last-Modified</code> message header, see <code>RFC7232</code>.
      */
-    public static final MessageHeader LAST_MODIFIED = new MessageHeader("Last-Modified");
+    public static final HeaderName LAST_MODIFIED = new HeaderName("Last-Modified");
     /**
      * <code>Link</code> message header, see <code>RFC8288</code>.
      */
-    public static final MessageHeader LINK = new MessageHeader("Link");
+    public static final HeaderName LINK = new HeaderName("Link");
     /**
      * <code>Location</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader LOCATION = new MessageHeader("Location");
+    public static final HeaderName LOCATION = new HeaderName("Location");
     /**
      * <code>Lock-Token</code> message header, see <code>RFC4918</code>.
      */
-    public static final MessageHeader LOCK_TOKEN = new MessageHeader("Lock-Token");
+    public static final HeaderName LOCK_TOKEN = new HeaderName("Lock-Token");
     /**
      * <code>Man</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader MAN = new MessageHeader("Man");
+    public static final HeaderName MAN = new HeaderName("Man");
     /**
      * <code>Max-Forwards</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader MAX_FORWARDS = new MessageHeader("Max-Forwards");
+    public static final HeaderName MAX_FORWARDS = new HeaderName("Max-Forwards");
     /**
      * <code>Memento-Datetime</code> message header, see <code>RFC7089</code>.
      */
-    public static final MessageHeader MEMENTO_DATETIME = new MessageHeader("Memento-Datetime");
+    public static final HeaderName MEMENTO_DATETIME = new HeaderName("Memento-Datetime");
     /**
      * <code>Message-ID</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader MESSAGE_ID = new MessageHeader("Message-ID");
+    public static final HeaderName MESSAGE_ID = new HeaderName("Message-ID");
     /**
      * <code>Meter</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader METER = new MessageHeader("Meter");
+    public static final HeaderName METER = new HeaderName("Meter");
     /**
      * <code>Method-Check</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader METHOD_CHECK = new MessageHeader("Method-Check");
+    public static final HeaderName METHOD_CHECK = new HeaderName("Method-Check");
     /**
      * <code>Method-Check-Expires</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader METHOD_CHECK_EXPIRES = new MessageHeader("Method-Check-Expires");
+    public static final HeaderName METHOD_CHECK_EXPIRES = new HeaderName("Method-Check-Expires");
     /**
      * <code>MIME-Version</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader MIME_VERSION = new MessageHeader("MIME-Version");
+    public static final HeaderName MIME_VERSION = new HeaderName("MIME-Version");
     /**
      * <code>Negotiate</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader NEGOTIATE = new MessageHeader("Negotiate");
+    public static final HeaderName NEGOTIATE = new HeaderName("Negotiate");
     /**
      * <code>Non-Compliance</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader NON_COMPLIANCE = new MessageHeader("Non-Compliance");
+    public static final HeaderName NON_COMPLIANCE = new HeaderName("Non-Compliance");
     /**
      * <code>OData-EntityId</code> message header, see <code>OData Version 4.01</code>.
      */
-    public static final MessageHeader ODATA_ENTITY_ID = new MessageHeader("OData-EntityId");
+    public static final HeaderName ODATA_ENTITY_ID = new HeaderName("OData-EntityId");
     /**
      * <code>OData-Isolation</code> message header, see <code>OData Version 4.01</code>.
      */
-    public static final MessageHeader ODATA_ISOLATION = new MessageHeader("OData-Isolation");
+    public static final HeaderName ODATA_ISOLATION = new HeaderName("OData-Isolation");
     /**
      * <code>OData-MaxVersion</code> message header, see <code>OData Version 4.01</code>.
      */
-    public static final MessageHeader ODATA_MAX_VERSION = new MessageHeader("OData-MaxVersion");
+    public static final HeaderName ODATA_MAX_VERSION = new HeaderName("OData-MaxVersion");
     /**
      * <code>OData-Version</code> message header, see <code>OData Version 4.01</code>.
      */
-    public static final MessageHeader ODATA_VERSION = new MessageHeader("OData-Version");
+    public static final HeaderName ODATA_VERSION = new HeaderName("OData-Version");
     /**
      * <code>Opt</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader OPT = new MessageHeader("Opt");
+    public static final HeaderName OPT = new HeaderName("Opt");
     /**
      * <code>Optional</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader OPTIONAL = new MessageHeader("Optional");
+    public static final HeaderName OPTIONAL = new HeaderName("Optional");
     /**
      * <code>Optional-WWW-Authenticate</code> message header, see <code>RFC8053</code>.
      */
-    public static final MessageHeader OPTIONAL_WWW_AUTHENTICATE = new MessageHeader("Optional-WWW-Authenticate");
+    public static final HeaderName OPTIONAL_WWW_AUTHENTICATE = new HeaderName("Optional-WWW-Authenticate");
     /**
      * <code>Ordering-Type</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader ORDERING_TYPE = new MessageHeader("Ordering-Type");
+    public static final HeaderName ORDERING_TYPE = new HeaderName("Ordering-Type");
     /**
      * <code>Origin</code> message header, see <code>RFC6454</code>.
      */
-    public static final MessageHeader ORIGIN = new MessageHeader("Origin");
+    public static final HeaderName ORIGIN = new HeaderName("Origin");
     /**
      * <code>OSCORE</code> message header, see <code>RFC8613</code>.
      */
-    public static final MessageHeader OSCORE = new MessageHeader("OSCORE");
+    public static final HeaderName OSCORE = new HeaderName("OSCORE");
     /**
      * <code>Overwrite</code> message header, see <code>RFC4918</code>.
      */
-    public static final MessageHeader OVERWRITE = new MessageHeader("Overwrite");
+    public static final HeaderName OVERWRITE = new HeaderName("Overwrite");
     /**
      * <code>P3P</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader P3P = new MessageHeader("P3P");
+    public static final HeaderName P3P = new HeaderName("P3P");
     /**
      * <code>PEP</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PEP = new MessageHeader("PEP");
+    public static final HeaderName PEP = new HeaderName("PEP");
     /**
      * <code>PICS-Label</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PICS_LABEL = new MessageHeader("PICS-Label");
+    public static final HeaderName PICS_LABEL = new HeaderName("PICS-Label");
     /**
      * <code>Pep-Info</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PEP_INFO = new MessageHeader("Pep-Info");
+    public static final HeaderName PEP_INFO = new HeaderName("Pep-Info");
     /**
      * <code>Position</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader POSITION = new MessageHeader("Position");
+    public static final HeaderName POSITION = new HeaderName("Position");
     /**
      * <code>Pragma</code> message header, see <code>RFC7234</code>.
      */
-    public static final MessageHeader PRAGMA = new MessageHeader("Pragma");
+    public static final HeaderName PRAGMA = new HeaderName("Pragma");
     /**
      * <code>Prefer</code> message header, see <code>RFC7240</code>.
      */
-    public static final MessageHeader PREFER = new MessageHeader("Prefer");
+    public static final HeaderName PREFER = new HeaderName("Prefer");
     /**
      * <code>Preference-Applied</code> message header, see <code>RFC7240</code>.
      */
-    public static final MessageHeader PREFERENCE_APPLIED = new MessageHeader("Preference-Applied");
+    public static final HeaderName PREFERENCE_APPLIED = new HeaderName("Preference-Applied");
     /**
      * <code>ProfileObject</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PROFILE_OBJECT = new MessageHeader("ProfileObject");
+    public static final HeaderName PROFILE_OBJECT = new HeaderName("ProfileObject");
     /**
      * <code>Protocol</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PROTOCOL = new MessageHeader("Protocol");
+    public static final HeaderName PROTOCOL = new HeaderName("Protocol");
     /**
      * <code>Protocol-Info</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PROTOCOL_INFO = new MessageHeader("Protocol-Info");
+    public static final HeaderName PROTOCOL_INFO = new HeaderName("Protocol-Info");
     /**
      * <code>Protocol-Query</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PROTOCOL_QUERY = new MessageHeader("Protocol-Query");
+    public static final HeaderName PROTOCOL_QUERY = new HeaderName("Protocol-Query");
     /**
      * <code>Protocol-Request</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PROTOCOL_REQUEST = new MessageHeader("Protocol-Request");
+    public static final HeaderName PROTOCOL_REQUEST = new HeaderName("Protocol-Request");
     /**
      * <code>Proxy-Authenticate</code> message header, see <code>RFC7235</code>.
      */
-    public static final MessageHeader PROXY_AUTHENTICATE = new MessageHeader("Proxy-Authenticate");
+    public static final HeaderName PROXY_AUTHENTICATE = new HeaderName("Proxy-Authenticate");
     /**
      * <code>Proxy-Authentication-Info</code> message header, see <code>RFC7615</code>.
      */
-    public static final MessageHeader PROXY_AUTHENTICATION_INFO = new MessageHeader("Proxy-Authentication-Info");
+    public static final HeaderName PROXY_AUTHENTICATION_INFO = new HeaderName("Proxy-Authentication-Info");
     /**
      * <code>Proxy-Authorization</code> message header, see <code>RFC7235</code>.
      */
-    public static final MessageHeader PROXY_AUTHORIZATION = new MessageHeader("Proxy-Authorization");
+    public static final HeaderName PROXY_AUTHORIZATION = new HeaderName("Proxy-Authorization");
     /**
      * <code>Proxy-Features</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PROXY_FEATURES = new MessageHeader("Proxy-Features");
+    public static final HeaderName PROXY_FEATURES = new HeaderName("Proxy-Features");
     /**
      * <code>Proxy-Instruction</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PROXY_INSTRUCTION = new MessageHeader("Proxy-Instruction");
+    public static final HeaderName PROXY_INSTRUCTION = new HeaderName("Proxy-Instruction");
     /**
      * <code>Public</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader PUBLIC = new MessageHeader("Public");
+    public static final HeaderName PUBLIC = new HeaderName("Public");
     /**
      * <code>Public-Key-Pins</code> message header, see <code>RFC7469</code>.
      */
-    public static final MessageHeader PUBLIC_KEY_PINS = new MessageHeader("Public-Key-Pins");
+    public static final HeaderName PUBLIC_KEY_PINS = new HeaderName("Public-Key-Pins");
     /**
      * <code>Public-Key-Pins-Report-Only</code> message header, see <code>RFC7469</code>.
      */
-    public static final MessageHeader PUBLIC_KEY_PINS_REPORT_ONLY = new MessageHeader("Public-Key-Pins-Report-Only");
+    public static final HeaderName PUBLIC_KEY_PINS_REPORT_ONLY = new HeaderName("Public-Key-Pins-Report-Only");
     /**
      * <code>Range</code> message header, see <code>RFC7233</code>.
      */
-    public static final MessageHeader RANGE = new MessageHeader("Range");
+    public static final HeaderName RANGE = new HeaderName("Range");
     /**
      * <code>Redirect-Ref</code> message header, see <code>RFC4437</code>.
      */
-    public static final MessageHeader REDIRECT_REF = new MessageHeader("Redirect-Ref");
+    public static final HeaderName REDIRECT_REF = new HeaderName("Redirect-Ref");
     /**
      * <code>Referer</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader REFERER = new MessageHeader("Referer");
+    public static final HeaderName REFERER = new HeaderName("Referer");
     /**
      * <code>Referer-Root</code> message header, see <code>W3C Web Application Formats Working Group</code>.
      */
-    public static final MessageHeader REFERER_ROOT = new MessageHeader("Referer-Root");
+    public static final HeaderName REFERER_ROOT = new HeaderName("Referer-Root");
     /**
      * <code>Refresh</code> message header, see <code>https://html.spec.whatwg.org/multipage/browsing-the-web.html#navigating-across-documents%3Ashared-declarative-refresh-steps</code>.
      */
-    public static final MessageHeader REFRESH = new MessageHeader("Refresh");
+    public static final HeaderName REFRESH = new HeaderName("Refresh");
     /**
      * <code>Replay-Nonce</code> message header, see <code>RFC8555</code>.
      */
-    public static final MessageHeader REPLAY_NONCE = new MessageHeader("Replay-Nonce");
+    public static final HeaderName REPLAY_NONCE = new HeaderName("Replay-Nonce");
     /**
      * <code>Resolution-Hint</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader RESOLUTION_HINT = new MessageHeader("Resolution-Hint");
+    public static final HeaderName RESOLUTION_HINT = new HeaderName("Resolution-Hint");
     /**
      * <code>Resolver-Location</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader RESOLVER_LOCATION = new MessageHeader("Resolver-Location");
+    public static final HeaderName RESOLVER_LOCATION = new HeaderName("Resolver-Location");
     /**
      * <code>Retry-After</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader RETRY_AFTER = new MessageHeader("Retry-After");
+    public static final HeaderName RETRY_AFTER = new HeaderName("Retry-After");
     /**
      * <code>Safe</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader SAFE = new MessageHeader("Safe");
+    public static final HeaderName SAFE = new HeaderName("Safe");
     /**
      * <code>Schedule-Reply</code> message header, see <code>RFC6638</code>.
      */
-    public static final MessageHeader SCHEDULE_REPLY = new MessageHeader("Schedule-Reply");
+    public static final HeaderName SCHEDULE_REPLY = new HeaderName("Schedule-Reply");
     /**
      * <code>Schedule-Tag</code> message header, see <code>RFC6638</code>.
      */
-    public static final MessageHeader SCHEDULE_TAG = new MessageHeader("Schedule-Tag");
+    public static final HeaderName SCHEDULE_TAG = new HeaderName("Schedule-Tag");
     /**
      * <code>Sec-Token-Binding</code> message header, see <code>RFC8473</code>.
      */
-    public static final MessageHeader SEC_TOKEN_BINDING = new MessageHeader("Sec-Token-Binding");
+    public static final HeaderName SEC_TOKEN_BINDING = new HeaderName("Sec-Token-Binding");
     /**
      * <code>Sec-WebSocket-Accept</code> message header, see <code>RFC6455</code>.
      */
-    public static final MessageHeader SEC_WEBSOCKET_ACCEPT = new MessageHeader("Sec-WebSocket-Accept");
+    public static final HeaderName SEC_WEBSOCKET_ACCEPT = new HeaderName("Sec-WebSocket-Accept");
     /**
      * <code>Sec-WebSocket-Extensions</code> message header, see <code>RFC6455</code>.
      */
-    public static final MessageHeader SEC_WEBSOCKET_EXTENSIONS = new MessageHeader("Sec-WebSocket-Extensions");
+    public static final HeaderName SEC_WEBSOCKET_EXTENSIONS = new HeaderName("Sec-WebSocket-Extensions");
     /**
      * <code>Sec-WebSocket-Key</code> message header, see <code>RFC6455</code>.
      */
-    public static final MessageHeader SEC_WEBSOCKET_KEY = new MessageHeader("Sec-WebSocket-Key");
+    public static final HeaderName SEC_WEBSOCKET_KEY = new HeaderName("Sec-WebSocket-Key");
     /**
      * <code>Sec-WebSocket-Protocol</code> message header, see <code>RFC6455</code>.
      */
-    public static final MessageHeader SEC_WEBSOCKET_PROTOCOL = new MessageHeader("Sec-WebSocket-Protocol");
+    public static final HeaderName SEC_WEBSOCKET_PROTOCOL = new HeaderName("Sec-WebSocket-Protocol");
     /**
      * <code>Sec-WebSocket-Version</code> message header, see <code>RFC6455</code>.
      */
-    public static final MessageHeader SEC_WEBSOCKET_VERSION = new MessageHeader("Sec-WebSocket-Version");
+    public static final HeaderName SEC_WEBSOCKET_VERSION = new HeaderName("Sec-WebSocket-Version");
     /**
      * <code>Security-Scheme</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader SECURITY_SCHEME = new MessageHeader("Security-Scheme");
+    public static final HeaderName SECURITY_SCHEME = new HeaderName("Security-Scheme");
     /**
      * <code>Server</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader SERVER = new MessageHeader("Server");
+    public static final HeaderName SERVER = new HeaderName("Server");
     /**
      * <code>Set-Cookie</code> message header, see <code>RFC6265</code>.
      */
-    public static final MessageHeader SET_COOKIE = new MessageHeader("Set-Cookie");
+    public static final HeaderName SET_COOKIE = new HeaderName("Set-Cookie");
     /**
      * <code>Set-Cookie2</code> message header, see <code>RFC2965</code> and <code>RFC6265</code>.
      */
-    public static final MessageHeader SET_COOKIE2 = new MessageHeader("Set-Cookie2");
+    public static final HeaderName SET_COOKIE2 = new HeaderName("Set-Cookie2");
     /**
      * <code>SetProfile</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader SET_PROFILE = new MessageHeader("SetProfile");
+    public static final HeaderName SET_PROFILE = new HeaderName("SetProfile");
     /**
      * <code>SLUG</code> message header, see <code>RFC5023</code>.
      */
-    public static final MessageHeader SLUG = new MessageHeader("SLUG");
+    public static final HeaderName SLUG = new HeaderName("SLUG");
     /**
      * <code>SoapAction</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader SOAP_ACTION = new MessageHeader("SoapAction");
+    public static final HeaderName SOAP_ACTION = new HeaderName("SoapAction");
     /**
      * <code>Status-URI</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader STATUS_URI = new MessageHeader("Status-URI");
+    public static final HeaderName STATUS_URI = new HeaderName("Status-URI");
     /**
      * <code>Strict-Transport-Security</code> message header, see <code>RFC6797</code>.
      */
-    public static final MessageHeader STRICT_TRANSPORT_SECURITY = new MessageHeader("Strict-Transport-Security");
+    public static final HeaderName STRICT_TRANSPORT_SECURITY = new HeaderName("Strict-Transport-Security");
     /**
      * <code>SubOK</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader SUBOK = new MessageHeader("SubOK");
+    public static final HeaderName SUBOK = new HeaderName("SubOK");
     /**
      * <code>Subst</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader SUBST = new MessageHeader("Subst");
+    public static final HeaderName SUBST = new HeaderName("Subst");
     /**
      * <code>Sunset</code> message header, see <code>RFC8594</code>.
      */
-    public static final MessageHeader SUNSET = new MessageHeader("Sunset");
+    public static final HeaderName SUNSET = new HeaderName("Sunset");
     /**
      * <code>Surrogate-Capability</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader SURROGATE_CAPABILITY = new MessageHeader("Surrogate-Capability");
+    public static final HeaderName SURROGATE_CAPABILITY = new HeaderName("Surrogate-Capability");
     /**
      * <code>Surrogate-Control</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader SURROGATE_CONTROL = new MessageHeader("Surrogate-Control");
+    public static final HeaderName SURROGATE_CONTROL = new HeaderName("Surrogate-Control");
     /**
      * <code>TCN</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader TCN = new MessageHeader("TCN");
+    public static final HeaderName TCN = new HeaderName("TCN");
     /**
      * <code>TE</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader TE = new MessageHeader("TE");
+    public static final HeaderName TE = new HeaderName("TE");
     /**
      * <code>Timeout</code> message header, see <code>RFC4918</code>.
      */
-    public static final MessageHeader TIMEOUT = new MessageHeader("Timeout");
+    public static final HeaderName TIMEOUT = new HeaderName("Timeout");
     /**
      * <code>Timing-Allow-Origin</code> message header, see <code>https://www.w3.org/TR/resource-timing-1/#timing-allow-origin</code>.
      */
-    public static final MessageHeader TIMING_ALLOW_ORIGIN = new MessageHeader("Timing-Allow-Origin");
+    public static final HeaderName TIMING_ALLOW_ORIGIN = new HeaderName("Timing-Allow-Origin");
     /**
      * <code>Title</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader TITLE = new MessageHeader("Title");
+    public static final HeaderName TITLE = new HeaderName("Title");
     /**
      * <code>Topic</code> message header, see <code>RFC8030</code>.
      */
-    public static final MessageHeader TOPIC = new MessageHeader("Topic");
+    public static final HeaderName TOPIC = new HeaderName("Topic");
     /**
      * <code>Traceparent</code> message header, see <code>https://www.w3.org/TR/trace-context/#traceparent-field</code>.
      */
-    public static final MessageHeader TRACEPARENT = new MessageHeader("Traceparent");
+    public static final HeaderName TRACEPARENT = new HeaderName("Traceparent");
     /**
      * <code>Tracestate</code> message header, see <code>https://www.w3.org/TR/trace-context/#tracestate-field</code>.
      */
-    public static final MessageHeader TRACESTATE = new MessageHeader("Tracestate");
+    public static final HeaderName TRACESTATE = new HeaderName("Tracestate");
     /**
      * <code>Trailer</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader TRAILER = new MessageHeader("Trailer");
+    public static final HeaderName TRAILER = new HeaderName("Trailer");
     /**
      * <code>Transfer-Encoding</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader TRANSFER_ENCODING = new MessageHeader("Transfer-Encoding");
+    public static final HeaderName TRANSFER_ENCODING = new HeaderName("Transfer-Encoding");
     /**
      * <code>TTL</code> message header, see <code>RFC8030</code>.
      */
-    public static final MessageHeader TTL = new MessageHeader("TTL");
+    public static final HeaderName TTL = new HeaderName("TTL");
     /**
      * <code>UA-Color</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader UA_COLOR = new MessageHeader("UA-Color");
+    public static final HeaderName UA_COLOR = new HeaderName("UA-Color");
     /**
      * <code>UA-Media</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader UA_MEDIA = new MessageHeader("UA-Media");
+    public static final HeaderName UA_MEDIA = new HeaderName("UA-Media");
     /**
      * <code>UA-Pixels</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader UA_PIXELS = new MessageHeader("UA-Pixels");
+    public static final HeaderName UA_PIXELS = new HeaderName("UA-Pixels");
     /**
      * <code>UA-Resolution</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader UA_RESOLUTION = new MessageHeader("UA-Resolution");
+    public static final HeaderName UA_RESOLUTION = new HeaderName("UA-Resolution");
     /**
      * <code>UA-Windowpixels</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader UA_WINDOWPIXELS = new MessageHeader("UA-Windowpixels");
+    public static final HeaderName UA_WINDOWPIXELS = new HeaderName("UA-Windowpixels");
     /**
      * <code>Urgency</code> message header, see <code>RFC8030</code>.
      */
-    public static final MessageHeader URGENCY = new MessageHeader("Urgency");
+    public static final HeaderName URGENCY = new HeaderName("Urgency");
     /**
      * <code>URI</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader URI = new MessageHeader("URI");
+    public static final HeaderName URI = new HeaderName("URI");
     /**
      * <code>Upgrade</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader UPGRADE = new MessageHeader("Upgrade");
+    public static final HeaderName UPGRADE = new HeaderName("Upgrade");
     /**
      * <code>User-Agent</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader USER_AGENT = new MessageHeader("User-Agent");
+    public static final HeaderName USER_AGENT = new HeaderName("User-Agent");
     /**
      * <code>Variant-Vary</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader VARIANT_VARY = new MessageHeader("Variant-Vary");
+    public static final HeaderName VARIANT_VARY = new HeaderName("Variant-Vary");
     /**
      * <code>Vary</code> message header, see <code>RFC7231</code>.
      */
-    public static final MessageHeader VARY = new MessageHeader("Vary");
+    public static final HeaderName VARY = new HeaderName("Vary");
     /**
      * <code>Via</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader VIA = new MessageHeader("Via");
+    public static final HeaderName VIA = new HeaderName("Via");
     /**
      * <code>Version</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader VERSION = new MessageHeader("Version");
+    public static final HeaderName VERSION = new HeaderName("Version");
     /**
      * <code>WWW-Authenticate</code> message header, see <code>RFC7235</code>.
      */
-    public static final MessageHeader WWW_AUTHENTICATE = new MessageHeader("WWW-Authenticate");
+    public static final HeaderName WWW_AUTHENTICATE = new HeaderName("WWW-Authenticate");
     /**
      * <code>Want-Digest</code> message header, see <code>RFC4229</code>.
      */
-    public static final MessageHeader WANT_DIGEST = new MessageHeader("Want-Digest");
+    public static final HeaderName WANT_DIGEST = new HeaderName("Want-Digest");
     /**
      * <code>Warning</code> message header, see <code>RFC7234</code>.
      */
-    public static final MessageHeader WARNING = new MessageHeader("Warning");
+    public static final HeaderName WARNING = new HeaderName("Warning");
     /**
      * <code>X-Content-Type-Options</code> message header, see <code>RFC7230</code>.
      */
-    public static final MessageHeader X_CONTENT_TYPE_OPTIONS = new MessageHeader("X-Content-Type-Options");
+    public static final HeaderName X_CONTENT_TYPE_OPTIONS = new HeaderName("X-Content-Type-Options");
     /**
      * <code>X-Device-Accept</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
      */
-    public static final MessageHeader X_DEVICE_ACCEPT = new MessageHeader("X-Device-Accept");
+    public static final HeaderName X_DEVICE_ACCEPT = new HeaderName("X-Device-Accept");
     /**
      * <code>X-Device-Accept-Charset</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
      */
-    public static final MessageHeader X_DEVICE_ACCEPT_CHARSET = new MessageHeader("X-Device-Accept-Charset");
+    public static final HeaderName X_DEVICE_ACCEPT_CHARSET = new HeaderName("X-Device-Accept-Charset");
     /**
      * <code>X-Device-Accept-Encoding</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
      */
-    public static final MessageHeader X_DEVICE_ACCEPT_ENCODING = new MessageHeader("X-Device-Accept-Encoding");
+    public static final HeaderName X_DEVICE_ACCEPT_ENCODING = new HeaderName("X-Device-Accept-Encoding");
     /**
      * <code>X-Device-Accept-Language</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
      */
-    public static final MessageHeader X_DEVICE_ACCEPT_LANGUAGE = new MessageHeader("X-Device-Accept-Language");
+    public static final HeaderName X_DEVICE_ACCEPT_LANGUAGE = new HeaderName("X-Device-Accept-Language");
     /**
      * <code>X-Device-User-Agent</code> message header, see <code>W3C Mobile Web Best Practices Working Group</code>.
      */
-    public static final MessageHeader X_DEVICE_USER_AGENT = new MessageHeader("X-Device-User-Agent");
+    public static final HeaderName X_DEVICE_USER_AGENT = new HeaderName("X-Device-User-Agent");
     /**
      * <code>X-Frame-Options</code> message header, see <code>RFC7034</code>.
      */
-    public static final MessageHeader X_FRAME_OPTIONS = new MessageHeader("X-Frame-Options");
+    public static final HeaderName X_FRAME_OPTIONS = new HeaderName("X-Frame-Options");
 
-    private static final Map<String, MessageHeader> KNOWN_HEADERS = new HashMap<>();
+    private static final Map<String, HeaderName> KNOWN_HEADERS = new HashMap<>();
 
     private final String titleCaseName;
     private final String lowerCaseName;
 
-    private MessageHeader(final String name) {
+    private HeaderName(final String name) {
         this(name, true);
     }
 
-    private MessageHeader(final String name, final boolean register) {
+    private HeaderName(final String name, final boolean register) {
         this.titleCaseName = name;
         this.lowerCaseName = name.toLowerCase();
         if (register) {
@@ -910,10 +910,10 @@ public final class MessageHeader {
      * @return message header instance
      * @throws IllegalArgumentException if message header name doesn't match HTTP's spec. <code>token</code> definition
      */
-    public static MessageHeader of(final String name) {
+    public static HeaderName of(final String name) {
         validateToken(name);
-        MessageHeader retVal = KNOWN_HEADERS.get(name.toLowerCase(Locale.US));
-        return retVal != null ? retVal : new MessageHeader(name, false);
+        HeaderName retVal = KNOWN_HEADERS.get(name.toLowerCase(Locale.US));
+        return retVal != null ? retVal : new HeaderName(name, false);
     }
 
 }
