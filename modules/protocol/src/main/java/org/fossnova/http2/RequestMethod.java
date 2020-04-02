@@ -53,6 +53,17 @@ public final class RequestMethod {
         }
     }
 
+    /**
+     * Returns request method name
+     * @return request method name
+     */
+    public String getName() {
+        return method;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return method;

@@ -924,6 +924,9 @@ public final class HeaderName {
         return lowerCaseName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return titleCaseName;

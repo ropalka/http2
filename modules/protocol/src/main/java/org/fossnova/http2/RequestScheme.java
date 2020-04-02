@@ -48,6 +48,17 @@ public final class RequestScheme {
         }
     }
 
+    /**
+     * Returns request scheme name with all letters de-capitalized.
+     * @return request scheme name in lower case form
+     */
+    public String getName() {
+        return scheme;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return scheme;
