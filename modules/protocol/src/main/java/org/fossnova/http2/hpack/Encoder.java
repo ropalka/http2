@@ -22,6 +22,8 @@ package org.fossnova.http2.hpack;
 import org.fossnova.http2.HeaderName;
 
 import static org.fossnova.http2.HeaderName.*;
+import static org.fossnova.http2.RequestMethod.*;
+import static org.fossnova.http2.RequestScheme.*;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -124,12 +126,12 @@ public final class Encoder {
         STATIC_TABLE_HEADER_NAMES[i++] = WWW_AUTHENTICATE.getLowerCaseName().getBytes(CHARSET);
         i = 1;
         STATIC_TABLE_HEADER_VALUES[i++] = new byte[0];
-        STATIC_TABLE_HEADER_VALUES[i++] = "GET".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "POST".getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = GET.getName().getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = POST.getName().getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = "/".getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = "/index.html".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "http".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "https".getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = HTTP.getName().getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = HTTPS.getName().getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = "200".getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = "204".getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = "206".getBytes(CHARSET);
