@@ -29,18 +29,18 @@ import static org.fossnova.http2.Utils.validateScheme;
  *
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-public final class RequestScheme {
+public final class Scheme {
 
-    public static final RequestScheme HTTP = new RequestScheme("http");
-    public static final RequestScheme HTTPS = new RequestScheme("https");
-    private static final Map<String, RequestScheme> KNOWN_SCHEMES = new HashMap<>();
+    public static final Scheme HTTP = new Scheme("http");
+    public static final Scheme HTTPS = new Scheme("https");
+    private static final Map<String, Scheme> KNOWN_SCHEMES = new HashMap<>();
     private final String scheme;
 
-    private RequestScheme(final String scheme) {
+    private Scheme(final String scheme) {
         this(scheme, true);
     }
 
-    private RequestScheme(final String scheme, final boolean register) {
+    private Scheme(final String scheme, final boolean register) {
         validateScheme(scheme);
         this.scheme = scheme.toLowerCase();
         if (register) {
@@ -71,10 +71,10 @@ public final class RequestScheme {
      * @return request scheme instance
      * @throws IllegalArgumentException if request scheme name doesn't match HTTP's spec. <code>scheme</code> definition
      */
-    public static RequestScheme of(final String name) {
+    public static Scheme of(final String name) {
         validateScheme(name);
-        final RequestScheme retVal = KNOWN_SCHEMES.get(name.toLowerCase());
-        return retVal != null ? retVal : new RequestScheme(name, false);
+        final Scheme retVal = KNOWN_SCHEMES.get(name.toLowerCase());
+        return retVal != null ? retVal : new Scheme(name, false);
     }
 
 }

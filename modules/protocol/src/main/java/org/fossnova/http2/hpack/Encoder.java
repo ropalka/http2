@@ -19,11 +19,11 @@
  */
 package org.fossnova.http2.hpack;
 
-import org.fossnova.http2.HeaderName;
+import org.fossnova.http2.Header;
 
-import static org.fossnova.http2.HeaderName.*;
-import static org.fossnova.http2.RequestMethod.*;
-import static org.fossnova.http2.RequestScheme.*;
+import static org.fossnova.http2.Header.*;
+import static org.fossnova.http2.Method.*;
+import static org.fossnova.http2.Scheme.*;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -149,7 +149,7 @@ public final class Encoder {
         this.maxTableSize = maxTableSize;
     }
 
-    public void addHeader(final HeaderName name, final String value, final Instruction i) {
+    public void addHeader(final Header name, final String value, final Instruction i) {
         // TODO: implement
     }
 

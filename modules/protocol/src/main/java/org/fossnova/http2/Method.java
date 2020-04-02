@@ -29,24 +29,24 @@ import static org.fossnova.http2.Utils.validateToken;
  *
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-public final class RequestMethod {
+public final class Method {
 
-    public static final RequestMethod GET = new RequestMethod("GET");
-    public static final RequestMethod HEAD = new RequestMethod("HEAD");
-    public static final RequestMethod POST = new RequestMethod("POST");
-    public static final RequestMethod PUT = new RequestMethod("PUT");
-    public static final RequestMethod DELETE = new RequestMethod("DELETE");
-    public static final RequestMethod CONNECT = new RequestMethod("CONNECT");
-    public static final RequestMethod OPTIONS = new RequestMethod("OPTIONS");
-    public static final RequestMethod TRACE = new RequestMethod("TRACE");
-    private static final Map<String, RequestMethod> KNOWN_METHODS = new HashMap<>();
+    public static final Method GET = new Method("GET");
+    public static final Method HEAD = new Method("HEAD");
+    public static final Method POST = new Method("POST");
+    public static final Method PUT = new Method("PUT");
+    public static final Method DELETE = new Method("DELETE");
+    public static final Method CONNECT = new Method("CONNECT");
+    public static final Method OPTIONS = new Method("OPTIONS");
+    public static final Method TRACE = new Method("TRACE");
+    private static final Map<String, Method> KNOWN_METHODS = new HashMap<>();
     private final String method;
 
-    private RequestMethod(final String method) {
+    private Method(final String method) {
         this(method, true);
     }
 
-    private RequestMethod(final String method, final boolean register) {
+    private Method(final String method, final boolean register) {
         this.method = method;
         if (register) {
             KNOWN_METHODS.put(method, this);
@@ -76,10 +76,10 @@ public final class RequestMethod {
      * @return request method instance
      * @throws IllegalArgumentException if request method name doesn't match HTTP's spec. <code>token</code> definition
      */
-    public static RequestMethod of(final String name) {
+    public static Method of(final String name) {
         validateToken(name);
-        final RequestMethod retVal = KNOWN_METHODS.get(name);
-        return retVal != null ? retVal : new RequestMethod(name, false);
+        final Method retVal = KNOWN_METHODS.get(name);
+        return retVal != null ? retVal : new Method(name, false);
     }
 
 }
