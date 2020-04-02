@@ -30,8 +30,6 @@ import static org.fossnova.http2.Utils.validateToken;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public final class RequestMethod {
-    private static final Map<String, RequestMethod> KNOWN_METHODS = new HashMap<>();
-    private final String method;
 
     public static final RequestMethod GET = new RequestMethod("GET");
     public static final RequestMethod HEAD = new RequestMethod("HEAD");
@@ -41,19 +39,8 @@ public final class RequestMethod {
     public static final RequestMethod CONNECT = new RequestMethod("CONNECT");
     public static final RequestMethod OPTIONS = new RequestMethod("OPTIONS");
     public static final RequestMethod TRACE = new RequestMethod("TRACE");
-
-    /**
-     * Creates specified request method.
-     *
-     * @param name method name
-     * @return request method instance
-     * @throws IllegalArgumentException if request method name doesn't match HTTP's spec. <code>token</code> definition
-     */
-    public static final RequestMethod of(final String name) {
-        validateToken(name);
-        final RequestMethod retVal = KNOWN_METHODS.get(name);
-        return retVal != null ? retVal : new RequestMethod(name, false);
-    }
+    private static final Map<String, RequestMethod> KNOWN_METHODS = new HashMap<>();
+    private final String method;
 
     private RequestMethod(final String method) {
         this(method, true);
@@ -70,4 +57,18 @@ public final class RequestMethod {
     public String toString() {
         return method;
     }
+
+    /**
+     * Creates specified request method.
+     *
+     * @param name method name
+     * @return request method instance
+     * @throws IllegalArgumentException if request method name doesn't match HTTP's spec. <code>token</code> definition
+     */
+    public static RequestMethod of(final String name) {
+        validateToken(name);
+        final RequestMethod retVal = KNOWN_METHODS.get(name);
+        return retVal != null ? retVal : new RequestMethod(name, false);
+    }
+
 }

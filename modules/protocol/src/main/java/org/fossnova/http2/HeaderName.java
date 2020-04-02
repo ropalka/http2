@@ -22,11 +22,10 @@ package org.fossnova.http2;
 import static org.fossnova.http2.Utils.validateToken;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
- * HTTP message headers as defined by
+ * HTTP message headers as defined by <a href="https://tools.ietf.org/html/rfc7540">HTTP 2</a> specification and
  * <a href="http://www.iana.org/assignments/message-headers/message-headers.xhtml">IANA</a> organization.
  *
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
@@ -893,7 +892,6 @@ public final class HeaderName {
     public static final HeaderName X_FRAME_OPTIONS = new HeaderName("X-Frame-Options");
 
     private static final Map<String, HeaderName> KNOWN_HEADERS = new HashMap<>();
-
     private final String titleCaseName;
     private final String lowerCaseName;
 
@@ -902,6 +900,7 @@ public final class HeaderName {
     }
 
     private HeaderName(final String name, final boolean register) {
+        validateToken(name);
         this.titleCaseName = name;
         this.lowerCaseName = name.toLowerCase();
         if (register) {
@@ -938,7 +937,7 @@ public final class HeaderName {
      */
     public static HeaderName of(final String name) {
         validateToken(name);
-        HeaderName retVal = KNOWN_HEADERS.get(name.toLowerCase(Locale.US));
+        final HeaderName retVal = KNOWN_HEADERS.get(name.toLowerCase());
         return retVal != null ? retVal : new HeaderName(name, false);
     }
 
