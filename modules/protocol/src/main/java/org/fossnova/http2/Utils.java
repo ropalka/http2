@@ -32,6 +32,20 @@ final class Utils {
             '!', '#', '$', '%', '&', '\'', '*', '+', '-', '.', '^', '_', '`', '|', '~'
     };
 
+    private static final char[] SCHEME_EXTRAS = new char[] {
+            '+', '-', '.'
+    };
+
+    static void validateScheme(final String scheme) {
+        if (scheme == null || scheme.length() == 0) throw new IllegalArgumentException();
+        if (!isAlphaChar(scheme.charAt(0))) throw new IllegalArgumentException();
+        for (int i = 1; i < scheme.length(); i++) {
+            if (!isSchemeChar(scheme.charAt(i))) {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
     static void validateToken(final String token) {
         if (token == null || token.length() == 0) throw new IllegalArgumentException();
         for (int i = 0; i < token.length(); i++) {
@@ -54,6 +68,15 @@ final class Utils {
         if (isDigitChar(c)) return true;
         for (int i = 0; i < TOKEN_EXTRAS.length; i++) {
             if (TOKEN_EXTRAS[i] == c) return true;
+        }
+        return false;
+    }
+
+    static boolean isSchemeChar(final char c) {
+        if (isAlphaChar(c)) return true;
+        if (isDigitChar(c)) return true;
+        for (int i = 0; i < SCHEME_EXTRAS.length; i++) {
+            if (SCHEME_EXTRAS[i] == c) return true;
         }
         return false;
     }
