@@ -61,7 +61,7 @@ public final class Scheme {
      */
     @Override
     public String toString() {
-        return scheme;
+        return "Request scheme: " + scheme;
     }
 
     /**

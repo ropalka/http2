@@ -929,7 +929,7 @@ public final class Header {
      */
     @Override
     public String toString() {
-        return titleCaseName;
+        return "Request header name: " + titleCaseName;
     }
 
     /**

@@ -54,7 +54,7 @@ public final class Method {
     }
 
     /**
-     * Returns request method name
+     * Returns request method name.
      * @return request method name
      */
     public String getName() {
@@ -66,7 +66,7 @@ public final class Method {
      */
     @Override
     public String toString() {
-        return method;
+        return "Request method: " + method;
     }
 
     /**
