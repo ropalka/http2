@@ -24,6 +24,7 @@ import org.fossnova.http2.Header;
 import static org.fossnova.http2.Header.*;
 import static org.fossnova.http2.Method.*;
 import static org.fossnova.http2.Scheme.*;
+import static org.fossnova.http2.StatusCode.*;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -132,13 +133,13 @@ public final class Encoder {
         STATIC_TABLE_HEADER_VALUES[i++] = "/index.html".getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = HTTP.getName().getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = HTTPS.getName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "200".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "204".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "206".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "304".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "400".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "404".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "500".getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = OK.getCodeAsString().getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = NO_CONTENT.getCodeAsString().getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = PARTIAL_CONTENT.getCodeAsString().getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = NOT_MODIFIED.getCodeAsString().getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = BAD_REQUEST.getCodeAsString().getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = NOT_FOUND.getCodeAsString().getBytes(CHARSET);
+        STATIC_TABLE_HEADER_VALUES[i++] = INTERNAL_SERVER_ERROR.getCodeAsString().getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = new byte[0];
         STATIC_TABLE_HEADER_VALUES[i++] = "gzip, deflate".getBytes(CHARSET);
     }

@@ -296,7 +296,7 @@ public final class StatusCode {
      * Returns status code integer value.
      * @return status code integer value
      */
-    public int getInteger() {
+    public int getCodeAsInteger() {
         return code;
     }
 
@@ -304,7 +304,7 @@ public final class StatusCode {
      * Returns status code integer value as string.
      * @return status code integer value as string
      */
-    public String getString() {
+    public String getCodeAsString() {
         return codeString;
     }
 
