@@ -61,7 +61,7 @@ public final class Encoder {
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
     private static final Charset CHARSET = StandardCharsets.UTF_8;
     private static final byte[][] STATIC_TABLE_HEADER_NAMES = new byte[62][];
-    private static final byte[][] STATIC_TABLE_HEADER_VALUES = new byte[17][];
+    private static final byte[][] STATIC_TABLE_HEADER_VALUES = new byte[62][];
 
     static {
         int i = 1;
@@ -143,12 +143,13 @@ public final class Encoder {
         STATIC_TABLE_HEADER_VALUES[i++] = INTERNAL_SERVER_ERROR.getCodeAsString().getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = EMPTY_BYTE_ARRAY;
         STATIC_TABLE_HEADER_VALUES[i++] = "gzip, deflate".getBytes(CHARSET);
+        while (i < STATIC_TABLE_HEADER_VALUES.length) STATIC_TABLE_HEADER_VALUES[i++] = EMPTY_BYTE_ARRAY;
     }
 
-    private volatile int maxTableSize;
+    private volatile int maxDynamicTableSize;
 
-    private Encoder(final int maxTableSize) {
-        this.maxTableSize = maxTableSize;
+    private Encoder(final int maxSize) {
+        this.maxDynamicTableSize = maxSize;
     }
 
     public void addHeader(final Header name, final String value, final Instruction i) {
@@ -158,10 +159,10 @@ public final class Encoder {
     /**
      * Creates new encoder.
      *
-     * @param maxTableSize maximum dynamic table size in octets
+     * @param maxSize maximum dynamic table size in octets
      * @return new Encoder instance
      */
-    public static Encoder newInstance(final int maxTableSize) {
-        return new Encoder(maxTableSize);
+    public static Encoder newInstance(final int maxSize) {
+        return new Encoder(maxSize);
     }
 }
