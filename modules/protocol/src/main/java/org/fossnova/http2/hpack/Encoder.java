@@ -21,14 +21,6 @@ package org.fossnova.http2.hpack;
 
 import org.fossnova.http2.Header;
 
-import static org.fossnova.http2.Header.*;
-import static org.fossnova.http2.Method.*;
-import static org.fossnova.http2.Scheme.*;
-import static org.fossnova.http2.StatusCode.*;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
 /**
  * // TODO: javadoc
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
@@ -56,94 +48,6 @@ public final class Encoder {
             return WITHOUT_INDEXING;
         }
 
-    }
-
-    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
-    private static final Charset CHARSET = StandardCharsets.UTF_8;
-    private static final byte[][] STATIC_TABLE_HEADER_NAMES = new byte[62][];
-    private static final byte[][] STATIC_TABLE_HEADER_VALUES = new byte[62][];
-
-    static {
-        int i = 1;
-        STATIC_TABLE_HEADER_NAMES[i++] = AUTHORITY.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = METHOD.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = METHOD.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = PATH.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = PATH.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = SCHEME.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = SCHEME.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = STATUS.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = STATUS.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = STATUS.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = STATUS.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = STATUS.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = STATUS.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = STATUS.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = ACCEPT_CHARSET.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = ACCEPT_ENCODING.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = ACCEPT_LANGUAGE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = ACCEPT_RANGES.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = ACCEPT.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = ACCESS_CONTROL_ALLOW_ORIGIN.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = AGE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = ALLOW.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = AUTHORIZATION.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = CACHE_CONTROL.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = CONTENT_DISPOSITION.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = CONTENT_ENCODING.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = CONTENT_LANGUAGE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = CONTENT_LENGTH.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = CONTENT_LOCATION.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = CONTENT_RANGE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = CONTENT_TYPE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = COOKIE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = DATE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = ETAG.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = EXPECT.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = EXPIRES.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = FROM.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = HOST.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = IF_MATCH.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = IF_MODIFIED_SINCE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = IF_NONE_MATCH.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = IF_RANGE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = IF_UNMODIFIED_SINCE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = LAST_MODIFIED.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = LINK.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = LOCATION.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = MAX_FORWARDS.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = PROXY_AUTHENTICATE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = PROXY_AUTHORIZATION.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = RANGE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = REFERER.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = REFRESH.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = RETRY_AFTER.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = SERVER.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = SET_COOKIE.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = STRICT_TRANSPORT_SECURITY.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = TRANSFER_ENCODING.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = USER_AGENT.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = VARY.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = VIA.getLowerCaseName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_NAMES[i++] = WWW_AUTHENTICATE.getLowerCaseName().getBytes(CHARSET);
-        i = 1;
-        STATIC_TABLE_HEADER_VALUES[i++] = EMPTY_BYTE_ARRAY;
-        STATIC_TABLE_HEADER_VALUES[i++] = GET.getName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = POST.getName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "/".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = "/index.html".getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = HTTP.getName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = HTTPS.getName().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = OK.getCodeAsString().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = NO_CONTENT.getCodeAsString().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = PARTIAL_CONTENT.getCodeAsString().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = NOT_MODIFIED.getCodeAsString().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = BAD_REQUEST.getCodeAsString().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = NOT_FOUND.getCodeAsString().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = INTERNAL_SERVER_ERROR.getCodeAsString().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = EMPTY_BYTE_ARRAY;
-        STATIC_TABLE_HEADER_VALUES[i++] = "gzip, deflate".getBytes(CHARSET);
-        while (i < STATIC_TABLE_HEADER_VALUES.length) STATIC_TABLE_HEADER_VALUES[i++] = EMPTY_BYTE_ARRAY;
     }
 
     private volatile int maxDynamicTableSize;
