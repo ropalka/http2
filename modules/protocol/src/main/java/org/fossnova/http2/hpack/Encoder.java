@@ -58,6 +58,7 @@ public final class Encoder {
 
     }
 
+    private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
     private static final Charset CHARSET = StandardCharsets.UTF_8;
     private static final byte[][] STATIC_TABLE_HEADER_NAMES = new byte[62][];
     private static final byte[][] STATIC_TABLE_HEADER_VALUES = new byte[17][];
@@ -126,7 +127,7 @@ public final class Encoder {
         STATIC_TABLE_HEADER_NAMES[i++] = VIA.getLowerCaseName().getBytes(CHARSET);
         STATIC_TABLE_HEADER_NAMES[i++] = WWW_AUTHENTICATE.getLowerCaseName().getBytes(CHARSET);
         i = 1;
-        STATIC_TABLE_HEADER_VALUES[i++] = new byte[0];
+        STATIC_TABLE_HEADER_VALUES[i++] = EMPTY_BYTE_ARRAY;
         STATIC_TABLE_HEADER_VALUES[i++] = GET.getName().getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = POST.getName().getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = "/".getBytes(CHARSET);
@@ -140,7 +141,7 @@ public final class Encoder {
         STATIC_TABLE_HEADER_VALUES[i++] = BAD_REQUEST.getCodeAsString().getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = NOT_FOUND.getCodeAsString().getBytes(CHARSET);
         STATIC_TABLE_HEADER_VALUES[i++] = INTERNAL_SERVER_ERROR.getCodeAsString().getBytes(CHARSET);
-        STATIC_TABLE_HEADER_VALUES[i++] = new byte[0];
+        STATIC_TABLE_HEADER_VALUES[i++] = EMPTY_BYTE_ARRAY;
         STATIC_TABLE_HEADER_VALUES[i++] = "gzip, deflate".getBytes(CHARSET);
     }
 
