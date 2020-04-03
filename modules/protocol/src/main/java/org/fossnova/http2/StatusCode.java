@@ -309,14 +309,6 @@ public final class StatusCode {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "Response status code: " + code;
-    }
-
-    /**
      * Creates specified status code.
      *
      * @param sc status code
@@ -339,6 +331,30 @@ public final class StatusCode {
         if (sc <= 0) throw new IllegalArgumentException();
         final StatusCode retVal = KNOWN_CODES.get(sc);
         return retVal != null ? retVal : new StatusCode(sc, false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object o) {
+        return o == this || o instanceof StatusCode && code == ((StatusCode)o).code;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(code);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "Response status code: " + code;
     }
 
 }

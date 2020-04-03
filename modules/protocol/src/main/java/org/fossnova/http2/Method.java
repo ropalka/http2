@@ -62,14 +62,6 @@ public final class Method {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "Request method: " + method;
-    }
-
-    /**
      * Creates specified request method.
      *
      * @param name method name
@@ -80,6 +72,30 @@ public final class Method {
         validateToken(name);
         final Method retVal = KNOWN_METHODS.get(name);
         return retVal != null ? retVal : new Method(name, false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object o) {
+        return o == this || o instanceof Method && method.equals(((Method)o).method);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return method.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "Request method: " + method;
     }
 
 }

@@ -57,14 +57,6 @@ public final class Scheme {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "Request scheme: " + scheme;
-    }
-
-    /**
      * Creates specified request scheme.
      *
      * @param name scheme name
@@ -75,6 +67,30 @@ public final class Scheme {
         validateScheme(name);
         final Scheme retVal = KNOWN_SCHEMES.get(name.toLowerCase());
         return retVal != null ? retVal : new Scheme(name, false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object o) {
+        return o == this || o instanceof Scheme && scheme.equals(((Scheme)o).scheme);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return scheme.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "Request scheme: " + scheme;
     }
 
 }

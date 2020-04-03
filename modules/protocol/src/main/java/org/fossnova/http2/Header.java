@@ -925,14 +925,6 @@ public final class Header {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "Request header name: " + titleCaseName;
-    }
-
-    /**
      * Creates specified message header.
      * @param name header name
      * @return message header instance
@@ -942,6 +934,30 @@ public final class Header {
         validateToken(name);
         final Header retVal = KNOWN_HEADERS.get(name.toLowerCase());
         return retVal != null ? retVal : new Header(name, false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object o) {
+        return o == this || o instanceof Header && lowerCaseName.equals(((Header)o).lowerCaseName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return lowerCaseName.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "Request header name: " + titleCaseName;
     }
 
 }
