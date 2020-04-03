@@ -28,6 +28,10 @@ final class Utils {
         // forbidden instantiation
     }
 
+    private static final String OBS_FOLD = "\r\n '";
+    private static final String SP = " ";
+    private static final String HTAB = "\t";
+
     private static final char[] TOKEN_EXTRAS = new char[] {
             '!', '#', '$', '%', '&', '\'', '*', '+', '-', '.', '^', '_', '`', '|', '~'
     };
@@ -35,6 +39,49 @@ final class Utils {
     private static final char[] SCHEME_EXTRAS = new char[] {
             '+', '-', '.'
     };
+
+    /*
+OWS = *( SP / HTAB )
+header-field   = field-name ":" OWS field-value OWS
+field-name     = token
+field-value    = *( field-content / obs-fold )
+field-content  = field-vchar [ 1*( SP / HTAB ) field-vchar ]
+field-vchar    = VCHAR / obs-text
+obs-fold       = CRLF 1*( SP / HTAB )
+                    ; obsolete line folding
+                    ; see Section 3.2.4
+     */
+    static String validateHeaderValue(final String headerValue) {
+        // TODO: optimize this method
+        // eliminate OWS first - TODO: don't use trim() as it ignores all chars before ' ' space char not just OWS chars
+        String retVal = headerValue.trim();
+        // eliminate obsolete line folding first - see Section 3.2.4
+        retVal.replace(HTAB, SP);
+        retVal = retVal.replace(OBS_FOLD, SP);
+        // eliminate all double spaces
+        while (retVal.indexOf(SP + SP) != -1) {
+            retVal.replace(SP + SP, SP);
+        }
+        // finally validate chars
+        for (int i = 0; i < retVal.length(); i++) {
+            if (!isFieldVCHAR(retVal.charAt(i)) && retVal.charAt(i) != SP.charAt(0)) {
+                throw new IllegalArgumentException(headerValue);
+            }
+        }
+        return retVal;
+    }
+
+    private static boolean isFieldVCHAR(final char c) {
+        return isVCHAR(c) || isObsText(c);
+    }
+
+    private static boolean isVCHAR(final char c) {
+        return 0x21 <= c && c <= 0x7E;
+    }
+
+    private static boolean isObsText(final char c) {
+        return 0x80 <= c && c <= 0xFF;
+    }
 
     static void validateScheme(final String scheme) {
         if (scheme == null || scheme.length() == 0) throw new IllegalArgumentException();
