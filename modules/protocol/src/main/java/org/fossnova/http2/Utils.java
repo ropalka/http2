@@ -46,6 +46,14 @@ final class Utils {
         }
     }
 
+    static void validateHeaderName(final String fieldName) {
+        validateToken(fieldName);
+    }
+
+    static void validateMethod(final String methodName) {
+        validateToken(methodName);
+    }
+
     static void validateToken(final String token) {
         if (token == null || token.length() == 0) throw new IllegalArgumentException();
         for (int i = 0; i < token.length(); i++) {

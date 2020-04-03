@@ -22,7 +22,7 @@ package org.fossnova.http2;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.fossnova.http2.Utils.validateToken;
+import static org.fossnova.http2.Utils.validateMethod;
 
 /**
  * HTTP request methods.
@@ -40,16 +40,17 @@ public final class Method {
     public static final Method OPTIONS = new Method("OPTIONS");
     public static final Method TRACE = new Method("TRACE");
     private static final Map<String, Method> KNOWN_METHODS = new HashMap<>();
-    private final String method;
+    private final String name;
 
-    private Method(final String method) {
-        this(method, true);
+    private Method(final String name) {
+        this(name, true);
     }
 
-    private Method(final String method, final boolean register) {
-        this.method = method;
+    private Method(final String name, final boolean register) {
+        validateMethod(name);
+        this.name = name;
         if (register) {
-            KNOWN_METHODS.put(method, this);
+            KNOWN_METHODS.put(name, this);
         }
     }
 
@@ -58,7 +59,7 @@ public final class Method {
      * @return request method name
      */
     public String getName() {
-        return method;
+        return name;
     }
 
     /**
@@ -69,7 +70,7 @@ public final class Method {
      * @throws IllegalArgumentException if request method name doesn't match HTTP's spec. <code>token</code> definition
      */
     public static Method of(final String name) {
-        validateToken(name);
+        validateMethod(name);
         final Method retVal = KNOWN_METHODS.get(name);
         return retVal != null ? retVal : new Method(name, false);
     }
@@ -79,7 +80,7 @@ public final class Method {
      */
     @Override
     public boolean equals(final Object o) {
-        return o == this || o instanceof Method && method.equals(((Method)o).method);
+        return o == this || o instanceof Method && name.equals(((Method)o).name);
     }
 
     /**
@@ -87,7 +88,7 @@ public final class Method {
      */
     @Override
     public int hashCode() {
-        return method.hashCode();
+        return name.hashCode();
     }
 
     /**
@@ -95,7 +96,7 @@ public final class Method {
      */
     @Override
     public String toString() {
-        return "Request method: " + method;
+        return "Request method: " + name;
     }
 
 }

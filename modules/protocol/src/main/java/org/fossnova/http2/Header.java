@@ -19,7 +19,7 @@
  */
 package org.fossnova.http2;
 
-import static org.fossnova.http2.Utils.validateToken;
+import static org.fossnova.http2.Utils.validateHeaderName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -900,7 +900,7 @@ public final class Header {
     }
 
     private Header(final String name, final boolean register) {
-        validateToken(name);
+        validateHeaderName(name);
         this.titleCaseName = name;
         this.lowerCaseName = name.toLowerCase();
         if (register) {
@@ -931,7 +931,7 @@ public final class Header {
      * @throws IllegalArgumentException if message header name doesn't match HTTP's spec. <code>token</code> definition
      */
     public static Header of(final String name) {
-        validateToken(name);
+        validateHeaderName(name);
         final Header retVal = KNOWN_HEADERS.get(name.toLowerCase());
         return retVal != null ? retVal : new Header(name, false);
     }
