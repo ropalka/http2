@@ -19,15 +19,28 @@
  */
 package org.fossnova.http2.hpack;
 
-import org.fossnova.http2.Header;
+import org.fossnova.http2.HeaderField;
 
 /**
- * // TODO: javadoc
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
-public final class Encoder {
+final class EncoderImpl implements HpackEncoder {
 
-    public enum Instruction {
+    private static final Policy DEFAULT_POLICY = new DefaultFunction();
+
+    private static final class DefaultFunction implements Policy {
+        @Override
+        public boolean indexize(final HeaderField hf) {
+            return false;
+        }
+
+        @Override
+        public boolean huffmanize(final HeaderField hf) {
+            return false;
+        }
+    }
+
+    private enum Instruction {
         INDEXED((byte) 0x80),
         SIZE_UPDATE((byte) 0x20),
         WITH_INDEXING((byte) 0x40),
@@ -50,23 +63,35 @@ public final class Encoder {
 
     }
 
-    private volatile int maxDynamicTableSize;
+    private static final int INITIAL_DYNAMIC_TABLE_SIZE = 4096;
+    private final int maxDynamicTableSize;
+    private final Policy policy;
+    private final boolean server;
 
-    private Encoder(final int maxSize) {
-        this.maxDynamicTableSize = maxSize;
+    private EncoderImpl(final Policy policy, final int maxDynamicTableSize, final boolean server) {
+        this.policy = policy;
+        this.maxDynamicTableSize = Math.min(maxDynamicTableSize, INITIAL_DYNAMIC_TABLE_SIZE);
+        this.server = server;
     }
 
-    public void addHeader(final Header name, final String value, final Instruction i) {
+    @Override
+    public void add(final HeaderField hf) {
         // TODO: implement
+        throw new UnsupportedOperationException();
     }
 
-    /**
-     * Creates new encoder.
-     *
-     * @param maxSize maximum dynamic table size in octets
-     * @return new Encoder instance
-     */
-    public static Encoder newInstance(final int maxSize) {
-        return new Encoder(maxSize);
+    @Override
+    public byte[] finish() {
+        // TODO: implement
+        throw new UnsupportedOperationException();
     }
+
+    public static EncoderImpl newInstance(final int maxDynamicTableSize, final boolean server) {
+        return newInstance(DEFAULT_POLICY, maxDynamicTableSize, server);
+    }
+
+    public static EncoderImpl newInstance(final Policy policy, final int maxDynamicTableSize, final boolean server) {
+        return new EncoderImpl(policy == null ? DEFAULT_POLICY : policy, maxDynamicTableSize, server);
+    }
+
 }
