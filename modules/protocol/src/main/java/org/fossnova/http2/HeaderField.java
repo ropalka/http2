@@ -19,15 +19,21 @@
  */
 package org.fossnova.http2;
 
+import static org.fossnova.http2.Utils.getHeaderNameSize;
+import static org.fossnova.http2.Utils.getHeaderValueSize;
+import static org.fossnova.http2.Utils.validateHeaderValue;
+
 /**
  * TODO: javadoc
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
 public final class HeaderField {
 
+    private static final int OVERHEAD = 32;
     private final Header headerName;
     private final String headerValue;
     private final int hashCode;
+    private final int size;
 
     private HeaderField(final Header headerName, final String headerValue) {
         this.headerName = headerName;
@@ -36,6 +42,7 @@ public final class HeaderField {
         result = 37 * result + headerName.hashCode();
         result = 37 * result + (headerValue == null ? 0 : headerValue.hashCode());
         hashCode = result;
+        size = OVERHEAD + getHeaderNameSize(headerName) + getHeaderValueSize(headerValue);
     }
 
     /**
@@ -46,7 +53,7 @@ public final class HeaderField {
      */
     public static HeaderField of(final Header headerName, final String headerValue) {
         if (headerName == null) throw new IllegalArgumentException();
-        return new HeaderField(headerName, headerValue);
+        return new HeaderField(headerName, headerValue != null ? validateHeaderValue(headerValue) : null);
     }
 
     /**
@@ -57,6 +64,14 @@ public final class HeaderField {
     public static HeaderField of(final Header headerName) {
         if (headerName == null) throw new IllegalArgumentException();
         return of(headerName, null);
+    }
+
+    /**
+     * Returns size of this header field in octets.
+     * @return size in octets
+     */
+    public int getSize() {
+        return size;
     }
 
     /**

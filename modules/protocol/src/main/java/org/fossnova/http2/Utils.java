@@ -19,6 +19,9 @@
  */
 package org.fossnova.http2;
 
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.US_ASCII;
+
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -50,6 +53,8 @@ field-vchar    = VCHAR / obs-text
 obs-fold       = CRLF 1*( SP / HTAB )
                     ; obsolete line folding
                     ; see Section 3.2.4
+
+       TODO: This method is based on RFC7230 Section 3.2.4
      */
     static String validateHeaderValue(final String headerValue) {
         // TODO: optimize this method
@@ -69,6 +74,16 @@ obs-fold       = CRLF 1*( SP / HTAB )
             }
         }
         return retVal;
+    }
+
+    static int getHeaderNameSize(final Header header) {
+        return header.getTitleCaseName().getBytes(US_ASCII).length;
+    }
+
+    static int getHeaderValueSize(final String headerValue) {
+        // TODO: we could use ASCII instead of ISO_8859_1 if we wouldn't support obs-text, see RFC7230 Section 3.2.4
+        // TODO: Decide whether we will support obs-text and potentially provide configuration options like STRICT, BC_COMPATIBLE modes
+        return headerValue != null ? headerValue.getBytes(ISO_8859_1).length : 0;
     }
 
     private static boolean isFieldVCHAR(final char c) {
