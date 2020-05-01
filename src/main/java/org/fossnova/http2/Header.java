@@ -32,6 +32,7 @@ import java.util.Map;
  */
 public final class Header {
 
+    private static final Map<String, Header> KNOWN_HEADERS = new HashMap<>();
     /////////////////////////////
     // HTTP 2 specific headers //
     /////////////////////////////
@@ -891,7 +892,6 @@ public final class Header {
      */
     public static final Header X_FRAME_OPTIONS = new Header("X-Frame-Options");
 
-    private static final Map<String, Header> KNOWN_HEADERS = new HashMap<>();
     private final String titleCaseName;
     private final String lowerCaseName;
 

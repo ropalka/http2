@@ -31,6 +31,7 @@ import static org.fossnova.http2.Utils.validateMethod;
  */
 public final class Method {
 
+    private static final Map<String, Method> KNOWN_METHODS = new HashMap<>();
     public static final Method GET = new Method("GET");
     public static final Method HEAD = new Method("HEAD");
     public static final Method POST = new Method("POST");
@@ -39,7 +40,6 @@ public final class Method {
     public static final Method CONNECT = new Method("CONNECT");
     public static final Method OPTIONS = new Method("OPTIONS");
     public static final Method TRACE = new Method("TRACE");
-    private static final Map<String, Method> KNOWN_METHODS = new HashMap<>();
     private final String name;
 
     private Method(final String name) {

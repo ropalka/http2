@@ -31,9 +31,10 @@ import static org.fossnova.http2.Utils.validateScheme;
  */
 public final class Scheme {
 
+    private static final Map<String, Scheme> KNOWN_SCHEMES = new HashMap<>();
     public static final Scheme HTTP = new Scheme("http");
     public static final Scheme HTTPS = new Scheme("https");
-    private static final Map<String, Scheme> KNOWN_SCHEMES = new HashMap<>();
+
     private final String scheme;
 
     private Scheme(final String scheme) {

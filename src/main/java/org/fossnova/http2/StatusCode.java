@@ -31,6 +31,7 @@ import static org.fossnova.http2.Utils.validateScheme;
  */
 public final class StatusCode {
 
+    private static final Map<Integer, StatusCode> KNOWN_CODES = new HashMap<>();
     /**
      * Status code <code>100</code>, see <code>RFC7231</code> section <code>6.2.1</code>.
      */
@@ -275,7 +276,7 @@ public final class StatusCode {
      * Status code <code>511</code>, see <code>RFC6585</code>.
      */
     public static final StatusCode NETWORK_AUTHENTICATION_REQUIRED = new StatusCode(511);
-    private static final Map<Integer, StatusCode> KNOWN_CODES = new HashMap<>();
+
     private final int code;
     private final String codeString;
 
