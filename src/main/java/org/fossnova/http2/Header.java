@@ -39,23 +39,23 @@ public final class Header {
     /**
      * <code>:authority</code> message header, see <code>RFC7540</code>.
      */
-    public static final Header AUTHORITY = new Header(":authority");
+    public static final Header AUTHORITY = new Header(":authority", false);
     /**
      * <code>:method</code> message header, see <code>RFC7540</code>.
      */
-    public static final Header METHOD = new Header(":method");
+    public static final Header METHOD = new Header(":method", false);
     /**
      * <code>:path</code> message header, see <code>RFC7540</code>.
      */
-    public static final Header PATH = new Header(":path");
+    public static final Header PATH = new Header(":path", false);
     /**
      * <code>:scheme</code> message header, see <code>RFC7540</code>.
      */
-    public static final Header SCHEME = new Header(":scheme");
+    public static final Header SCHEME = new Header(":scheme", false);
     /**
      * <code>:status</code> message header, see <code>RFC7540</code>.
      */
-    public static final Header STATUS = new Header(":status");
+    public static final Header STATUS = new Header(":status", false);
     ///////////////////////////////
     // HTTP 1.1 specific headers //
     ///////////////////////////////
@@ -896,11 +896,17 @@ public final class Header {
     private final String lowerCaseName;
 
     private Header(final String name) {
-        this(name, true);
+        this(name, true, true);
     }
 
-    private Header(final String name, final boolean register) {
-        validateHeaderName(name);
+    private Header(final String name, final boolean validate) {
+        this(name, validate, true);
+    }
+
+    private Header(final String name, final boolean validate, final boolean register) {
+        if (validate) {
+            validateHeaderName(name);
+        }
         this.titleCaseName = name;
         this.lowerCaseName = name.toLowerCase();
         if (register) {
