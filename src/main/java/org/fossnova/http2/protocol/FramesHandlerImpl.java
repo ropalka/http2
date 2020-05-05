@@ -33,6 +33,7 @@ public final class FramesHandlerImpl extends FramesHandler {
     private final boolean validate;
     private final AtomicBoolean started = new AtomicBoolean();
     private final AtomicBoolean stopped = new AtomicBoolean();
+    private final ByteBuffer buffer = ByteBuffer.allocate(SettingsFrame.DEFAULT_MAX_FRAME_SIZE);
 
     public FramesHandlerImpl(final String host, final int port, final boolean server, final boolean validate) {
         this.host = host;
@@ -68,12 +69,12 @@ public final class FramesHandlerImpl extends FramesHandler {
     }
 
     @Override
-    public void push(final Frame frame, final ByteBuffer buffer) {
+    public void push(final Frame frame) {
         ((AbstractFrameImpl) frame).writeTo(buffer);
     }
 
     @Override
-    public Frame pull(final ByteBuffer buffer) {
+    public Frame pull() {
         return AbstractFrameImpl.readFrom(buffer, server, validate);
     }
 

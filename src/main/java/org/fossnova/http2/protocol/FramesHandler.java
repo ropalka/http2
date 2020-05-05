@@ -51,6 +51,6 @@ public abstract class FramesHandler {
     public abstract WindowUpdateFrame.Builder newWindowUpdateFrameBuilder();
     public abstract void start();
     public abstract void stop();
-    public abstract void push(final Frame frame, final ByteBuffer buffer);
-    public abstract Frame pull(final ByteBuffer buffer);
+    public abstract void push(final Frame frame);
+    public abstract Frame pull();
 }

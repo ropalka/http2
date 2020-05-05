@@ -22,45 +22,36 @@ package org.fossnova.http2.protocol;
 import org.junit.After;
 import org.junit.Before;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public class AbstractHttp2TestCase {
     private static final String HOST = "localhost";
     private static final int PORT = 8080;
-    private byte[] dataBytes;
-    private ByteBuffer dataBuffer;
     private FramesHandler clientFramesHandler, serverFramesHandler;
 
     @Before
     public final void setUp() {
-        dataBytes = new byte[1024];
-        dataBuffer = ByteBuffer.wrap(dataBytes);
         clientFramesHandler = FramesHandler.newInstance(HOST, PORT, false, true);
         serverFramesHandler = FramesHandler.newInstance(HOST, PORT,true, true);
+        serverFramesHandler.start();
+        clientFramesHandler.start();
     }
 
     @After
     public final void tearDown() {
-        dataBytes = null;
-        dataBuffer = null;
+        clientFramesHandler.stop();
         clientFramesHandler = null;
+        serverFramesHandler.stop();
         serverFramesHandler = null;
     }
 
     final void pushFrame(final Frame f) {
-        clientFramesHandler.push(f, dataBuffer);
-        dataBuffer.flip();
+        clientFramesHandler.push(f);
     }
 
     final Frame pullFrame() {
-        try {
-            return serverFramesHandler.pull(dataBuffer);
-        } finally {
-            dataBuffer.flip();
-        }
+        return serverFramesHandler.pull();
     }
 
     final ContinuationFrame.Builder newContinuationFrameBuilder() {
