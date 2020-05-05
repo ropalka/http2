@@ -26,16 +26,25 @@ import java.nio.ByteBuffer;
  */
 public final class FramesHandlerImpl extends FramesHandler {
 
+    private final String host;
+    private final int port;
     private final boolean server;
     private final boolean validate;
 
-    public FramesHandlerImpl(final boolean server, final boolean validate) {
+    public FramesHandlerImpl(final String host, final int port, final boolean server, final boolean validate) {
+        this.host = host;
+        this.port = port;
         this.server = server;
         this.validate = validate;
     }
 
     @Override
     public void push(final Frame frame, final ByteBuffer buffer) {
+        if (server) {
+            // start non blocking HTTP server emulator
+        } else {
+            // start non blocking HTTP client emulator
+        }
         ((AbstractFrameImpl) frame).writeTo(buffer);
     }
 
