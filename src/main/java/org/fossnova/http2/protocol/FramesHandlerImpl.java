@@ -20,6 +20,7 @@
 package org.fossnova.http2.protocol;
 
 import java.nio.ByteBuffer;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
@@ -30,6 +31,8 @@ public final class FramesHandlerImpl extends FramesHandler {
     private final int port;
     private final boolean server;
     private final boolean validate;
+    private final AtomicBoolean started = new AtomicBoolean();
+    private final AtomicBoolean stopped = new AtomicBoolean();
 
     public FramesHandlerImpl(final String host, final int port, final boolean server, final boolean validate) {
         this.host = host;
@@ -39,12 +42,33 @@ public final class FramesHandlerImpl extends FramesHandler {
     }
 
     @Override
-    public void push(final Frame frame, final ByteBuffer buffer) {
-        if (server) {
-            // start non blocking HTTP server emulator
+    public void start() {
+        if (started.compareAndSet(false, true)) {
+            if (server) {
+                // start non blocking HTTP server emulator
+            } else {
+                // start non blocking HTTP client emulator
+            }
         } else {
-            // start non blocking HTTP client emulator
+            // TODO: what???
         }
+    }
+
+    @Override
+    public void stop() {
+        if (stopped.compareAndSet(false, true)) {
+            if (server) {
+                // stop non blocking HTTP server emulator
+            } else {
+                // stop non blocking HTTP client emulator
+            }
+        } else {
+            // TODO: what???
+        }
+    }
+
+    @Override
+    public void push(final Frame frame, final ByteBuffer buffer) {
         ((AbstractFrameImpl) frame).writeTo(buffer);
     }
 

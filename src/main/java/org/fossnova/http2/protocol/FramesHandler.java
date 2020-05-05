@@ -49,6 +49,8 @@ public abstract class FramesHandler {
     public abstract RstStreamFrame.Builder newRstStreamFrameBuilder();
     public abstract SettingsFrame.Builder newSettingsFrameBuilder();
     public abstract WindowUpdateFrame.Builder newWindowUpdateFrameBuilder();
+    public abstract void start();
+    public abstract void stop();
     public abstract void push(final Frame frame, final ByteBuffer buffer);
     public abstract Frame pull(final ByteBuffer buffer);
 }
