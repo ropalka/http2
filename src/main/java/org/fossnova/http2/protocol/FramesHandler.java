@@ -36,8 +36,8 @@ public abstract class FramesHandler {
     /**
      * TODO: javadoc
      */
-    public static FramesHandler newInstance(final boolean server, final boolean validate) {
-        return new FramesHandlerImpl(server, validate);
+    public static FramesHandler newInstance(final String host, final int port, final boolean server, final boolean validate) {
+        return new FramesHandlerImpl(host, port, server, validate);
     }
     public abstract ContinuationFrame.Builder newContinuationFrameBuilder();
     public abstract DataFrame.Builder newDataFrameBuilder();

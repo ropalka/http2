@@ -28,6 +28,8 @@ import java.nio.ByteBuffer;
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
 public class AbstractHttp2TestCase {
+    private static final String HOST = "localhost";
+    private static final int PORT = 8080;
     private byte[] dataBytes;
     private ByteBuffer dataBuffer;
     private FramesHandler clientFramesHandler, serverFramesHandler;
@@ -36,8 +38,8 @@ public class AbstractHttp2TestCase {
     public final void setUp() {
         dataBytes = new byte[1024];
         dataBuffer = ByteBuffer.wrap(dataBytes);
-        clientFramesHandler = FramesHandler.newInstance(false, true);
-        serverFramesHandler = FramesHandler.newInstance(true, true);
+        clientFramesHandler = FramesHandler.newInstance(HOST, PORT, false, true);
+        serverFramesHandler = FramesHandler.newInstance(HOST, PORT,true, true);
     }
 
     @After
