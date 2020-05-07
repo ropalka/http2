@@ -19,6 +19,7 @@
  */
 package org.fossnova.http2.protocol;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
@@ -49,8 +50,8 @@ public abstract class FramesHandler {
     public abstract RstStreamFrame.Builder newRstStreamFrameBuilder();
     public abstract SettingsFrame.Builder newSettingsFrameBuilder();
     public abstract WindowUpdateFrame.Builder newWindowUpdateFrameBuilder();
-    public abstract void start();
-    public abstract void stop();
+    public abstract void start() throws IOException, InterruptedException;
+    public abstract void stop() throws IOException, InterruptedException;
     public abstract void push(final Frame frame);
     public abstract Frame pull();
 }

@@ -19,7 +19,9 @@
  */
 package org.fossnova.http2.protocol;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -34,6 +36,7 @@ public final class FramesHandlerImpl extends FramesHandler {
     private final AtomicBoolean started = new AtomicBoolean();
     private final AtomicBoolean stopped = new AtomicBoolean();
     private final ByteBuffer buffer = ByteBuffer.allocate(SettingsFrame.DEFAULT_MAX_FRAME_SIZE);
+    private volatile Thread connThread;
 
     public FramesHandlerImpl(final String host, final int port, final boolean server, final boolean validate) {
         this.host = host;
@@ -43,10 +46,13 @@ public final class FramesHandlerImpl extends FramesHandler {
     }
 
     @Override
-    public void start() {
+    public void start() throws IOException, InterruptedException {
         if (started.compareAndSet(false, true)) {
             if (server) {
-                // start non blocking HTTP server emulator
+                final CountDownLatch serverStartLatch = new CountDownLatch(1);
+                connThread = new Thread(new Server(host, port, serverStartLatch));
+                connThread.start();
+                serverStartLatch.await();
             } else {
                 // start non blocking HTTP client emulator
             }
@@ -59,7 +65,7 @@ public final class FramesHandlerImpl extends FramesHandler {
     public void stop() {
         if (stopped.compareAndSet(false, true)) {
             if (server) {
-                // stop non blocking HTTP server emulator
+                connThread.interrupt();
             } else {
                 // stop non blocking HTTP client emulator
             }

@@ -31,7 +31,7 @@ public class AbstractHttp2TestCase {
     private FramesHandler clientFramesHandler, serverFramesHandler;
 
     @Before
-    public final void setUp() {
+    public final void setUp() throws Exception {
         clientFramesHandler = FramesHandler.newInstance(HOST, PORT, false, true);
         serverFramesHandler = FramesHandler.newInstance(HOST, PORT,true, true);
         serverFramesHandler.start();
@@ -39,7 +39,7 @@ public class AbstractHttp2TestCase {
     }
 
     @After
-    public final void tearDown() {
+    public final void tearDown() throws Exception {
         clientFramesHandler.stop();
         clientFramesHandler = null;
         serverFramesHandler.stop();
