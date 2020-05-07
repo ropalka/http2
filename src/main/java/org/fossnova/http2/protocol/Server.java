@@ -42,13 +42,14 @@ final class Server implements Runnable {
     private final int port;
     private final Selector selector;
     private final ServerSocketChannel serverChannel;
-    private final CountDownLatch latch;
+    private final CountDownLatch startLatch, stopLatch;
     private volatile Throwable failure;
 
-    Server(final String host, final int port, final CountDownLatch latch) throws IOException {
+    Server(final String host, final int port, final CountDownLatch startLatch, final CountDownLatch stopLatch) throws IOException {
         this.host = host;
         this.port = port;
-        this.latch = latch;
+        this.startLatch = startLatch;
+        this.stopLatch = stopLatch;
         selector = Selector.open();
         serverChannel = ServerSocketChannel.open();
         serverChannel.configureBlocking(false);
@@ -60,7 +61,7 @@ final class Server implements Runnable {
     @Override
     public void run() {
         try {
-            latch.countDown();
+            startLatch.countDown();
             while (!Thread.interrupted()) {
                 selector.select();
                 Set selected = selector.selectedKeys();
@@ -71,6 +72,8 @@ final class Server implements Runnable {
             }
         } catch (final Throwable t) {
             failure = t;
+        } finally {
+            stopLatch.countDown();
         }
     }
 

@@ -35,6 +35,8 @@ public final class FramesHandlerImpl extends FramesHandler {
     private final boolean validate;
     private final AtomicBoolean started = new AtomicBoolean();
     private final AtomicBoolean stopped = new AtomicBoolean();
+    private final CountDownLatch startLatch = new CountDownLatch(1);
+    private final CountDownLatch stopLatch = new CountDownLatch(1);
     private final ByteBuffer buffer = ByteBuffer.allocate(SettingsFrame.DEFAULT_MAX_FRAME_SIZE);
     private volatile Thread connThread;
 
@@ -48,29 +50,18 @@ public final class FramesHandlerImpl extends FramesHandler {
     @Override
     public void start() throws IOException, InterruptedException {
         if (started.compareAndSet(false, true)) {
-            if (server) {
-                final CountDownLatch serverStartLatch = new CountDownLatch(1);
-                connThread = new Thread(new Server(host, port, serverStartLatch));
-                connThread.start();
-                serverStartLatch.await();
-            } else {
-                // start non blocking HTTP client emulator
-            }
-        } else {
-            // TODO: what???
+            final Runnable r = server ? new Server(host, port, startLatch, stopLatch) : new Client(host, port, startLatch, stopLatch);
+            connThread = new Thread(r);
+            connThread.start();
+            startLatch.await();
         }
     }
 
     @Override
-    public void stop() {
+    public void stop() throws InterruptedException {
         if (stopped.compareAndSet(false, true)) {
-            if (server) {
-                connThread.interrupt();
-            } else {
-                // stop non blocking HTTP client emulator
-            }
-        } else {
-            // TODO: what???
+            connThread.interrupt();
+            stopLatch.await();
         }
     }
 
