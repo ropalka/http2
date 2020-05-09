@@ -19,8 +19,6 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -37,20 +35,22 @@ final class RstStreamFrameImpl extends AbstractFrameImpl implements RstStreamFra
         return errorCode;
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        super.writeTo(buffer);
-        buffer.put((byte)(errorCode >>> 24));
-        buffer.put((byte)(errorCode >>> 16));
-        buffer.put((byte)(errorCode >>> 8));
-        buffer.put((byte)(errorCode));
+    byte[] writePayload() {
+        final byte[] buffer = new byte[getPayloadSize()];
+        int i = 0;
+        buffer[i++] = (byte)(errorCode >>> 24);
+        buffer[i++] = (byte)(errorCode >>> 16);
+        buffer[i++] = (byte)(errorCode >>> 8);
+        buffer[i++] = (byte)(errorCode);
+        return buffer;
     }
 
-    static RstStreamFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // implementation
-        int errorCode = 0xFF_00_00_00 & buffer.get() << 24;
-        errorCode |= 0x00_FF_00_00 & buffer.get() << 16;
-        errorCode |= 0x00_00_FF_00 & buffer.get() << 8;
-        errorCode |= 0x00_00_00_FF & buffer.get();
+    static RstStreamFrameImpl readFrom(final byte[] buffer, final Builder builder) {
+        int i = 0;
+        int errorCode = 0xFF_00_00_00 & buffer[i++] << 24;
+        errorCode |= 0x00_FF_00_00 & buffer[i++] << 16;
+        errorCode |= 0x00_00_FF_00 & buffer[i++] << 8;
+        errorCode |= 0x00_00_00_FF & buffer[i++];
         builder.setErrorCode(errorCode);
         return builder.build();
     }

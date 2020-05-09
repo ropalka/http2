@@ -19,8 +19,6 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -37,20 +35,22 @@ final class WindowUpdateFrameImpl extends AbstractFrameImpl implements WindowUpd
         return windowInc;
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        super.writeTo(buffer);
-        buffer.put((byte)(windowInc >>> 24));
-        buffer.put((byte)(windowInc >>> 16));
-        buffer.put((byte)(windowInc >>> 8));
-        buffer.put((byte)(windowInc));
+    byte[] writePayload() {
+        final byte[] buffer = new byte[getPayloadSize()];
+        int i = 0;
+        buffer[i++] = (byte)(windowInc >>> 24);
+        buffer[i++] = (byte)(windowInc >>> 16);
+        buffer[i++] = (byte)(windowInc >>> 8);
+        buffer[i++] = (byte)(windowInc);
+        return buffer;
     }
 
-    static WindowUpdateFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // implementation
-        int windowInc = 0xFF_00_00_00 & buffer.get() << 24;
-        windowInc |= 0x00_FF_00_00 & buffer.get() << 16;
-        windowInc |= 0x00_00_FF_00 & buffer.get() << 8;
-        windowInc |= 0x00_00_00_FF & buffer.get();
+    static WindowUpdateFrameImpl readFrom(final byte[] buffer, final Builder builder) {
+        int i = 0;
+        int windowInc = 0xFF_00_00_00 & buffer[i++] << 24;
+        windowInc |= 0x00_FF_00_00 & buffer[i++] << 16;
+        windowInc |= 0x00_00_FF_00 & buffer[i++] << 8;
+        windowInc |= 0x00_00_00_FF & buffer[i++];
         builder.setWindowSizeIncrement(windowInc);
         return builder.build();
     }

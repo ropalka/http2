@@ -19,8 +19,6 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -51,38 +49,40 @@ final class GoAwayFrameImpl extends AbstractFrameImpl implements GoAwayFrame {
         return debugData != null ? debugData.clone() : null;
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        super.writeTo(buffer);
-        buffer.put((byte)(lastStreamId >>> 24));
-        buffer.put((byte)(lastStreamId >>> 16));
-        buffer.put((byte)(lastStreamId >>> 8));
-        buffer.put((byte)(lastStreamId));
-        buffer.put((byte)(errorCode >>> 24));
-        buffer.put((byte)(errorCode >>> 16));
-        buffer.put((byte)(errorCode >>> 8));
-        buffer.put((byte)(errorCode));
+    byte[] writePayload() {
+        final byte[] buffer = new byte[getPayloadSize()];
+        int i = 0;
+        buffer[i++] = (byte)(lastStreamId >>> 24);
+        buffer[i++] = (byte)(lastStreamId >>> 16);
+        buffer[i++] = (byte)(lastStreamId >>> 8);
+        buffer[i++] = (byte)(lastStreamId);
+        buffer[i++] = (byte)(errorCode >>> 24);
+        buffer[i++] = (byte)(errorCode >>> 16);
+        buffer[i++] = (byte)(errorCode >>> 8);
+        buffer[i++] = (byte)(errorCode);
         if (debugData != null) {
-            buffer.put(debugData);
+            System.arraycopy(debugData, 0, buffer, i, debugData.length);
         }
+        return buffer;
     }
 
-    static GoAwayFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // implementation
-        int lastStreamId = 0xFF_00_00_00 & buffer.get() << 24;
-        lastStreamId |= 0x00_FF_00_00 & buffer.get() << 16;
-        lastStreamId |= 0x00_00_FF_00 & buffer.get() << 8;
-        lastStreamId |= 0x00_00_00_FF & buffer.get();
+    static GoAwayFrameImpl readFrom(final byte[] buffer, final Builder builder) {
+        int i = 0;
+        int lastStreamId = 0xFF_00_00_00 & buffer[i++] << 24;
+        lastStreamId |= 0x00_FF_00_00 & buffer[i++] << 16;
+        lastStreamId |= 0x00_00_FF_00 & buffer[i++] << 8;
+        lastStreamId |= 0x00_00_00_FF & buffer[i++];
         builder.setLastStreamId(lastStreamId);
 
-        int errorCode = 0xFF_00_00_00 & buffer.get() << 24;
-        errorCode |= 0x00_FF_00_00 & buffer.get() << 16;
-        errorCode |= 0x00_00_FF_00 & buffer.get() << 8;
-        errorCode |= 0x00_00_00_FF & buffer.get();
+        int errorCode = 0xFF_00_00_00 & buffer[i++] << 24;
+        errorCode |= 0x00_FF_00_00 & buffer[i++] << 16;
+        errorCode |= 0x00_00_FF_00 & buffer[i++] << 8;
+        errorCode |= 0x00_00_00_FF & buffer[i++];
         builder.setErrorCode(errorCode);
 
         if (builder.payloadSize > 8) {
             byte[] debugData = new byte[builder.payloadSize - 8];
-            buffer.get(debugData);
+            System.arraycopy(buffer, i, debugData, 0, debugData.length);
             builder.setAdditionalDebugData(debugData);
         }
 

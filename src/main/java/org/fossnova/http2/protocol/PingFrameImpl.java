@@ -19,8 +19,6 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -37,28 +35,30 @@ final class PingFrameImpl extends AbstractFrameImpl implements PingFrame {
         return data;
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        super.writeTo(buffer);
-        buffer.put((byte)(data >>> 56));
-        buffer.put((byte)(data >>> 48));
-        buffer.put((byte)(data >>> 40));
-        buffer.put((byte)(data >>> 32));
-        buffer.put((byte)(data >>> 24));
-        buffer.put((byte)(data >>> 16));
-        buffer.put((byte)(data >>> 8));
-        buffer.put((byte)(data));
+    byte[] writePayload() {
+        final byte[] buffer = new byte[getPayloadSize()];
+        int i = 0;
+        buffer[i++] = (byte)(data >>> 56);
+        buffer[i++] = (byte)(data >>> 48);
+        buffer[i++] = (byte)(data >>> 40);
+        buffer[i++] = (byte)(data >>> 32);
+        buffer[i++] = (byte)(data >>> 24);
+        buffer[i++] = (byte)(data >>> 16);
+        buffer[i++] = (byte)(data >>> 8);
+        buffer[i++] = (byte)(data);
+        return buffer;
     }
 
-    static PingFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // implementation
-        long data = 0xFF_00_00_00_00_00_00_00L & (long)buffer.get() << 56;
-        data |= 0x00_FF_00_00_00_00_00_00L & (long)buffer.get() << 48;
-        data |= 0x00_00_FF_00_00_00_00_00L & (long)buffer.get() << 40;
-        data |= 0x00_00_00_FF_00_00_00_00L & (long)buffer.get() << 32;
-        data |= 0x00_00_00_00_FF_00_00_00L & (long)buffer.get() << 24;
-        data |= 0x00_00_00_00_00_FF_00_00L & (long)buffer.get() << 16;
-        data |= 0x00_00_00_00_00_00_FF_00L & (long)buffer.get() << 8;
-        data |= 0x00_00_00_00_00_00_00_FFL & (long)buffer.get();
+    static PingFrameImpl readFrom(final byte[] buffer, final Builder builder) {
+        int i = 0;
+        long data = 0xFF_00_00_00_00_00_00_00L & (long)buffer[i++] << 56;
+        data |= 0x00_FF_00_00_00_00_00_00L & (long)buffer[i++] << 48;
+        data |= 0x00_00_FF_00_00_00_00_00L & (long)buffer[i++] << 40;
+        data |= 0x00_00_00_FF_00_00_00_00L & (long)buffer[i++] << 32;
+        data |= 0x00_00_00_00_FF_00_00_00L & (long)buffer[i++] << 24;
+        data |= 0x00_00_00_00_00_FF_00_00L & (long)buffer[i++] << 16;
+        data |= 0x00_00_00_00_00_00_FF_00L & (long)buffer[i++] << 8;
+        data |= 0x00_00_00_00_00_00_00_FFL & (long)buffer[i++];
         builder.setOpaqueData(data);
         return builder.build();
     }

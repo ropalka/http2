@@ -19,8 +19,6 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -37,33 +35,29 @@ final class DataFrameImpl extends AbstractFrameImpl implements DataFrame {
         return data != null ? data.clone() : null;
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        super.writeTo(buffer);
+    byte[] writePayload() {
+        final byte[] buffer = new byte[getPayloadSize()];
+        int i = 0;
         final int padLength = getPayloadSize() - data.length;
         if ((getFlags() & FLAG_PADDED) != 0) {
-            buffer.put((byte) padLength);
+            buffer[i++] = (byte) padLength;
         }
         if (data.length != 0) {
-            buffer.put(data);
+            System.arraycopy(data, 0, buffer, i, data.length);
         }
-        if (padLength != 0) {
-            buffer.put(new byte[padLength]);
-        }
+        return buffer;
     }
 
-    static DataFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // implementation
+    static DataFrameImpl readFrom(final byte[] buffer, final Builder builder) {
         int padLength = 0;
+        int i = 0;
         if ((builder.flags & DataFrame.FLAG_PADDED) != 0) {
-            padLength = 0x00_00_00_FF & buffer.get();
+            padLength = 0x00_00_00_FF & buffer[i++];
         }
         if (builder.payloadSize > padLength) {
-            byte[] data = new byte[builder.payloadSize - padLength];
-            buffer.get(data);
+            final byte[] data = new byte[builder.payloadSize - padLength];
+            System.arraycopy(buffer, i, data, 0, data.length);
             builder.setData(data);
-        }
-        if (padLength > 0) {
-            buffer.get(new byte[padLength]);
         }
 
         return builder.build();

@@ -21,7 +21,6 @@ package org.fossnova.http2.protocol;
 
 import static java.lang.Thread.currentThread;
 
-import java.nio.ByteBuffer;
 import java.util.ConcurrentModificationException;
 
 /**
@@ -58,62 +57,57 @@ abstract class AbstractFrameImpl implements Frame {
         return streamId;
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        if (buffer.capacity() < FRAME_HEADER_SIZE + payloadSize) {
-            throw new IllegalArgumentException();
-        }
-        buffer.put((byte)(payloadSize >>> 16));
-        buffer.put((byte)(payloadSize >>> 8));
-        buffer.put((byte)(payloadSize));
-        buffer.put(frameType);
-        buffer.put(flags);
-        buffer.put((byte)(streamId >>> 24));
-        buffer.put((byte)(streamId >>> 16));
-        buffer.put((byte)(streamId >>> 8));
-        buffer.put((byte)(streamId));
+    final byte[] writeHeader() {
+        final byte[] buffer = new byte[FRAME_HEADER_SIZE];
+        int i = 0;
+        buffer[i++] = (byte)(payloadSize >>> 16);
+        buffer[i++] = (byte)(payloadSize >>> 8);
+        buffer[i++] = (byte)(payloadSize);
+        buffer[i++] = frameType;
+        buffer[i++] = flags;
+        buffer[i++] = (byte)(streamId >>> 24);
+        buffer[i++] = (byte)(streamId >>> 16);
+        buffer[i++] = (byte)(streamId >>> 8);
+        buffer[i++] = (byte)(streamId);
+        return buffer;
     }
 
-    static AbstractFrameImpl readFrom(final ByteBuffer buffer, final boolean server, final boolean validate) {
-        if (buffer.capacity() < FRAME_HEADER_SIZE) {
-            throw new IllegalStateException();
-        }
-        int payloadSize = 0x00_FF_00_00 & buffer.get() << 16;
-        payloadSize |= 0x00_00_FF_00 & buffer.get() << 8;
-        payloadSize |= 0x00_00_00_FF & buffer.get();
-        final FrameType frameType = FrameType.of(buffer.get());
-        byte flags = buffer.get();
-        int streamId = 0xFF_00_00_00 & buffer.get() << 24;
-        streamId |= 0x00_FF_00_00 & buffer.get() << 16;
-        streamId |= 0x00_00_FF_00 & buffer.get() << 8;
-        streamId |= 0x00_00_00_FF & buffer.get();
+    abstract byte[] writePayload();
 
-        if (buffer.capacity() < payloadSize) {
-            throw new IllegalStateException();
-        }
+    static AbstractFrameImpl readFrom(final byte[] headerBuffer, final byte[] payloadBuffer, final boolean server, final boolean validate) {
+        int i = 0;
+        int payloadSize = 0x00_FF_00_00 & headerBuffer[i++] << 16;
+        payloadSize |= 0x00_00_FF_00 & headerBuffer[i++] << 8;
+        payloadSize |= 0x00_00_00_FF & headerBuffer[i++];
+        final FrameType frameType = FrameType.of(headerBuffer[i++]);
+        byte flags = headerBuffer[i++];
+        int streamId = 0xFF_00_00_00 & headerBuffer[i++] << 24;
+        streamId |= 0x00_FF_00_00 & headerBuffer[i++] << 16;
+        streamId |= 0x00_00_FF_00 & headerBuffer[i++] << 8;
+        streamId |= 0x00_00_00_FF & headerBuffer[i++];
 
         if (frameType == FrameType.GOAWAY) {
-            return GoAwayFrameImpl.readFrom(buffer, new GoAwayFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return GoAwayFrameImpl.readFrom(payloadBuffer, new GoAwayFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.CONTINUATION) {
-            return ContinuationFrameImpl.readFrom(buffer, new ContinuationFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return ContinuationFrameImpl.readFrom(payloadBuffer, new ContinuationFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.DATA) {
-            return DataFrameImpl.readFrom(buffer, new DataFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return DataFrameImpl.readFrom(payloadBuffer, new DataFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.HEADERS) {
-            return HeadersFrameImpl.readFrom(buffer, new HeadersFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return HeadersFrameImpl.readFrom(payloadBuffer, new HeadersFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.PING) {
-            return PingFrameImpl.readFrom(buffer, new PingFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return PingFrameImpl.readFrom(payloadBuffer, new PingFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.PRIORITY) {
-            return PriorityFrameImpl.readFrom(buffer, new PriorityFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return PriorityFrameImpl.readFrom(payloadBuffer, new PriorityFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.PUSH_PROMISE) {
-            return PushPromiseFrameImpl.readFrom(buffer, new PushPromiseFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return PushPromiseFrameImpl.readFrom(payloadBuffer, new PushPromiseFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.RST_STREAM) {
-            return RstStreamFrameImpl.readFrom(buffer, new RstStreamFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return RstStreamFrameImpl.readFrom(payloadBuffer, new RstStreamFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.WINDOW_UPDATE) {
-            return WindowUpdateFrameImpl.readFrom(buffer, new WindowUpdateFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return WindowUpdateFrameImpl.readFrom(payloadBuffer, new WindowUpdateFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else if (frameType == FrameType.SETTINGS) {
-            return SettingsFrameImpl.readFrom(buffer, new SettingsFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
+            return SettingsFrameImpl.readFrom(payloadBuffer, new SettingsFrameImpl.Builder(server, server, validate, payloadSize, frameType, flags, streamId));
         } else {
-            buffer.position(payloadSize);
-            return null; // TODO: we return null for unknown frame types, shouldn't we process next frame instead?
+            return null; // indicates unknown frame types
         }
     }
 

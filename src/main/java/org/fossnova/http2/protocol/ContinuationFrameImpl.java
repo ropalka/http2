@@ -19,8 +19,6 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -37,19 +35,13 @@ final class ContinuationFrameImpl extends AbstractFrameImpl implements Continuat
         return headerBlockFragment != null ? headerBlockFragment.clone() : null;
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        super.writeTo(buffer);
-        if (headerBlockFragment != null) {
-            buffer.put(headerBlockFragment);
-        }
+    byte[] writePayload() {
+        return headerBlockFragment != null ? headerBlockFragment : EMPTY_ARRAY;
     }
 
-    static ContinuationFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // implementation
+    static ContinuationFrameImpl readFrom(final byte[] buffer, final Builder builder) {
         if (builder.payloadSize > 0) {
-            byte[] headerBlockFragment = new byte[builder.payloadSize];
-            buffer.get(headerBlockFragment);
-            builder.setHeaderBlockFragment(headerBlockFragment);
+            builder.setHeaderBlockFragment(buffer);
         }
 
         return builder.build();

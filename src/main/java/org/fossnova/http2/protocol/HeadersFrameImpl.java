@@ -19,8 +19,6 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -58,61 +56,57 @@ final class HeadersFrameImpl extends AbstractFrameImpl implements HeadersFrame {
         return data != null ? data.clone() : null;
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        super.writeTo(buffer);
+    byte[] writePayload() {
         final int priorityFieldsLength = (getFlags() & FLAG_PRIORITY) != 0 ? 5 : 0;
         final int padLength = getPayloadSize() - data.length - priorityFieldsLength;
+        final byte[] buffer = new byte[getPayloadSize()];
+        int i = 0;
         if ((getFlags() & FLAG_PADDED) != 0) {
-            buffer.put((byte) padLength);
+            buffer[i++] = (byte) padLength;
         }
         if (priorityFieldsLength != 0) {
             if (exclusive) {
-                buffer.put((byte)(0b00000000_00000000_00000000_10000000 | dependencyStreamId >>> 24));
+                buffer[i++] = (byte)(0b00000000_00000000_00000000_10000000 | dependencyStreamId >>> 24);
             } else {
-                buffer.put((byte)(dependencyStreamId >>> 24));
+                buffer[i++] = (byte)(dependencyStreamId >>> 24);
             }
-            buffer.put((byte)(dependencyStreamId >>> 16));
-            buffer.put((byte)(dependencyStreamId >>> 8));
-            buffer.put((byte)(dependencyStreamId));
-            buffer.put((byte)weight);
+            buffer[i++] = (byte)(dependencyStreamId >>> 16);
+            buffer[i++] = (byte)(dependencyStreamId >>> 8);
+            buffer[i++] = (byte)(dependencyStreamId);
+            buffer[i++] = (byte)weight;
         }
         if (data.length != 0) {
-            buffer.put(data);
+            System.arraycopy(data, 0, buffer, i, data.length);
         }
-        if (padLength != 0) {
-            buffer.put(new byte[padLength]);
-        }
+        return buffer;
     }
 
-    static HeadersFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // implementation
+    static HeadersFrameImpl readFrom(final byte[] buffer, final Builder builder) {
+        int i = 0;
         int padLength = 0;
         if ((builder.flags & FLAG_PADDED) != 0) {
-            padLength = 0x00_00_00_FF & buffer.get();
+            padLength = 0x00_00_00_FF & buffer[i++];
         }
         int priorityFieldsLength = 0;
         if ((builder.flags & FLAG_PRIORITY) != 0) {
             priorityFieldsLength = 5;
-            int dependencyStreamId = 0xFF_00_00_00 & buffer.get() << 24;
+            int dependencyStreamId = 0xFF_00_00_00 & buffer[i++] << 24;
             boolean exclusive = (0b10000000_00000000_00000000_00000000 & dependencyStreamId) != 0;
             if (exclusive) {
                 dependencyStreamId &= 0b01111111_11111111_11111111_11111111;
             }
-            dependencyStreamId |= 0x00_FF_00_00 & buffer.get() << 16;
-            dependencyStreamId |= 0x00_00_FF_00 & buffer.get() << 8;
-            dependencyStreamId |= 0x00_00_00_FF & buffer.get();
-            int weight = 0x00_00_00_FF & buffer.get();
+            dependencyStreamId |= 0x00_FF_00_00 & buffer[i++] << 16;
+            dependencyStreamId |= 0x00_00_FF_00 & buffer[i++] << 8;
+            dependencyStreamId |= 0x00_00_00_FF & buffer[i++];
+            int weight = 0x00_00_00_FF & buffer[i++];
             builder.setDependencyExclusive(exclusive);
             builder.setDependencyStream(dependencyStreamId);
             builder.setWeight(weight);
         }
         if (builder.payloadSize > (padLength + priorityFieldsLength)) {
-            byte[] data = new byte[builder.payloadSize - padLength - priorityFieldsLength];
-            buffer.get(data);
+            final byte[] data = new byte[builder.payloadSize - padLength - priorityFieldsLength];
+            System.arraycopy(buffer, i, data, 0, data.length);
             builder.setHeaderBlockFragment(data);
-        }
-        if (padLength > 0) {
-            buffer.get(new byte[padLength]);
         }
 
         return builder.build();

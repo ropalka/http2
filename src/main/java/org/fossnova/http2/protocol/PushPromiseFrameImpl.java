@@ -19,8 +19,6 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -44,42 +42,38 @@ final class PushPromiseFrameImpl extends AbstractFrameImpl implements PushPromis
         return data != null ? data.clone() : null;
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        super.writeTo(buffer);
+    byte[] writePayload() {
+        final byte[] buffer = new byte[getPayloadSize()];
+        int i = 0;
         final int padLength = getPayloadSize() - data.length;
         if ((getFlags() & FLAG_PADDED) != 0) {
-            buffer.put((byte) padLength);
+            buffer[i++] = (byte)padLength;
         }
-        buffer.put((byte)(promisedStreamId >>> 24));
-        buffer.put((byte)(promisedStreamId >>> 16));
-        buffer.put((byte)(promisedStreamId >>> 8));
-        buffer.put((byte)(promisedStreamId));
+        buffer[i++] = (byte)(promisedStreamId >>> 24);
+        buffer[i++] = (byte)(promisedStreamId >>> 16);
+        buffer[i++] = (byte)(promisedStreamId >>> 8);
+        buffer[i++] = (byte)(promisedStreamId);
         if (data.length != 0) {
-            buffer.put(data);
+            System.arraycopy(data, 0, buffer, i, data.length);
         }
-        if (padLength != 0) {
-            buffer.put(new byte[padLength]);
-        }
+        return buffer;
     }
 
-    static PushPromiseFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // implementation
+    static PushPromiseFrameImpl readFrom(final byte[] buffer, final Builder builder) {
+        int i = 0;
         int padLength = 0;
         if ((builder.flags & FLAG_PADDED) != 0) {
-            padLength = 0x00_00_00_FF & buffer.get();
+            padLength = 0x00_00_00_FF & buffer[i++];
         }
-        int promisedStreamId = 0xFF_00_00_00 & buffer.get() << 24;
-        promisedStreamId |= 0x00_FF_00_00 & buffer.get() << 16;
-        promisedStreamId |= 0x00_00_FF_00 & buffer.get() << 8;
-        promisedStreamId |= 0x00_00_00_FF & buffer.get();
+        int promisedStreamId = 0xFF_00_00_00 & buffer[i++] << 24;
+        promisedStreamId |= 0x00_FF_00_00 & buffer[i++] << 16;
+        promisedStreamId |= 0x00_00_FF_00 & buffer[i++] << 8;
+        promisedStreamId |= 0x00_00_00_FF & buffer[i++];
         builder.setPromisedStreamId(promisedStreamId);
         if (builder.payloadSize > padLength) {
-            byte[] data = new byte[builder.payloadSize - padLength];
-            buffer.get(data);
+            final byte[] data = new byte[builder.payloadSize - padLength];
+            System.arraycopy(buffer, i, data, 0, data.length);
             builder.setHeaderBlockFragment(data);
-        }
-        if (padLength > 0) {
-            buffer.get(new byte[padLength]);
         }
 
         return builder.build();

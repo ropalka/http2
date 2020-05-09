@@ -19,8 +19,6 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author <a href="mailto:opalka.richard@gmail.com">Richard Opalka</a>
  */
@@ -37,65 +35,67 @@ final class SettingsFrameImpl extends AbstractFrameImpl implements SettingsFrame
         return (paramId < 1 || paramId > 6) ? 0 : settings[paramId - 1];
     }
 
-    void writeTo(final ByteBuffer buffer) {
-        super.writeTo(buffer);
-        if (settings == null) return;
+    byte[] writePayload() {
+        if (settings == null) return EMPTY_ARRAY;
+        final byte[] buffer = new byte[getPayloadSize()];
+        int i = 0;
         // serialize SETTINGS_HEADER_TABLE_SIZE
-        buffer.put((byte)(HEADER_TABLE_SIZE >>> 8));
-        buffer.put((byte)(HEADER_TABLE_SIZE));
-        buffer.put((byte)(settings[HEADER_TABLE_SIZE - 1] >>> 24));
-        buffer.put((byte)(settings[HEADER_TABLE_SIZE - 1] >>> 16));
-        buffer.put((byte)(settings[HEADER_TABLE_SIZE - 1] >>> 8));
-        buffer.put((byte)(settings[HEADER_TABLE_SIZE - 1]));
+        buffer[i++] = (byte)(HEADER_TABLE_SIZE >>> 8);
+        buffer[i++] = (byte)(HEADER_TABLE_SIZE);
+        buffer[i++] = (byte)(settings[HEADER_TABLE_SIZE - 1] >>> 24);
+        buffer[i++] = (byte)(settings[HEADER_TABLE_SIZE - 1] >>> 16);
+        buffer[i++] = (byte)(settings[HEADER_TABLE_SIZE - 1] >>> 8);
+        buffer[i++] = (byte)(settings[HEADER_TABLE_SIZE - 1]);
         // serialize SETTINGS_ENABLE_PUSH
-        buffer.put((byte)(ENABLE_PUSH >>> 8));
-        buffer.put((byte)(ENABLE_PUSH));
-        buffer.put((byte)(settings[ENABLE_PUSH - 1] >>> 24));
-        buffer.put((byte)(settings[ENABLE_PUSH - 1] >>> 16));
-        buffer.put((byte)(settings[ENABLE_PUSH - 1] >>> 8));
-        buffer.put((byte)(settings[ENABLE_PUSH - 1]));
+        buffer[i++] = (byte)(ENABLE_PUSH >>> 8);
+        buffer[i++] = (byte)(ENABLE_PUSH);
+        buffer[i++] = (byte)(settings[ENABLE_PUSH - 1] >>> 24);
+        buffer[i++] = (byte)(settings[ENABLE_PUSH - 1] >>> 16);
+        buffer[i++] = (byte)(settings[ENABLE_PUSH - 1] >>> 8);
+        buffer[i++] = (byte)(settings[ENABLE_PUSH - 1]);
         // serialize SETTINGS_MAX_CONCURRENT_STREAMS
-        buffer.put((byte)(MAX_CONCURRENT_STREAMS >>> 8));
-        buffer.put((byte)(MAX_CONCURRENT_STREAMS));
-        buffer.put((byte)(settings[MAX_CONCURRENT_STREAMS - 1] >>> 24));
-        buffer.put((byte)(settings[MAX_CONCURRENT_STREAMS - 1] >>> 16));
-        buffer.put((byte)(settings[MAX_CONCURRENT_STREAMS - 1] >>> 8));
-        buffer.put((byte)(settings[MAX_CONCURRENT_STREAMS - 1]));
+        buffer[i++] = (byte)(MAX_CONCURRENT_STREAMS >>> 8);
+        buffer[i++] = (byte)(MAX_CONCURRENT_STREAMS);
+        buffer[i++] = (byte)(settings[MAX_CONCURRENT_STREAMS - 1] >>> 24);
+        buffer[i++] = (byte)(settings[MAX_CONCURRENT_STREAMS - 1] >>> 16);
+        buffer[i++] = (byte)(settings[MAX_CONCURRENT_STREAMS - 1] >>> 8);
+        buffer[i++] = (byte)(settings[MAX_CONCURRENT_STREAMS - 1]);
         // serialize SETTINGS_INITIAL_WINDOW_SIZE
-        buffer.put((byte)(INITIAL_WINDOW_SIZE >>> 8));
-        buffer.put((byte)(INITIAL_WINDOW_SIZE));
-        buffer.put((byte)(settings[INITIAL_WINDOW_SIZE - 1] >>> 24));
-        buffer.put((byte)(settings[INITIAL_WINDOW_SIZE - 1] >>> 16));
-        buffer.put((byte)(settings[INITIAL_WINDOW_SIZE - 1] >>> 8));
-        buffer.put((byte)(settings[INITIAL_WINDOW_SIZE - 1]));
+        buffer[i++] = (byte)(INITIAL_WINDOW_SIZE >>> 8);
+        buffer[i++] = (byte)(INITIAL_WINDOW_SIZE);
+        buffer[i++] = (byte)(settings[INITIAL_WINDOW_SIZE - 1] >>> 24);
+        buffer[i++] = (byte)(settings[INITIAL_WINDOW_SIZE - 1] >>> 16);
+        buffer[i++] = (byte)(settings[INITIAL_WINDOW_SIZE - 1] >>> 8);
+        buffer[i++] = (byte)(settings[INITIAL_WINDOW_SIZE - 1]);
         // serialize SETTINGS_MAX_FRAME_SIZE
-        buffer.put((byte)(MAX_FRAME_SIZE >>> 8));
-        buffer.put((byte)(MAX_FRAME_SIZE));
-        buffer.put((byte)(settings[MAX_FRAME_SIZE - 1] >>> 24));
-        buffer.put((byte)(settings[MAX_FRAME_SIZE - 1] >>> 16));
-        buffer.put((byte)(settings[MAX_FRAME_SIZE - 1] >>> 8));
-        buffer.put((byte)(settings[MAX_FRAME_SIZE - 1]));
+        buffer[i++] = (byte)(MAX_FRAME_SIZE >>> 8);
+        buffer[i++] = (byte)(MAX_FRAME_SIZE);
+        buffer[i++] = (byte)(settings[MAX_FRAME_SIZE - 1] >>> 24);
+        buffer[i++] = (byte)(settings[MAX_FRAME_SIZE - 1] >>> 16);
+        buffer[i++] = (byte)(settings[MAX_FRAME_SIZE - 1] >>> 8);
+        buffer[i++] = (byte)(settings[MAX_FRAME_SIZE - 1]);
         // serialize SETTINGS_MAX_HEADER_LIST_SIZE
-        buffer.put((byte)(MAX_HEADER_LIST_SIZE >>> 8));
-        buffer.put((byte)(MAX_HEADER_LIST_SIZE));
-        buffer.put((byte)(settings[MAX_HEADER_LIST_SIZE - 1] >>> 24));
-        buffer.put((byte)(settings[MAX_HEADER_LIST_SIZE - 1] >>> 16));
-        buffer.put((byte)(settings[MAX_HEADER_LIST_SIZE - 1] >>> 8));
-        buffer.put((byte)(settings[MAX_HEADER_LIST_SIZE - 1]));
+        buffer[i++] = (byte)(MAX_HEADER_LIST_SIZE >>> 8);
+        buffer[i++] = (byte)(MAX_HEADER_LIST_SIZE);
+        buffer[i++] = (byte)(settings[MAX_HEADER_LIST_SIZE - 1] >>> 24);
+        buffer[i++] = (byte)(settings[MAX_HEADER_LIST_SIZE - 1] >>> 16);
+        buffer[i++] = (byte)(settings[MAX_HEADER_LIST_SIZE - 1] >>> 8);
+        buffer[i++] = (byte)(settings[MAX_HEADER_LIST_SIZE - 1]);
+        return buffer;
     }
 
-    static SettingsFrameImpl readFrom(final ByteBuffer buffer, final Builder builder) {
-        // implementation
+    static SettingsFrameImpl readFrom(final byte[] buffer, final Builder builder) {
+        int i = 0;
         int id, value;
-        for (int i = 0; i < builder.payloadSize / 6; i++) {
+        for (int j = 0; j < builder.payloadSize / 6; j++) {
             // settings name
-            id = 0x00_00_FF_00 & buffer.get() << 8;
-            id |= 0x00_00_00_FF & buffer.get();
+            id = 0x00_00_FF_00 & buffer[i++] << 8;
+            id |= 0x00_00_00_FF & buffer[i++];
             // settings value
-            value = 0xFF_00_00_00 & buffer.get() << 24;
-            value |= 0x00_FF_00_00 & buffer.get() << 16;
-            value |= 0x00_00_FF_00 & buffer.get() << 8;
-            value |= 0x00_00_00_FF & buffer.get();
+            value = 0xFF_00_00_00 & buffer[i++] << 24;
+            value |= 0x00_FF_00_00 & buffer[i++] << 16;
+            value |= 0x00_00_FF_00 & buffer[i++] << 8;
+            value |= 0x00_00_00_FF & buffer[i++];
             builder.setParameter(id, value);
         }
         return builder.build();
