@@ -34,7 +34,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
-public class Client implements Runnable {
+public class Client implements RawFrameHandler {
     private final String host;
     private final int port;
     private final Selector selector;
@@ -88,6 +88,16 @@ public class Client implements Runnable {
         } finally {
             stopLatch.countDown();
         }
+    }
+
+    @Override
+    public void push(final RawFrame rawFrame) {
+        throw new UnsupportedOperationException(); // TODO: implement
+    }
+
+    @Override
+    public RawFrame pull() {
+        throw new UnsupportedOperationException(); // TODO: implement
     }
 
     void dispatch(final SelectionKey sk) {

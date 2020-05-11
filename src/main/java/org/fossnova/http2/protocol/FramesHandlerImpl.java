@@ -39,6 +39,7 @@ public final class FramesHandlerImpl extends FramesHandler {
     private final CountDownLatch stopLatch = new CountDownLatch(1);
     private final ByteBuffer buffer = ByteBuffer.allocate(SettingsFrame.DEFAULT_MAX_FRAME_SIZE);
     private volatile Thread connThread;
+    private volatile RawFrameHandler rawFrameHandler;
 
     public FramesHandlerImpl(final String host, final int port, final boolean server, final boolean validate) {
         this.host = host;
@@ -50,8 +51,8 @@ public final class FramesHandlerImpl extends FramesHandler {
     @Override
     public void start() throws IOException, InterruptedException {
         if (started.compareAndSet(false, true)) {
-            final Runnable r = server ? new Server(host, port, startLatch, stopLatch) : new Client(host, port, startLatch, stopLatch);
-            connThread = new Thread(r);
+            rawFrameHandler = server ? new Server(host, port, startLatch, stopLatch) : new Client(host, port, startLatch, stopLatch);
+            connThread = new Thread(rawFrameHandler);
             connThread.start();
             startLatch.await();
         }
@@ -60,19 +61,31 @@ public final class FramesHandlerImpl extends FramesHandler {
     @Override
     public void stop() throws InterruptedException {
         if (stopped.compareAndSet(false, true)) {
-            connThread.interrupt();
+            connThread.interrupt(); // TODO: Raw frame handler should handle that?
             stopLatch.await();
+            rawFrameHandler = null; // TODO: revisit
         }
     }
 
     @Override
     public void push(final Frame frame) {
-        ((AbstractFrameImpl) frame).writeTo(buffer);
+        if (!(frame instanceof AbstractFrameImpl)) throw new IllegalArgumentException();
+        final AbstractFrameImpl frameImpl = (AbstractFrameImpl)frame;
+        final byte[] headerBytes = frameImpl.writeHeader();
+        final byte[] payloadBytes = frameImpl.writePayload();
+        final RawFrame rawFrame = new RawFrame(headerBytes, payloadBytes);
+        rawFrameHandler.push(rawFrame);
     }
 
     @Override
     public Frame pull() {
-        return AbstractFrameImpl.readFrom(buffer, server, validate);
+        RawFrame rawFrame = null;
+        do {
+            rawFrame = rawFrameHandler.pull();
+        } while (rawFrame != null);
+        final byte[] headerBuffer = rawFrame.getHeaderBytes();
+        final byte[] payloadBuffer = rawFrame.getPayloadBytes();
+        return AbstractFrameImpl.readFrom(headerBuffer, payloadBuffer, server, validate);
     }
 
     @Override

@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
-final class Server implements Runnable {
+final class Server implements RawFrameHandler {
     private final String host;
     private final int port;
     private final Selector selector;
@@ -75,6 +75,16 @@ final class Server implements Runnable {
         } finally {
             stopLatch.countDown();
         }
+    }
+
+    @Override
+    public void push(final RawFrame rawFrame) {
+        throw new UnsupportedOperationException(); // TODO: implement
+    }
+
+    @Override
+    public RawFrame pull() {
+        throw new UnsupportedOperationException(); // TODO: implement
     }
 
     void dispatch(final SelectionKey sk) {
