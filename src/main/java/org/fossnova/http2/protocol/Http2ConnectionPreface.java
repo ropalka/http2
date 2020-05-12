@@ -19,21 +19,36 @@
  */
 package org.fossnova.http2.protocol;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
 final class Http2ConnectionPreface {
 
-    static final byte[] HTTP2_CLIENT = new byte[] {
-            0x50, 0x52, 0x49, 0x20, 0x2A,
-            0x20, 0x48, 0x54, 0x54, 0x50,
-            0x2F, 0x32, 0x2E, 0x30, 0x0D,
-            0x0A, 0x0D, 0x0A, 0x53, 0x4D,
-            0x0D, 0x0A, 0x0D, 0x0A
-    };
+    private static final String CR_LF = "\r\n";
 
+    // TODO: Turn this class into 'factory' pattern to construct the following string only once
     private Http2ConnectionPreface() {
         // forbidden instantiation
+    }
+
+    static byte[] newHttp20ConnectionPreface() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("HTTP/2.0").append(CR_LF).append(CR_LF);
+        sb.append("SM").append(CR_LF).append(CR_LF);
+        return sb.toString().getBytes(StandardCharsets.US_ASCII);
+    }
+
+    static byte[] newHttp11ConnectionPreface(final String host) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("GET / HTTP/1.1").append(CR_LF);
+        sb.append("Host: ").append(host).append(CR_LF);
+        sb.append("Connection: Upgrade, HTTP2-Settings").append(CR_LF);
+        sb.append("Upgrade: h2c").append(CR_LF);
+        sb.append("HTTP2-Settings: ").append(CR_LF);
+        sb.append(CR_LF);
+        return sb.toString().getBytes(StandardCharsets.US_ASCII);
     }
 
 }

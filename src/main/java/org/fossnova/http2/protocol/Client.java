@@ -28,8 +28,13 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
@@ -40,10 +45,7 @@ public class Client implements RawFrameHandler {
     private final Selector selector;
     private final SocketChannel clientChannel;
     private final CountDownLatch startLatch, stopLatch;
-    private final ByteBuffer frameHeaderReadBuffer = ByteBuffer.allocate(9);
-    private final ByteBuffer frameHeaderWriteBuffer = ByteBuffer.allocate(9);
-    private final ByteBuffer framePayloadReadBuffer = ByteBuffer.allocate(SettingsFrame.DEFAULT_MAX_FRAME_SIZE);
-    private final ByteBuffer framePayloadWriteBuffer = ByteBuffer.allocate(SettingsFrame.DEFAULT_MAX_FRAME_SIZE);
+    private final ChannelProcessor acceptor;
     private volatile Throwable failure;
 
     Client(final String host, final int port, final CountDownLatch startLatch, final CountDownLatch stopLatch) throws IOException {
@@ -55,25 +57,17 @@ public class Client implements RawFrameHandler {
         clientChannel = SocketChannel.open();
         clientChannel.configureBlocking(false);
         clientChannel.connect(new InetSocketAddress(host, port));
-        SelectionKey sk = clientChannel.register(selector, SelectionKey.OP_WRITE);
-        sk.attach(new Writer());
+        final SelectionKey sk = clientChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
         while (!clientChannel.finishConnect()) {
             System.out.println("still connecting");
         }
+        acceptor = new ChannelProcessor(true, host);
     }
 
     @Override
     public void run() {
         try {
             startLatch.countDown();
-            // prepare preface data
-            final ByteBuffer connPreface = ConnectionPreface.getClientInitialBytes();
-            // send preface data
-            int writtenBytes;
-            do {
-                writtenBytes = clientChannel.write(connPreface);
-            } while (writtenBytes != -1);
-            if (connPreface.hasRemaining()) throw new IllegalStateException();
             // enter main thread loop
             while (!Thread.interrupted()) {
                 selector.select();
@@ -92,12 +86,12 @@ public class Client implements RawFrameHandler {
 
     @Override
     public void push(final RawFrame rawFrame) {
-        throw new UnsupportedOperationException(); // TODO: implement
+        acceptor.push(rawFrame);
     }
 
     @Override
     public RawFrame pull() {
-        throw new UnsupportedOperationException(); // TODO: implement
+        return acceptor.pull();
     }
 
     void dispatch(final SelectionKey sk) {
@@ -105,11 +99,90 @@ public class Client implements RawFrameHandler {
         if (r != null) r.run();
     }
 
-    private static class Writer implements Runnable {
-        @Override
-        public void run() {
+    private static class ChannelProcessor {
 
+        private static final int IDLE = 0;
+        private static final int CLIENT_PREFACE_SENT = 1;
+        private static final int SERVER_PREFACE_RECEIVED = 2;
+
+        private final Queue<ReadChannelTask> readTasks = new LinkedList<>();
+        private final Queue<WriteChannelTask> writeTasks = new LinkedList<>();
+        private final boolean http2;
+        private final String host;
+        ReadChannelTask currentReadTask;
+        WriteChannelTask currentWriteTask;
+        private int connectionState = IDLE;
+
+        private ChannelProcessor(final boolean http2, final String host) {
+            this.http2 = http2;
+            this.host = host;
         }
+
+        public void handleEvent(final SelectionKey sk) {
+            final SocketChannel channel = (SocketChannel) sk.channel();
+            if (sk.isWritable()) {
+                // process write tasks
+                while (true) {
+                    if (currentWriteTask == null) {
+                        if (connectionState == IDLE) {
+                            currentWriteTask = new ClientConnectionPrefaceWriteChannelTask(http2, host);
+                        } else if (connectionState == SERVER_PREFACE_RECEIVED) {
+                            // we're sending user defined frames after successful handshake only
+                            synchronized (writeTasks) {
+                                currentWriteTask = writeTasks.poll();
+                            }
+                        }
+                        if (currentWriteTask == null) break;
+                    } else {
+                        currentWriteTask.execute(channel);
+                        if (currentWriteTask.isDone()) {
+                            if (currentWriteTask instanceof ClientConnectionPrefaceWriteChannelTask) {
+                                connectionState = CLIENT_PREFACE_SENT;
+                            }
+                            currentWriteTask = null;
+                        }
+                    }
+                }
+            }
+            if (sk.isReadable()) {
+                // process read tasks
+                while (true) {
+                    if (currentReadTask == null) {
+                        if (connectionState == IDLE) throw new RuntimeException();
+                        if (connectionState == CLIENT_PREFACE_SENT) {
+                            currentReadTask = null; // TODO: new read task to do connection negotiation
+                        }
+                        if (connectionState == SERVER_PREFACE_RECEIVED) {
+                            currentReadTask = null; // TODO: new read task to process next frame
+                        }
+                        if (currentReadTask == null) throw new RuntimeException();
+                        currentReadTask.execute(channel);
+                        if (currentReadTask.isDone()) {
+                            synchronized (readTasks) {
+                                readTasks.offer(currentReadTask);
+                            }
+                            currentReadTask = null;
+                        } else break;
+                    }
+                }
+            }
+        }
+
+        public void push(final RawFrame rawFrame) {
+            synchronized (writeTasks) {
+                writeTasks.offer(new WriteChannelTask(ByteBuffer.wrap(rawFrame.header), ByteBuffer.wrap(rawFrame.payload)));
+            }
+        }
+
+        public RawFrame pull() {
+            synchronized (readTasks) {
+                final ReadChannelTask readTask = readTasks.poll();
+                if (readTask == null) return null; // TODO: implement thread wait if value is not yet available ?
+                final ByteBuffer[] buffers = readTask.getBuffers();
+                return new RawFrame(buffers[0].array(), buffers[1].array());
+            }
+        }
+
     }
 
 }

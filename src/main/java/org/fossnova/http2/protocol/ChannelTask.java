@@ -19,25 +19,17 @@
  */
 package org.fossnova.http2.protocol;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 /**
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
-final class Http2ClientConnectionPrefaceWriteTaskImpl {
+interface ChannelTask {
 
-    private final ByteBuffer conPrefaceData = ByteBuffer.wrap(Http2ConnectionPreface.HTTP2_CLIENT);
+    void execute(final SocketChannel channel);
 
-    public void write(final SocketChannel channel) throws IOException {
-        int count;
-        do {
-            count = channel.write(conPrefaceData);
-        } while (count > 0 && conPrefaceData.hasRemaining());
-    }
+    boolean isDone();
 
-    public boolean done() {
-        return !conPrefaceData.hasRemaining();
-    }
+    Throwable getFailure();
+
 }
