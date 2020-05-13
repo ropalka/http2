@@ -154,6 +154,8 @@ public class Client implements RawFrameHandler {
                                 connectionState = CLIENT_CONNECTION_PREFACE_SENT;
                             }
                             currentWriteTask = null;
+                        } else {
+                            break; // cannot proceed further
                         }
                     }
                 }
@@ -177,20 +179,23 @@ public class Client implements RawFrameHandler {
                             continue;
                         }
                         if (connectionState == SERVER_CONNECTION_PREFACE_RECEIVED) {
-                            currentReadTask = new
-                            synchronized (readTasks) {
-
-                            }
-                            currentReadTask = null; // TODO: new read task to process next frame
+                            currentReadTask = new RawFrameReadChannelTask();
                         }
-                        if (currentReadTask == null) throw new RuntimeException();
                     } else {
                         currentReadTask.execute(channel);
                         if (currentReadTask.isDone()) {
-                            synchronized (readTasks) {
-                                readTasks.offer(currentReadTask);
+                            if (currentReadTask instanceof SwitchingProtocolsReadChannelTask) {
+                                connectionState = SWITCHING_PROTOCOLS_RECEIVED;
+                            } else if (currentReadTask == ServerConnectionPrefaceReadChannelTask) {
+                                connectionState = SERVER_CONNECTION_PREFACE_RECEIVED;
+                            } else {
+                                synchronized (readTasks) {
+                                    readTasks.offer(currentReadTask);
+                                }
                             }
                             currentReadTask = null;
+                        } else {
+                            break; // cannot proceed further
                         }
                     }
                 }
