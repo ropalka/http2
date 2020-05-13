@@ -101,8 +101,8 @@ public class Client implements RawFrameHandler {
         private static final int IDLE = 0;
         private static final int UPGRADE_TO_HTTP2_REQUEST_SENT = 1;
         private static final int SWITCHING_PROTOCOLS_RECEIVED = 2;
-        private static final int CLIENT_PREFACE_SENT = 3;
-        private static final int SERVER_PREFACE_RECEIVED = 4;
+        private static final int CLIENT_CONNECTION_PREFACE_SENT = 3;
+        private static final int SERVER_CONNECTION_PREFACE_RECEIVED = 4;
 
         private final Queue<ReadChannelTask> readTasks = new LinkedList<>();
         private final Queue<WriteChannelTask> writeTasks = new LinkedList<>();
@@ -124,17 +124,19 @@ public class Client implements RawFrameHandler {
                     if (currentWriteTask == null) {
                         if (connectionState == IDLE) {
                             currentWriteTask = new UpgradeToHttp2WriteChannelTask(host);
+                            continue;
                         }
                         if (connectionState == UPGRADE_TO_HTTP2_REQUEST_SENT) {
                             break; // awaiting SWITCHING_PROTOCOLS_RECEIVED event
                         }
                         if (connectionState == SWITCHING_PROTOCOLS_RECEIVED) {
                             currentWriteTask = new ClientConnectionPrefaceWriteChannelTask();
+                            continue;
                         }
-                        if (connectionState == CLIENT_PREFACE_SENT) {
+                        if (connectionState == CLIENT_CONNECTION_PREFACE_SENT) {
                             break; // awaiting SERVER_PREFACE_RECEIVED event
                         }
-                        if (connectionState == SERVER_PREFACE_RECEIVED) {
+                        if (connectionState == SERVER_CONNECTION_PREFACE_RECEIVED) {
                             // sending user defined frames after successful initial handshake
                             synchronized (writeTasks) {
                                 currentWriteTask = writeTasks.poll();
@@ -147,11 +149,9 @@ public class Client implements RawFrameHandler {
                         currentWriteTask.execute(channel);
                         if (currentWriteTask.isDone()) {
                             if (currentWriteTask instanceof UpgradeToHttp2WriteChannelTask) {
-                                currentWriteTask = new ClientConnectionPrefaceWriteChannelTask();
-                                continue;
-                            }
-                            if (currentWriteTask instanceof ClientConnectionPrefaceWriteChannelTask) {
-                                connectionState = CLIENT_PREFACE_SENT;
+                                connectionState = UPGRADE_TO_HTTP2_REQUEST_SENT;
+                            } else if (currentWriteTask instanceof ClientConnectionPrefaceWriteChannelTask) {
+                                connectionState = CLIENT_CONNECTION_PREFACE_SENT;
                             }
                             currentWriteTask = null;
                         }
@@ -162,21 +162,36 @@ public class Client implements RawFrameHandler {
                 // process read tasks
                 while (true) {
                     if (currentReadTask == null) {
-                        if (connectionState == IDLE) throw new RuntimeException();
-                        if (connectionState == CLIENT_PREFACE_SENT) {
-                            currentReadTask = null; // TODO: new read task to do connection negotiation
+                        if (connectionState == IDLE) {
+                            break; // awaiting UPGRADE_TO_HTTP2_REQUEST_SENT event
                         }
-                        if (connectionState == SERVER_PREFACE_RECEIVED) {
+                        if (connectionState == UPGRADE_TO_HTTP2_REQUEST_SENT) {
+                            currentReadTask = new SwitchingProtocolsReadChannelTask();
+                            continue;
+                        }
+                        if (connectionState == SWITCHING_PROTOCOLS_RECEIVED) {
+                            break; // awaiting CLIENT_PREFACE_SENT event
+                        }
+                        if (connectionState == CLIENT_CONNECTION_PREFACE_SENT) {
+                            currentReadTask = new ServerConnectionPrefaceReadChannelTask();
+                            continue;
+                        }
+                        if (connectionState == SERVER_CONNECTION_PREFACE_RECEIVED) {
+                            currentReadTask = new
+                            synchronized (readTasks) {
+
+                            }
                             currentReadTask = null; // TODO: new read task to process next frame
                         }
                         if (currentReadTask == null) throw new RuntimeException();
+                    } else {
                         currentReadTask.execute(channel);
                         if (currentReadTask.isDone()) {
                             synchronized (readTasks) {
                                 readTasks.offer(currentReadTask);
                             }
                             currentReadTask = null;
-                        } else break;
+                        }
                     }
                 }
             }
