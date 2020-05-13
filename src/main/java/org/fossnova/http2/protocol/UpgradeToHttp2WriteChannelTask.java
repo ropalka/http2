@@ -24,10 +24,10 @@ import java.nio.ByteBuffer;
 /**
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
  */
-final class ClientConnectionPrefaceWriteChannelTask extends WriteChannelTask {
+final class UpgradeToHttp2WriteChannelTask extends WriteChannelTask {
 
-    ClientConnectionPrefaceWriteChannelTask() {
-        super(ByteBuffer.wrap(Http2ConnectionPreface.newHttp20ConnectionPreface()));
+    UpgradeToHttp2WriteChannelTask(final String host) {
+        super(ByteBuffer.wrap(Http2ConnectionPreface.newUpgradeToHttp2Request(host)));
     }
 
 }

@@ -32,9 +32,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author <a href="mailto:ropalka@redhat.com">Richard Opalka</a>
@@ -45,7 +42,7 @@ public class Client implements RawFrameHandler {
     private final Selector selector;
     private final SocketChannel clientChannel;
     private final CountDownLatch startLatch, stopLatch;
-    private final ChannelProcessor acceptor;
+    private final ClientChannelProcessor acceptor;
     private volatile Throwable failure;
 
     Client(final String host, final int port, final CountDownLatch startLatch, final CountDownLatch stopLatch) throws IOException {
@@ -61,7 +58,7 @@ public class Client implements RawFrameHandler {
         while (!clientChannel.finishConnect()) {
             System.out.println("still connecting");
         }
-        acceptor = new ChannelProcessor(true, host);
+        acceptor = new ClientChannelProcessor(true, host);
     }
 
     @Override
@@ -99,23 +96,24 @@ public class Client implements RawFrameHandler {
         if (r != null) r.run();
     }
 
-    private static class ChannelProcessor {
+    private static class ClientChannelProcessor {
 
         private static final int IDLE = 0;
-        private static final int CLIENT_PREFACE_SENT = 1;
-        private static final int SERVER_PREFACE_RECEIVED = 2;
+        private static final int UPGRADE_TO_HTTP2_REQUEST_SENT = 1;
+        private static final int SWITCHING_PROTOCOLS_RECEIVED = 2;
+        private static final int CLIENT_PREFACE_SENT = 3;
+        private static final int SERVER_PREFACE_RECEIVED = 4;
 
         private final Queue<ReadChannelTask> readTasks = new LinkedList<>();
         private final Queue<WriteChannelTask> writeTasks = new LinkedList<>();
-        private final boolean http2;
         private final String host;
         ReadChannelTask currentReadTask;
         WriteChannelTask currentWriteTask;
-        private int connectionState = IDLE;
+        private int connectionState;
 
-        private ChannelProcessor(final boolean http2, final String host) {
-            this.http2 = http2;
+        private ClientChannelProcessor(final boolean http2, final String host) {
             this.host = host;
+            connectionState = http2 ? SWITCHING_PROTOCOLS_RECEIVED : IDLE;
         }
 
         public void handleEvent(final SelectionKey sk) {
@@ -125,17 +123,33 @@ public class Client implements RawFrameHandler {
                 while (true) {
                     if (currentWriteTask == null) {
                         if (connectionState == IDLE) {
-                            currentWriteTask = new ClientConnectionPrefaceWriteChannelTask(http2, host);
-                        } else if (connectionState == SERVER_PREFACE_RECEIVED) {
-                            // we're sending user defined frames after successful handshake only
+                            currentWriteTask = new UpgradeToHttp2WriteChannelTask(host);
+                        }
+                        if (connectionState == UPGRADE_TO_HTTP2_REQUEST_SENT) {
+                            break; // awaiting SWITCHING_PROTOCOLS_RECEIVED event
+                        }
+                        if (connectionState == SWITCHING_PROTOCOLS_RECEIVED) {
+                            currentWriteTask = new ClientConnectionPrefaceWriteChannelTask();
+                        }
+                        if (connectionState == CLIENT_PREFACE_SENT) {
+                            break; // awaiting SERVER_PREFACE_RECEIVED event
+                        }
+                        if (connectionState == SERVER_PREFACE_RECEIVED) {
+                            // sending user defined frames after successful initial handshake
                             synchronized (writeTasks) {
                                 currentWriteTask = writeTasks.poll();
                             }
+                            if (currentWriteTask == null) {
+                                break; // no user defined frames to be written are available
+                            }
                         }
-                        if (currentWriteTask == null) break;
                     } else {
                         currentWriteTask.execute(channel);
                         if (currentWriteTask.isDone()) {
+                            if (currentWriteTask instanceof UpgradeToHttp2WriteChannelTask) {
+                                currentWriteTask = new ClientConnectionPrefaceWriteChannelTask();
+                                continue;
+                            }
                             if (currentWriteTask instanceof ClientConnectionPrefaceWriteChannelTask) {
                                 connectionState = CLIENT_PREFACE_SENT;
                             }

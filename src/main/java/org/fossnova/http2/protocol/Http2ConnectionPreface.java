@@ -40,7 +40,7 @@ final class Http2ConnectionPreface {
         return sb.toString().getBytes(StandardCharsets.US_ASCII);
     }
 
-    static byte[] newHttp11ConnectionPreface(final String host) {
+    static byte[] newUpgradeToHttp2Request(final String host) {
         final StringBuilder sb = new StringBuilder();
         sb.append("GET / HTTP/1.1").append(CR_LF);
         sb.append("Host: ").append(host).append(CR_LF);
