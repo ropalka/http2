@@ -102,7 +102,6 @@ public class Client implements RawFrameHandler {
         private static final int UPGRADE_TO_HTTP2_REQUEST_SENT = 1;
         private static final int SWITCHING_PROTOCOLS_RECEIVED = 2;
         private static final int CLIENT_CONNECTION_PREFACE_SENT = 3;
-        private static final int SERVER_CONNECTION_PREFACE_RECEIVED = 4;
 
         private final Queue<ReadChannelTask> readTasks = new LinkedList<>();
         private final Queue<WriteChannelTask> writeTasks = new LinkedList<>();
@@ -134,9 +133,6 @@ public class Client implements RawFrameHandler {
                             continue;
                         }
                         if (connectionState == CLIENT_CONNECTION_PREFACE_SENT) {
-                            break; // awaiting SERVER_PREFACE_RECEIVED event
-                        }
-                        if (connectionState == SERVER_CONNECTION_PREFACE_RECEIVED) {
                             // sending user defined frames after successful initial handshake
                             synchronized (writeTasks) {
                                 currentWriteTask = writeTasks.poll();
@@ -175,10 +171,6 @@ public class Client implements RawFrameHandler {
                             break; // awaiting CLIENT_PREFACE_SENT event
                         }
                         if (connectionState == CLIENT_CONNECTION_PREFACE_SENT) {
-                            currentReadTask = new ServerConnectionPrefaceReadChannelTask();
-                            continue;
-                        }
-                        if (connectionState == SERVER_CONNECTION_PREFACE_RECEIVED) {
                             currentReadTask = new RawFrameReadChannelTask();
                         }
                     } else {
@@ -186,8 +178,6 @@ public class Client implements RawFrameHandler {
                         if (currentReadTask.isDone()) {
                             if (currentReadTask instanceof SwitchingProtocolsReadChannelTask) {
                                 connectionState = SWITCHING_PROTOCOLS_RECEIVED;
-                            } else if (currentReadTask == ServerConnectionPrefaceReadChannelTask) {
-                                connectionState = SERVER_CONNECTION_PREFACE_RECEIVED;
                             } else {
                                 synchronized (readTasks) {
                                     readTasks.offer(currentReadTask);
